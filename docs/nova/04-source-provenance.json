@@ -1,0 +1,3936 @@
+{
+  "checkedAt": "2026-10-07",
+  "sources": [
+    {
+      "revision": "4db0ac9a7ce3cc57a2d26c43ee375391db93198f",
+      "commitDate": "2026-09-16T07:48:31+07:00",
+      "lines": [
+        {
+          "version": "v19",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "19.2.10",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "17a21c6f29be777d05094682af6a1e57651106c0c36ca2b9efcd0b91df737f60",
+            "forms/index.ts": "22412a378f85067fbc8c39c36eaf87947099138ad8f3607b285e2f69e8af8c75",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        },
+        {
+          "version": "v20",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "20.2.10",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "17a21c6f29be777d05094682af6a1e57651106c0c36ca2b9efcd0b91df737f60",
+            "forms/index.ts": "22412a378f85067fbc8c39c36eaf87947099138ad8f3607b285e2f69e8af8c75",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        },
+        {
+          "version": "v21",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "21.2.10",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "17a21c6f29be777d05094682af6a1e57651106c0c36ca2b9efcd0b91df737f60",
+            "forms/index.ts": "22412a378f85067fbc8c39c36eaf87947099138ad8f3607b285e2f69e8af8c75",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        },
+        {
+          "version": "v22",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "22.2.10",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "17a21c6f29be777d05094682af6a1e57651106c0c36ca2b9efcd0b91df737f60",
+            "forms/index.ts": "22412a378f85067fbc8c39c36eaf87947099138ad8f3607b285e2f69e8af8c75",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        }
+      ],
+      "barrelParity": true,
+      "entrypointPathParity": true,
+      "missingEntryFiles": []
+    },
+    {
+      "revision": "c421f687bfba80a5dc9ec1b472d0c2c08f7b09f7",
+      "commitDate": "2026-10-05T12:27:40+07:00",
+      "lines": [
+        {
+          "version": "v19",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "19.2.15",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/file-explorer/ng-package.json",
+              "entry": "components/file-explorer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/highlight/ng-package.json",
+              "entry": "components/highlight/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/image-editor/ng-package.json",
+              "entry": "components/image-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/kanban/ng-package.json",
+              "entry": "components/kanban/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/segmented/ng-package.json",
+              "entry": "forms/segmented/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/theme/ng-package.json",
+              "entry": "utilities/theme/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "c61b639489881656118cc992b45b8f7f8706e191548ec79c995e45fb5f0e2c10",
+            "forms/index.ts": "231b519b74fdcc327adc10d9187d507d09379e0a4b1d77c4f24f8a7c72a4ea4d",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        },
+        {
+          "version": "v20",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "20.2.15",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/file-explorer/ng-package.json",
+              "entry": "components/file-explorer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/highlight/ng-package.json",
+              "entry": "components/highlight/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/image-editor/ng-package.json",
+              "entry": "components/image-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/kanban/ng-package.json",
+              "entry": "components/kanban/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/segmented/ng-package.json",
+              "entry": "forms/segmented/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/theme/ng-package.json",
+              "entry": "utilities/theme/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "c61b639489881656118cc992b45b8f7f8706e191548ec79c995e45fb5f0e2c10",
+            "forms/index.ts": "231b519b74fdcc327adc10d9187d507d09379e0a4b1d77c4f24f8a7c72a4ea4d",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        },
+        {
+          "version": "v21",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "21.2.15",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/file-explorer/ng-package.json",
+              "entry": "components/file-explorer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/highlight/ng-package.json",
+              "entry": "components/highlight/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/image-editor/ng-package.json",
+              "entry": "components/image-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/kanban/ng-package.json",
+              "entry": "components/kanban/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/segmented/ng-package.json",
+              "entry": "forms/segmented/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/theme/ng-package.json",
+              "entry": "utilities/theme/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "c61b639489881656118cc992b45b8f7f8706e191548ec79c995e45fb5f0e2c10",
+            "forms/index.ts": "231b519b74fdcc327adc10d9187d507d09379e0a4b1d77c4f24f8a7c72a4ea4d",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        },
+        {
+          "version": "v22",
+          "packageName": "@sdcorejs/angular",
+          "manifestVersion": "22.2.15",
+          "sourceManifestExports": null,
+          "entries": [
+            {
+              "path": "components/anchor/ng-package.json",
+              "entry": "components/anchor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/api-contract-builder/ng-package.json",
+              "entry": "components/api-contract-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/audit-diff/ng-package.json",
+              "entry": "components/audit-diff/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/autoid-inspector/ng-package.json",
+              "entry": "components/autoid-inspector/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/avatar/ng-package.json",
+              "entry": "components/avatar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/badge/ng-package.json",
+              "entry": "components/badge/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/breadcrumb/ng-package.json",
+              "entry": "components/breadcrumb/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/button/ng-package.json",
+              "entry": "components/button/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/card/ng-package.json",
+              "entry": "components/card/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ckeditor-styles/ng-package.json",
+              "entry": "components/ckeditor-styles/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/code-editor/ng-package.json",
+              "entry": "components/code-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/data-state/ng-package.json",
+              "entry": "components/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/editor/ng-package.json",
+              "entry": "components/editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/file-explorer/ng-package.json",
+              "entry": "components/file-explorer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/form-generic/ng-package.json",
+              "entry": "components/form-generic/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/highlight/ng-package.json",
+              "entry": "components/highlight/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/history/ng-package.json",
+              "entry": "components/history/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/image-editor/ng-package.json",
+              "entry": "components/image-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/import-excel/ng-package.json",
+              "entry": "components/import-excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/inform/ng-package.json",
+              "entry": "components/inform/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/job-progress/ng-package.json",
+              "entry": "components/job-progress/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/kanban/ng-package.json",
+              "entry": "components/kanban/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/mini-editor/ng-package.json",
+              "entry": "components/mini-editor/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal-resizable/ng-package.json",
+              "entry": "components/modal-resizable/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/modal/ng-package.json",
+              "entry": "components/modal/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/ng-package.json",
+              "entry": "components/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/operator/ng-package.json",
+              "entry": "components/operator/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/org-chart/ng-package.json",
+              "entry": "components/org-chart/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/preview/ng-package.json",
+              "entry": "components/preview/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-bar/ng-package.json",
+              "entry": "components/query-bar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/query-builder/ng-package.json",
+              "entry": "components/query-builder/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/quick-action/ng-package.json",
+              "entry": "components/quick-action/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/section/ng-package.json",
+              "entry": "components/section/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/side-drawer/ng-package.json",
+              "entry": "components/side-drawer/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/splitter/ng-package.json",
+              "entry": "components/splitter/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/stepper/ng-package.json",
+              "entry": "components/stepper/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab-router/ng-package.json",
+              "entry": "components/tab-router/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tab/ng-package.json",
+              "entry": "components/tab/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/table/ng-package.json",
+              "entry": "components/table/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/tree/ng-package.json",
+              "entry": "components/tree/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/upload-file/ng-package.json",
+              "entry": "components/upload-file/index.ts",
+              "exists": true
+            },
+            {
+              "path": "components/view/ng-package.json",
+              "entry": "components/view/index.ts",
+              "exists": true
+            },
+            {
+              "path": "configurations/ng-package.json",
+              "entry": "configurations/index.ts",
+              "exists": true
+            },
+            {
+              "path": "directives/ng-package.json",
+              "entry": "directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/autocomplete/ng-package.json",
+              "entry": "forms/autocomplete/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/checkbox/ng-package.json",
+              "entry": "forms/checkbox/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip-calendar/ng-package.json",
+              "entry": "forms/chip-calendar/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/chip/ng-package.json",
+              "entry": "forms/chip/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date-range/ng-package.json",
+              "entry": "forms/date-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/date/ng-package.json",
+              "entry": "forms/date/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/datetime/ng-package.json",
+              "entry": "forms/datetime/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/directives/ng-package.json",
+              "entry": "forms/directives/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/entity-picker/ng-package.json",
+              "entry": "forms/entity-picker/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/inline-text/ng-package.json",
+              "entry": "forms/inline-text/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-color/ng-package.json",
+              "entry": "forms/input-color/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input-number/ng-package.json",
+              "entry": "forms/input-number/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/input/ng-package.json",
+              "entry": "forms/input/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/label/ng-package.json",
+              "entry": "forms/label/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/models/ng-package.json",
+              "entry": "forms/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/ng-package.json",
+              "entry": "forms/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/radio/ng-package.json",
+              "entry": "forms/radio/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/segmented/ng-package.json",
+              "entry": "forms/segmented/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/select/ng-package.json",
+              "entry": "forms/select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/switch/ng-package.json",
+              "entry": "forms/switch/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/textarea/ng-package.json",
+              "entry": "forms/textarea/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time-range/ng-package.json",
+              "entry": "forms/time-range/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/time/ng-package.json",
+              "entry": "forms/time/index.ts",
+              "exists": true
+            },
+            {
+              "path": "forms/tree-select/ng-package.json",
+              "entry": "forms/tree-select/index.ts",
+              "exists": true
+            },
+            {
+              "path": "handlers/ng-package.json",
+              "entry": "handlers/index.ts",
+              "exists": true
+            },
+            {
+              "path": "i18n/ng-package.json",
+              "entry": "i18n/index.ts",
+              "exists": true
+            },
+            {
+              "path": "interceptors/ng-package.json",
+              "entry": "interceptors/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/auth/ng-package.json",
+              "entry": "modules/auth/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/icon/ng-package.json",
+              "entry": "modules/icon/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/keycloak/ng-package.json",
+              "entry": "modules/keycloak/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/layout/ng-package.json",
+              "entry": "modules/layout/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/ng-package.json",
+              "entry": "modules/index.ts",
+              "exists": true
+            },
+            {
+              "path": "modules/permission/ng-package.json",
+              "entry": "modules/permission/index.ts",
+              "exists": true
+            },
+            {
+              "path": "ng-package.json",
+              "entry": "src/public-api.ts",
+              "exists": true
+            },
+            {
+              "path": "pipes/ng-package.json",
+              "entry": "pipes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/api/ng-package.json",
+              "entry": "services/api/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/cache/ng-package.json",
+              "entry": "services/cache/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/confirm/ng-package.json",
+              "entry": "services/confirm/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/excel/ng-package.json",
+              "entry": "services/excel/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/loading/ng-package.json",
+              "entry": "services/loading/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/ng-package.json",
+              "entry": "services/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/notify/ng-package.json",
+              "entry": "services/notify/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/persistence/ng-package.json",
+              "entry": "services/persistence/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/storage/ng-package.json",
+              "entry": "services/storage/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/task/ng-package.json",
+              "entry": "services/task/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/unsaved-changes/ng-package.json",
+              "entry": "services/unsaved-changes/index.ts",
+              "exists": true
+            },
+            {
+              "path": "services/viewport/ng-package.json",
+              "entry": "services/viewport/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/data-state/ng-package.json",
+              "entry": "utilities/data-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/extensions/ng-package.json",
+              "entry": "utilities/extensions/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/models/ng-package.json",
+              "entry": "utilities/models/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/ng-package.json",
+              "entry": "utilities/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/read-state/ng-package.json",
+              "entry": "utilities/read-state/index.ts",
+              "exists": true
+            },
+            {
+              "path": "utilities/theme/ng-package.json",
+              "entry": "utilities/theme/index.ts",
+              "exists": true
+            }
+          ],
+          "barrels": {
+            "src/public-api.ts": "74acaf0be4265d54a6bdd23a70e12c4a95e3faf486e1b6dab993ac21e5df8e01",
+            "components/index.ts": "c61b639489881656118cc992b45b8f7f8706e191548ec79c995e45fb5f0e2c10",
+            "forms/index.ts": "231b519b74fdcc327adc10d9187d507d09379e0a4b1d77c4f24f8a7c72a4ea4d",
+            "services/index.ts": "e9b18bf33a5e33dc8257e8052c494aebf91c60cb5b3819a4a20ba9e6536536d6"
+          }
+        }
+      ],
+      "barrelParity": true,
+      "entrypointPathParity": true,
+      "missingEntryFiles": []
+    }
+  ],
+  "inventoryChecks": {
+    "dossiers": 59,
+    "uniqueIds": true,
+    "unionSymbols": 1000,
+    "allMapped": true,
+    "badRefs": [],
+    "missingAC": [],
+    "relativeResolutionMissing": [],
+    "externalTypeReexports": [
+      {
+        "symbol": "MentionFeedObjectItem",
+        "external": "ckeditor5",
+        "source": "components/mini-editor/src/mini-editor.model.ts"
+      }
+    ],
+    "noUnresolvedNamed": true,
+    "warning": "Type/API/examples are proposed contracts, no Nova implementation typecheck or runtime tests executed.",
+    "snippetSyntax": {
+      "snippets": 60,
+      "diagnostics": [],
+      "semanticTypecheck": "not run; proposed API/examples contain consumer placeholders and no implementation"
+    }
+  },
+  "releaseEvidence": {
+    "fileExplorerTag": "v2.15",
+    "tagCommit": "564e63aae217ba2664f36e07fea2c74f0a338054",
+    "referenceDescribe": "v2.15-20-gc421f687",
+    "archivesInReference": [
+      "published-docs/19.2.15/components/file-explorer/sd-file-explorer.md",
+      "published-docs/19.3.0/components/file-explorer/sd-file-explorer.md",
+      "published-docs/20.2.15/components/file-explorer/sd-file-explorer.md",
+      "published-docs/20.3.0/components/file-explorer/sd-file-explorer.md",
+      "published-docs/21.2.15/components/file-explorer/sd-file-explorer.md",
+      "published-docs/21.3.0/components/file-explorer/sd-file-explorer.md",
+      "published-docs/22.2.15/components/file-explorer/sd-file-explorer.md",
+      "published-docs/22.3.0/components/file-explorer/sd-file-explorer.md"
+    ],
+    "officialMainSource": "https://raw.githubusercontent.com/sdcorejs/sdcorejs-angular/main/versions/v19/projects/sdcorejs-angular/components/file-explorer/index.ts",
+    "githubReleases": "No GitHub release entries observed; this does not mean npm release never happened.",
+    "npmIndependentVerification": "Blocked: npm web403; registry network socket forbidden in selected execution environment. User history says base released; local tag/archive supports release-associated source, not tarball verification."
+  }
+}
