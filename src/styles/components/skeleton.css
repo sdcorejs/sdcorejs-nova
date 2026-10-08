@@ -1,0 +1,41 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-skeleton {
+    display: block;
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 1em;
+    border-radius: var(--nova-radius-control);
+    background: var(--nova-color-surface-hover);
+    animation: nova-skeleton-pulse 1.4s ease-in-out infinite;
+  }
+
+  .nova-skeleton--rect {
+    block-size: 4rem;
+  }
+
+  .nova-skeleton--circle {
+    inline-size: 40px;
+    block-size: 40px;
+    border-radius: 50%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-skeleton {
+      animation: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-skeleton {
+      border: var(--nova-border-width) solid GrayText;
+    }
+  }
+
+  @keyframes nova-skeleton-pulse {
+    50% {
+      opacity: 0.55;
+    }
+  }
+}

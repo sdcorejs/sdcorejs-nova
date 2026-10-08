@@ -1,0 +1,5 @@
+{
+  "$comment": "Every file copied or adapted from an upstream project is listed here and carries `@nova-provenance: <id>` (checked by scripts/check-provenance.mjs). P0 copies no upstream source: shadcn/ui is a visual/API reference only and Base UI is consumed as an npm dependency, not vendored.",
+  "verifiedAt": "2026-10-08",
+  "copied": []
+}

@@ -1,0 +1,126 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-breadcrumb {
+    container-type: inline-size;
+    min-inline-size: 0;
+    color: var(--nova-color-text-muted);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nova-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nova-breadcrumb__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nova-space-1);
+    min-inline-size: 0;
+  }
+
+  /* Ellipsis is visual only: the full label stays in the accessible name. The
+     containment applies inside the Nova-owned content box, to default Links and
+     to custom renderLink anchors alike (R22). */
+  .nova-breadcrumb__content {
+    display: inline-flex;
+    min-inline-size: 0;
+    max-inline-size: min(14rem, 100%);
+  }
+
+  .nova-breadcrumb__content > * {
+    display: inline-block;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .nova-breadcrumb__current {
+    color: var(--nova-color-text);
+    font-weight: var(--nova-font-weight-strong);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-breadcrumb__separator {
+    display: inline-flex;
+    inline-size: 1em;
+    block-size: 1em;
+  }
+
+  .nova-breadcrumb__separator > svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nova-breadcrumb__separator:dir(rtl) {
+    transform: scaleX(-1);
+  }
+
+  .nova-breadcrumb__item--disclosure {
+    display: none;
+  }
+
+  .nova-breadcrumb__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--nova-control-sm);
+    min-block-size: var(--nova-control-sm);
+    margin: 0;
+    padding: 0 var(--nova-space-1);
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: var(--nova-radius-control);
+    background: var(--nova-color-background);
+    color: var(--nova-color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .nova-breadcrumb__toggle:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  /* Collapse by container width, never by JS measurement. */
+  @container (max-width: 480px) {
+    .nova-breadcrumb--collapsible:not([data-expanded]) .nova-breadcrumb__item--collapsible {
+      display: none;
+    }
+
+    .nova-breadcrumb--collapsible .nova-breadcrumb__item--disclosure {
+      display: inline-flex;
+    }
+  }
+
+  @media (pointer: coarse) {
+    /* the anchor itself is the ≥ 44×44 target (R23) */
+    .nova-breadcrumb__content > a {
+      min-block-size: var(--nova-hit-target);
+      min-inline-size: var(--nova-hit-target);
+      line-height: var(--nova-hit-target);
+      text-align: center;
+    }
+
+    .nova-breadcrumb__toggle {
+      min-inline-size: var(--nova-hit-target);
+      min-block-size: var(--nova-hit-target);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-breadcrumb__toggle {
+      border-color: ButtonText;
+    }
+  }
+}

@@ -1,0 +1,69 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nova-space-1);
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    padding: 2px var(--nova-space-2);
+    border: var(--nova-border-width) solid transparent;
+    border-radius: 999px;
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-label);
+    line-height: var(--nova-line-height-label);
+    font-weight: var(--nova-font-weight-strong);
+    white-space: normal;
+    overflow-wrap: anywhere;
+    vertical-align: middle;
+  }
+
+  .nova-badge__icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: 1em;
+    block-size: 1em;
+  }
+
+  .nova-badge__icon > svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nova-badge__label {
+    min-inline-size: 0;
+  }
+
+  .nova-badge--neutral {
+    border-color: var(--nova-color-border);
+    background: var(--nova-color-surface);
+    color: var(--nova-color-text);
+  }
+
+  .nova-badge--success {
+    background: var(--nova-color-success-surface);
+    color: var(--nova-color-success-text);
+  }
+
+  .nova-badge--warning {
+    background: var(--nova-color-warning-surface);
+    color: var(--nova-color-warning-text);
+  }
+
+  .nova-badge--error {
+    background: var(--nova-color-error-surface);
+    color: var(--nova-color-error-text);
+  }
+
+  .nova-badge--info {
+    background: var(--nova-color-info-surface);
+    color: var(--nova-color-info-text);
+  }
+
+  @media (forced-colors: active) {
+    .nova-badge {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "nova-fixture-next-ssr",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Production Next.js App Router consumer of the packed @sdcorejs/nova tarball (installed with --no-save by scripts/smoke-pack.mjs).",
+  "scripts": {
+    "build": "node run-next.mjs build",
+    "start": "node run-next.mjs start"
+  },
+  "dependencies": {
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}

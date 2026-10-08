@@ -1,0 +1,116 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nova-space-2);
+    min-inline-size: 0;
+  }
+
+  .nova-radio-group--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--nova-space-4);
+  }
+
+  .nova-radio-option {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nova-space-2);
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+    cursor: pointer;
+  }
+
+  .nova-radio-option__label {
+    overflow-wrap: anywhere;
+  }
+
+  /* The interactive element's own box is the hit area (§8.4). */
+  .nova-radio {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    box-sizing: border-box;
+    inline-size: 20px;
+    block-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .nova-radio::before {
+    content: "";
+    box-sizing: border-box;
+    inline-size: 16px;
+    block-size: 16px;
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: 50%;
+    background: var(--nova-color-background);
+    grid-area: 1 / 1;
+  }
+
+  .nova-radio[data-checked]::before {
+    border-color: var(--nova-color-action);
+  }
+
+  .nova-radio__dot {
+    grid-area: 1 / 1;
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: 50%;
+    background: var(--nova-color-action);
+  }
+
+  .nova-radio:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  .nova-radio[data-disabled] {
+    cursor: not-allowed;
+  }
+
+  .nova-radio[data-disabled]::before {
+    background: var(--nova-color-disabled-surface);
+  }
+
+  .nova-radio[data-disabled] + .nova-radio-option__label {
+    color: var(--nova-color-disabled-text);
+  }
+
+  .nova-radio-group[aria-invalid="true"] .nova-radio::before {
+    border-color: var(--nova-color-error-text);
+  }
+
+  .nova-radio-group__empty {
+    margin: 0;
+    color: var(--nova-color-text-muted);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  @media (pointer: coarse) {
+    .nova-radio {
+      inline-size: var(--nova-hit-target);
+      block-size: var(--nova-hit-target);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-radio::before {
+      border-color: ButtonText;
+    }
+
+    .nova-radio__dot {
+      background: Highlight;
+    }
+
+    .nova-radio:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

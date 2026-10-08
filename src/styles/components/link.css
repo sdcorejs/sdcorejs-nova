@@ -1,0 +1,37 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-link {
+    color: var(--nova-color-action);
+    font-family: var(--nova-font-family);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+  }
+
+  .nova-link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .nova-link:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+    border-radius: 2px;
+  }
+
+  /* Non-navigating text for a rejected href. */
+  .nova-link--inert {
+    color: var(--nova-color-text);
+    text-decoration: none;
+  }
+
+  @media (forced-colors: active) {
+    .nova-link {
+      color: LinkText;
+    }
+
+    .nova-link--inert {
+      color: CanvasText;
+    }
+  }
+}
