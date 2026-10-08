@@ -3931,6 +3931,6 @@
     ],
     "officialMainSource": "https://raw.githubusercontent.com/sdcorejs/sdcorejs-angular/main/versions/v19/projects/sdcorejs-angular/components/file-explorer/index.ts",
     "githubReleases": "No GitHub release entries observed; this does not mean npm release never happened.",
-    "npmIndependentVerification": "Blocked: npm web403; registry network socket forbidden in selected execution environment. User history says base released; local tag/archive supports release-associated source, not tarball verification."
+    "npmIndependentVerification": "Source/tag/archive provenance does not independently verify npm tarball bytes."
   }
 }

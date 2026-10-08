@@ -1,0 +1,103 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-input {
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-block-size: var(--nova-control-md);
+    margin: 0;
+    padding: var(--nova-space-1) var(--nova-space-3);
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: var(--nova-radius-control);
+    background: var(--nova-color-background);
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-input::placeholder {
+    color: var(--nova-color-text-muted);
+    opacity: 1;
+  }
+
+  .nova-input:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  .nova-input[aria-invalid="true"] {
+    border-color: var(--nova-color-error-text);
+  }
+
+  .nova-input:disabled {
+    background: var(--nova-color-disabled-surface);
+    color: var(--nova-color-disabled-text);
+    cursor: not-allowed;
+  }
+
+  .nova-input:read-only:not(:disabled) {
+    background: var(--nova-color-surface);
+  }
+
+  .nova-textarea {
+    display: block;
+    padding-block: var(--nova-space-2);
+  }
+
+  .nova-textarea--resize-vertical {
+    resize: vertical;
+  }
+
+  .nova-textarea--resize-none {
+    resize: none;
+  }
+
+  .nova-input-group {
+    display: flex;
+    align-items: center;
+    gap: var(--nova-space-2);
+    min-inline-size: 0;
+  }
+
+  .nova-input-group > .nova-input {
+    flex: 1 1 auto;
+  }
+
+  .nova-input-group__start,
+  .nova-input-group__end {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    color: var(--nova-color-text-muted);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+  }
+
+  /* 16/24 on small or touch screens so mobile browsers never zoom on focus. */
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-input {
+      font-size: var(--nova-font-size-input-mobile);
+      line-height: var(--nova-line-height-input-mobile);
+    }
+  }
+
+  /* Touch: the field itself is the ≥ 44×44 target (INV-013). */
+  @media (pointer: coarse) {
+    .nova-input {
+      min-block-size: var(--nova-hit-target);
+      min-inline-size: var(--nova-hit-target);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-input {
+      border-color: FieldText;
+    }
+
+    .nova-input:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

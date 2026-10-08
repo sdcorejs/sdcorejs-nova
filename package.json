@@ -1,0 +1,148 @@
+{
+  "name": "@sdcorejs/nova",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "SD Nova — React Core UI cho trang end user.",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./theme": {
+      "types": "./dist/providers/nova/index.d.ts",
+      "default": "./dist/providers/nova/index.js"
+    },
+    "./i18n": {
+      "types": "./dist/i18n/index.d.ts",
+      "default": "./dist/i18n/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/types/index.js"
+    },
+    "./button": {
+      "types": "./dist/components/button/index.d.ts",
+      "default": "./dist/components/button/index.js"
+    },
+    "./avatar": {
+      "types": "./dist/components/avatar/index.d.ts",
+      "default": "./dist/components/avatar/index.js"
+    },
+    "./badge": {
+      "types": "./dist/components/badge/index.d.ts",
+      "default": "./dist/components/badge/index.js"
+    },
+    "./card": {
+      "types": "./dist/components/card/index.d.ts",
+      "default": "./dist/components/card/index.js"
+    },
+    "./link": {
+      "types": "./dist/components/link/index.d.ts",
+      "default": "./dist/components/link/index.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/components/breadcrumb/index.d.ts",
+      "default": "./dist/components/breadcrumb/index.js"
+    },
+    "./alert": {
+      "types": "./dist/components/alert/index.d.ts",
+      "default": "./dist/components/alert/index.js"
+    },
+    "./data-state": {
+      "types": "./dist/components/data-state/index.d.ts",
+      "default": "./dist/components/data-state/index.js"
+    },
+    "./field": {
+      "types": "./dist/components/field/index.d.ts",
+      "default": "./dist/components/field/index.js"
+    },
+    "./input": {
+      "types": "./dist/components/input/index.d.ts",
+      "default": "./dist/components/input/index.js"
+    },
+    "./checkbox": {
+      "types": "./dist/components/checkbox/index.d.ts",
+      "default": "./dist/components/checkbox/index.js"
+    },
+    "./switch": {
+      "types": "./dist/components/switch/index.d.ts",
+      "default": "./dist/components/switch/index.js"
+    },
+    "./radio-group": {
+      "types": "./dist/components/radio-group/index.d.ts",
+      "default": "./dist/components/radio-group/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./styles.css": "./dist/styles.css",
+    "./styles/*.css": "./dist/styles/*.css"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0"
+  },
+  "packageManager": "npm@10.9.7",
+  "scripts": {
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "tsc -p tsconfig.build.json",
+    "build:css": "node scripts/build-css.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck:fixtures": "npm run build:js && tsc -p tsconfig.types.json && node node_modules/typescript-5.7/bin/tsc -p tsconfig.types.json",
+    "lint": "eslint .",
+    "test:unit": "vitest run --project unit",
+    "test:ssr": "vitest run --project ssr",
+    "test:browser": "node scripts/build-css.mjs && playwright test --config playwright.config.ts",
+    "test:e2e": "playwright test --config test/e2e/playwright.config.ts",
+    "check:css": "node scripts/build-css.mjs && node scripts/check-css.mjs",
+    "check:dist": "node scripts/check-dist.mjs",
+    "check:package": "node scripts/check-package.mjs && node scripts/check-dist.mjs && publint --strict && attw --pack . --profile esm-only --exclude-entrypoints ./tokens.css ./styles.css",
+    "check:bundle": "node scripts/check-bundle.mjs",
+    "check:provenance": "node scripts/check-provenance.mjs",
+    "smoke:pack": "node scripts/smoke-pack.mjs",
+    "typecheck:showcase": "tsc -p showcase/tsconfig.json --noEmit",
+    "build:showcase": "node scripts/build-showcase.mjs",
+    "preview:showcase": "vite preview --config showcase/vite.config.mjs --port 5203",
+    "check:showcase": "node scripts/check-showcase.mjs && node --test test/showcase/artifact.test.mjs",
+    "test:showcase": "playwright test --config test/showcase/playwright.config.ts"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.0",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "axe-core": "4.13.0",
+    "eslint": "9.39.5",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "jsdom": "30.1.2",
+    "lightningcss": "1.33.0",
+    "publint": "0.3.25",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "6.0.3",
+    "typescript-5.7": "npm:typescript@5.7.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.3",
+    "vitest": "5.0.3"
+  },
+  "dependencies": {
+    "@base-ui/react": "~1.8.0"
+  }
+}

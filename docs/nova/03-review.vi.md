@@ -1,10 +1,6 @@
-# Review độc lập — SD Nova spec r1
+# Kiểm tra hợp đồng thiết kế Nova
 
-Ngày: 07/10/2026. Phạm vi: contract React/API, async/state/SSR, thiết kế/accessibility và traceability của bundle. Hai reviewer độc lập đọc source spec, không sửa file. Tác giả sửa contract rồi reviewer đọc lại. Đây là review tài liệu; không phải chứng nhận runtime hay approved implementation.
-
-## Kết quả
-
-Không còn blocker quan trọng trong phạm vi review cuối đã kiểm tra. Các default về React 19, CSS biên dịch sẵn và adapters optional vẫn là đề xuất chờ người dùng duyệt spec. Chưa tạo approved snapshot hoặc bắt đầu implementation.
+Đối chiếu tài liệu ngày 07/10/2026: React/API, async/state/SSR, accessibility và traceability. Các bảng sau là clarifications của thiết kế; không chứng nhận runtime hiện tại.
 
 | Finding | Rủi ro cụ thể | Contract đã sửa |
 |---|---|---|
@@ -23,8 +19,6 @@ Không còn blocker quan trọng trong phạm vi review cuối đã kiểm tra. 
 | R13 — D06 | Hai move từ cùng snapshot ghi đè nhau | Singleflight toàn board tới parent confirmation/replacement, AC hai-card concurrency. |
 | R14 — X06 | maxPixels kiểm tra quá trễ; alpha JPEG policy không có API | Decode budget trước allocation/preflight; exportOptions và jpegBackground explicit. |
 
-Reviewer API đã xác nhận sửa R13/R14 ở lượt cuối. Reviewer design đã xác nhận accessible name/PDF và các dossier bổ sung D05/D06/F16/X06/C18. Clarifications về grid là CSS list/card, focus khi đổi view và single/multi arrow behavior của Segmented đã được tác giả bổ sung sau review.
-
 ## Sửa provenance quan trọng
 
 Working checkout `4db0ac9…` cũ hơn reference `c421f687…`. Inventory đã mở rộng qua root barrel **và mọi ng-package secondary**. FileExplorer base hiện có trong snapshot mới và release-associated tag/archive v2.15; không còn mô tả là feature chưa từng released. Base capabilities list/search/grid/preview/transfer được map D05/U01/U03; selector/custom columns/consumer actions/raw T là adaptation proposal, không đánh đồng với enhancement draft từ nhiệm vụ khác. Kanban/Segmented/ImageEditor/Highlight/theme được thêm vào inventory và dossier.
@@ -38,10 +32,6 @@ Working checkout `4db0ac9…` cũ hơn reference `c421f687…`. Inventory đã m
 
 `04-source-provenance.json` chứa kết quả probe. Source-tag file identity chỉ là provenance; không chứng minh declaration API/runtime đã pass build. Số union bao gồm 64 locator chỉ ở snapshot cũ, không yêu cầu Nova phục hồi những export đã mất ở reference mới.
 
-## Giới hạn và bước tiếp theo
+## Giới hạn
 
-Nova chưa có repo trong inspected roots. React APIs/code snippets là proposed, chưa compile với implementation. Next/Vite smoke, runtime concurrency, screen reader, contrast/visual và license transitive đều là acceptance requirements cần chạy khi có source Nova.
-
-Independent npm metadata/tarball verification bị chặn: npm web trả 403 và socket tới registry bị execution environment cấm. Source/tag/archive và user history hỗ trợ provenance base released, nhưng bundle không tự xác nhận npm package bytes. Không cần workaround để duyệt spec.
-
-Người dùng review scope/priorities và defaults trong spec; sau đó mới tạo approved contract trong repo Nova đã có và đi qua architecture/implementation workflow. Không remote repo creation, commit, push, deploy hoặc publish trong nhiệm vụ này.
+API ngoài P0 vẫn là proposed. Source/tag/archive không thay thế xác minh npm tarball. Xem [tích hợp P0](p0-integration.vi.md) và source/tests để kiểm tra implementation hiện có.

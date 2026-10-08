@@ -1,15 +1,15 @@
 # SD Nova — bộ spec review r1
 
-Core UI React độc lập cho trang end user, package đề xuất `@sdcorejs/nova`, nền shadcn/Base UI và visual tokens neutral riêng. Đây là tài liệu thiết kế; repo chưa chứa implementation hoặc framework scaffold. Tài liệu chưa được coi là approved contract.
+Core UI React độc lập cho trang end user, package đề xuất `@sdcorejs/nova`, nền shadcn/Base UI và visual tokens neutral riêng. Đây là bộ tài liệu thiết kế. Phạm vi P0 (12 dossier) đã được triển khai và kiểm cục bộ nhưng P0 này chưa được publish; xem [hướng dẫn tích hợp P0](p0-integration.vi.md). Các dossier P1, P2, P3 vẫn là đề xuất, chưa thuộc API đã triển khai.
 
 Đọc theo thứ tự:
 
-1. [Kiến trúc candidate và conventions](architecture-and-conventions.vi.md): packaging, tokens, a11y, i18n, SSR, state và release gates.
+1. [Kiến trúc P0](p0-architecture.vi.md) và [kiến trúc candidate/conventions](architecture-and-conventions.vi.md): packaging, tokens, a11y, i18n, SSR, state và release gates.
 2. Các spec cá thể trong mục lục dưới: API TypeScript, ví dụ, behavior và AC/testcases.
 3. [Inventory CSV](02-inventory.csv) / [export graph JSON](inventory.json): 1.000 union symbol+source, 94 capability buckets, disposition và provenance hai snapshot.
 4. [Review độc lập](03-review.vi.md) và [source verification](04-source-provenance.json).
 
-Source provenance: working HEAD `4db0ac9…` và reference `c421f687…` khác nhau. FileExplorer base có trong reference/release-associated v2.15 source archive; selector/custom columns/typed raw consumer actions là Nova adaptation proposals. Không suy npm publication chỉ từ manifest/tag; independent tarball verification bị môi trường chặn.
+Source provenance: working HEAD `4db0ac9…` và reference `c421f687…` khác nhau. FileExplorer base có trong reference/release-associated v2.15 source archive; selector/custom columns/typed raw consumer actions là Nova adaptation proposals. Không suy npm publication chỉ từ manifest/tag; source provenance không thay thế xác minh tarball.
 
 ## Ưu tiên
 
@@ -18,7 +18,7 @@ Source provenance: working HEAD `4db0ac9…` và reference `c421f687…` khác n
 - P2: table/query/tree/entity/file/import/preview/task theo nhu cầu ứng dụng đầu tiên.
 - P3: editors/org chart/audit/history/schema renderer/Kanban/ImageEditor khi có usecase rõ.
 
-Defaults chờ review: React 19 trước; CSS biên dịch sẵn; một package với subpath exports; adapters nặng optional; app sở hữu data/auth/router/actions. Không cần hỏi lại quyết định React, shadcn/Base UI và hướng visual đã chấp thuận.
+Conventions P0: React 19 trước; CSS biên dịch sẵn; một package với subpath exports; adapters nặng optional; app sở hữu data/auth/router/actions.
 
 ## Mục lục 59 spec
 
@@ -88,4 +88,6 @@ Defaults chờ review: React 19 trước; CSS biên dịch sẵn; một package 
 
 59 dossier, 188 acceptance cases; 60 snippet TypeScript/TSX qua kiểm tra cú pháp. Review API/design độc lập đã xử lý blocker trong phạm vi kiểm tra. Inventory có disposition cho mọi row và không dangling spec references. Barrels/secondary path parity được kiểm tra giữa v19–v22 ở cả hai snapshots.
 
-Chưa có Nova implementation nên chưa semantic typecheck, runtime tests, Next/Vite smoke hoặc screen-reader/visual tests. Các kiểm tra đó là acceptance requirements. Không đưa credential, runtime scratch, Angular source snapshot, Library transfer helper hoặc ZIP duplicate vào repo.
+Với P0, typecheck ngữ nghĩa (TypeScript 6.0.3 và 5.7.3), test unit, SSR, trình duyệt ba engine và smoke production Vite/Next đã chạy cục bộ; kiểm thủ công trình đọc màn hình, zoom 200% và gõ Telex/VNI chưa được xác nhận. P1, P2, P3 chưa có implementation nên chưa có các kiểm tra này. Các kiểm tra đó là acceptance requirements.
+
+Showcase consumer Vite/Pages đã có menu gọn với selected/hover/focus riêng; CI và deployment/public revision cần xác nhận bằng run thực tế. Xem [hướng dẫn showcase](showcase-pages.vi.md). npm release tiếp tục hoãn đến sau P1/P2 và review, owner tự đánh version tag.

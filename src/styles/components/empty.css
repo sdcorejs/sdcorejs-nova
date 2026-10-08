@@ -1,0 +1,52 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nova-space-2);
+    box-sizing: border-box;
+    min-inline-size: 0;
+    padding: var(--nova-space-5) var(--nova-space-4);
+    border-radius: var(--nova-radius-card);
+    /* paints its own theme background: a scope (display: contents) cannot */
+    background: var(--nova-color-background);
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+    text-align: center;
+  }
+
+  .nova-empty__icon {
+    display: inline-flex;
+    inline-size: 2rem;
+    block-size: 2rem;
+    color: var(--nova-color-text-muted);
+  }
+
+  .nova-empty__icon > svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nova-empty__title {
+    margin: 0;
+    font-weight: var(--nova-font-weight-strong);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-empty__description {
+    margin: 0;
+    color: var(--nova-color-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-empty__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--nova-space-2);
+  }
+}

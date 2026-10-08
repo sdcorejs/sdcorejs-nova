@@ -1,0 +1,95 @@
+name: Nova showcase Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact run revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22.22.2'
+      - name: Install from lockfile
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Typecheck consumer fixtures
+        run: npm run typecheck:fixtures
+      - name: Build P0
+        run: npm run build
+      - name: Check CSS
+        run: npm run check:css
+      - name: Check package
+        run: npm run check:package
+      - name: Pack and build consumer fixtures
+        run: npm run smoke:pack
+      - name: Unit tests
+        run: npm run test:unit
+      - name: SSR tests
+        run: npm run test:ssr
+      - name: Install browser engines
+        run: npx --no-install playwright install --with-deps chromium firefox webkit
+      - name: Browser tests
+        run: npm run test:browser
+      - name: Production E2E
+        run: npm run test:e2e
+      - name: Bundle isolation
+        run: npm run check:bundle
+      - name: Provenance
+        run: npm run check:provenance
+      - name: Typecheck showcase
+        run: npm run typecheck:showcase
+      - name: Build clean public showcase
+        run: npm run build:showcase -- --deploy
+      - name: Verify public artifact and negative cases
+        run: npm run check:showcase
+      - name: Enforce deploy revision cleanliness
+        run: node scripts/check-showcase.mjs --deploy
+      - name: Showcase production browser checks
+        run: npm run test:showcase
+      - name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+        with:
+          enablement: false
+      - name: Upload checked static artifact only
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: showcase/dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy checked artifact
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5

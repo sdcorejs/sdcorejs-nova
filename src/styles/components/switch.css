@@ -1,0 +1,106 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-switch-root {
+    display: inline-flex;
+    flex: none;
+  }
+
+  /* The interactive element's own box is the hit area (§8.4). */
+  .nova-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-inline-size: 36px;
+    block-size: 22px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .nova-switch__track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    inline-size: 36px;
+    block-size: 20px;
+    padding: 2px;
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: 999px;
+    background: var(--nova-color-surface);
+    transition: background-color var(--nova-duration) ease;
+  }
+
+  .nova-switch__thumb {
+    display: block;
+    inline-size: 14px;
+    block-size: 14px;
+    border-radius: 50%;
+    background: var(--nova-color-text-muted);
+    transition: transform var(--nova-duration) ease;
+  }
+
+  .nova-switch[data-checked] .nova-switch__track {
+    border-color: var(--nova-color-action);
+    background: var(--nova-color-action);
+  }
+
+  .nova-switch[data-checked] .nova-switch__thumb {
+    background: var(--nova-color-on-action);
+    transform: translateX(16px);
+  }
+
+  .nova-theme[dir="rtl"] .nova-switch[data-checked] .nova-switch__thumb {
+    transform: translateX(-16px);
+  }
+
+  .nova-switch:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  .nova-switch[data-readonly] {
+    cursor: default;
+  }
+
+  .nova-switch[data-disabled] {
+    cursor: not-allowed;
+  }
+
+  .nova-switch[data-disabled] .nova-switch__track {
+    background: var(--nova-color-disabled-surface);
+  }
+
+  .nova-switch[aria-invalid="true"] .nova-switch__track {
+    border-color: var(--nova-color-error-text);
+  }
+
+  @media (pointer: coarse) {
+    .nova-switch {
+      min-inline-size: var(--nova-hit-target);
+      block-size: var(--nova-hit-target);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-switch__track {
+      border-color: ButtonText;
+    }
+
+    .nova-switch[data-checked] .nova-switch__track {
+      background: Highlight;
+    }
+
+    .nova-switch:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-switch__track,
+    .nova-switch__thumb {
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,101 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nova-space-1);
+    min-inline-size: 0;
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+    color: var(--nova-color-text);
+  }
+
+  .nova-field--inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--nova-space-2);
+  }
+
+  .nova-field--inline > .nova-field__description,
+  .nova-field--inline > .nova-field__error {
+    flex-basis: 100%;
+  }
+
+  .nova-label {
+    display: block;
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-label);
+    line-height: var(--nova-line-height-label);
+    font-weight: var(--nova-font-weight-strong);
+    color: var(--nova-color-text);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-field--inline > .nova-label {
+    font-weight: normal;
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-label__required {
+    color: var(--nova-color-error-text);
+    white-space: nowrap;
+  }
+
+  .nova-field__description,
+  .nova-field__error {
+    margin: 0;
+    font-size: var(--nova-font-size-label);
+    line-height: var(--nova-line-height-label);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-field__description {
+    color: var(--nova-color-text-muted);
+  }
+
+  .nova-field__error {
+    color: var(--nova-color-error-text);
+  }
+
+  .nova-form-errors {
+    padding: var(--nova-space-3) var(--nova-space-4);
+    border: var(--nova-border-width) solid var(--nova-color-error-text);
+    border-radius: var(--nova-radius-card);
+    background: var(--nova-color-error-surface);
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-form-errors__title {
+    margin: 0 0 var(--nova-space-2);
+    font-weight: var(--nova-font-weight-strong);
+    color: var(--nova-color-error-text);
+  }
+
+  .nova-form-errors__list {
+    margin: 0;
+    padding-inline-start: var(--nova-space-5);
+  }
+
+  .nova-form-errors__list a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .nova-form-errors__list a:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  @media (forced-colors: active) {
+    .nova-form-errors {
+      border-color: CanvasText;
+    }
+  }
+}

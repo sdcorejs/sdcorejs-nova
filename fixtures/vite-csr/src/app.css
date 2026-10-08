@@ -1,0 +1,8 @@
+/* Consumer CSS: the app paints its own surface with Nova tokens. A Nova scope
+   is display: contents and never paints a background (architecture §7, §8.3). */
+.fixture-surface {
+  min-block-size: 100vh;
+  padding: 16px;
+  background: var(--nova-color-background);
+  color: var(--nova-color-text);
+}

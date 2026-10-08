@@ -1,0 +1,79 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  /* Fixed box: a failed image keeps the same size as a loaded one (C03-AC01). */
+  .nova-avatar {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: 32px;
+    block-size: 32px;
+    overflow: hidden;
+    border: var(--nova-border-width) solid var(--nova-color-border);
+    border-radius: 50%;
+    background: var(--nova-color-surface);
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-label);
+    font-weight: var(--nova-font-weight-strong);
+    line-height: 1;
+    vertical-align: middle;
+    user-select: none;
+  }
+
+  .nova-avatar--sm {
+    inline-size: 24px;
+    block-size: 24px;
+    font-size: 10px;
+  }
+
+  .nova-avatar--lg {
+    inline-size: 44px;
+    block-size: 44px;
+    font-size: var(--nova-font-size-body);
+  }
+
+  .nova-avatar__image {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .nova-avatar__fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    block-size: 100%;
+    white-space: nowrap;
+  }
+
+  .nova-avatar__icon {
+    inline-size: 60%;
+    block-size: 60%;
+    color: var(--nova-color-text-muted);
+  }
+
+  .nova-avatar-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .nova-avatar-group > .nova-avatar + .nova-avatar {
+    margin-inline-start: calc(var(--nova-space-2) * -1);
+  }
+
+  .nova-avatar-group > .nova-avatar {
+    box-shadow: 0 0 0 2px var(--nova-color-background);
+  }
+
+  @media (forced-colors: active) {
+    .nova-avatar {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,112 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-checkbox-root {
+    display: inline-flex;
+    flex: none;
+  }
+
+  /* The interactive element's own box is the hit area (§8.4). */
+  .nova-checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: 20px;
+    block-size: 20px;
+    border-radius: var(--nova-radius-control);
+    cursor: pointer;
+  }
+
+  .nova-checkbox__box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: 16px;
+    block-size: 16px;
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: 4px;
+    background: var(--nova-color-background);
+    color: var(--nova-color-on-action);
+    transition: background-color var(--nova-duration) ease;
+  }
+
+  .nova-checkbox[data-checked] .nova-checkbox__box,
+  .nova-checkbox[data-indeterminate] .nova-checkbox__box {
+    border-color: var(--nova-color-action);
+    background: var(--nova-color-action);
+  }
+
+  .nova-checkbox__indicator {
+    display: inline-flex;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nova-checkbox__indicator > svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nova-checkbox__indicator[data-indeterminate] .nova-checkbox__check,
+  .nova-checkbox__indicator:not([data-indeterminate]) .nova-checkbox__dash {
+    display: none;
+  }
+
+  .nova-checkbox:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  .nova-checkbox[data-readonly] {
+    cursor: default;
+  }
+
+  .nova-checkbox[data-disabled] {
+    cursor: not-allowed;
+  }
+
+  .nova-checkbox[data-disabled] .nova-checkbox__box {
+    border-color: var(--nova-color-control-border);
+    background: var(--nova-color-disabled-surface);
+    color: var(--nova-color-disabled-text);
+  }
+
+  .nova-checkbox[aria-invalid="true"] .nova-checkbox__box {
+    border-color: var(--nova-color-error-text);
+  }
+
+  @media (pointer: coarse) {
+    .nova-checkbox {
+      inline-size: var(--nova-hit-target);
+      block-size: var(--nova-hit-target);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-checkbox__box {
+      border-color: ButtonText;
+    }
+
+    .nova-checkbox[data-checked] .nova-checkbox__box,
+    .nova-checkbox[data-indeterminate] .nova-checkbox__box {
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    .nova-checkbox:focus-visible {
+      outline-color: Highlight;
+    }
+
+    .nova-checkbox[data-disabled] .nova-checkbox__box {
+      border-color: GrayText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-checkbox__box {
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,150 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-data-state {
+    min-inline-size: 0;
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-data-state--loading,
+  .nova-data-state--error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nova-space-3);
+    padding: var(--nova-space-5) var(--nova-space-4);
+    text-align: center;
+  }
+
+  .nova-data-state__message {
+    margin: 0;
+    color: var(--nova-color-text);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-spinner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nova-space-2);
+    color: var(--nova-color-text-muted);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-spinner__icon {
+    flex: none;
+    inline-size: 1.25em;
+    block-size: 1.25em;
+    animation: nova-spinner-spin 0.8s linear infinite;
+  }
+
+  .nova-spinner--sm {
+    font-size: var(--nova-font-size-label);
+  }
+
+  .nova-spinner--lg .nova-spinner__icon {
+    inline-size: 2em;
+    block-size: 2em;
+  }
+
+  .nova-progress {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--nova-space-1) var(--nova-space-2);
+    min-inline-size: 0;
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-label);
+    line-height: var(--nova-line-height-label);
+  }
+
+  .nova-progress__label {
+    overflow-wrap: anywhere;
+  }
+
+  .nova-progress__value {
+    color: var(--nova-color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nova-progress__bar {
+    grid-column: 1 / -1;
+    appearance: none;
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 8px;
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: 999px;
+    background: var(--nova-color-surface);
+    color: var(--nova-color-action);
+    overflow: hidden;
+  }
+
+  .nova-progress__bar::-webkit-progress-bar {
+    background: var(--nova-color-surface);
+  }
+
+  .nova-progress__bar::-webkit-progress-value {
+    background: var(--nova-color-action);
+  }
+
+  .nova-progress__bar::-moz-progress-bar {
+    background: var(--nova-color-action);
+  }
+
+  .nova-progress__bar:indeterminate {
+    background: linear-gradient(90deg, var(--nova-color-surface) 0%, var(--nova-color-action) 50%, var(--nova-color-surface) 100%);
+    background-size: 200% 100%;
+    animation: nova-progress-slide 1.2s linear infinite;
+  }
+
+  /* The opaque WebKit track pseudo-element would cover the gradient (R26). */
+  .nova-progress__bar:indeterminate::-webkit-progress-bar {
+    background: transparent;
+  }
+
+  .nova-progress__bar:indeterminate::-moz-progress-bar {
+    background: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-spinner__icon,
+    .nova-progress__bar:indeterminate {
+      animation: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-progress__bar {
+      border-color: CanvasText;
+    }
+
+    .nova-progress__bar::-webkit-progress-value {
+      background: Highlight;
+    }
+
+    .nova-progress__bar::-moz-progress-bar {
+      background: Highlight;
+    }
+  }
+
+  @keyframes nova-spinner-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes nova-progress-slide {
+    from {
+      background-position: 100% 0;
+    }
+
+    to {
+      background-position: -100% 0;
+    }
+  }
+}

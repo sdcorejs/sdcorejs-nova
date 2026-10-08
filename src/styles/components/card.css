@@ -1,0 +1,97 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-card {
+    box-sizing: border-box;
+    min-inline-size: 0;
+    padding: var(--nova-space-4);
+    border: var(--nova-border-width) solid var(--nova-color-border);
+    border-radius: var(--nova-radius-card);
+    background: var(--nova-color-background);
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-card-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: var(--nova-space-4);
+    min-inline-size: 0;
+  }
+
+  .nova-card-group--gap-sm {
+    gap: var(--nova-space-2);
+  }
+
+  .nova-card-group--gap-lg {
+    gap: var(--nova-space-5);
+  }
+
+  .nova-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nova-space-3);
+    min-inline-size: 0;
+    color: var(--nova-color-text);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  /* Actions wrap below the title when the row is too narrow (C05-AC02). */
+  .nova-section__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--nova-space-3);
+  }
+
+  .nova-section__heading {
+    flex: 1 1 16rem;
+    min-inline-size: 0;
+  }
+
+  .nova-section__title {
+    margin: 0;
+    font-size: var(--nova-font-size-title);
+    line-height: var(--nova-line-height-title);
+    font-weight: var(--nova-font-weight-strong);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-section__description {
+    margin: var(--nova-space-1) 0 0;
+    color: var(--nova-color-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-section__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nova-space-2);
+    max-inline-size: 100%;
+  }
+
+  .nova-section__body,
+  .nova-section-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nova-space-2);
+    min-inline-size: 0;
+  }
+
+  .nova-section-item {
+    flex-flow: row wrap;
+    align-items: flex-start;
+  }
+
+  @media (forced-colors: active) {
+    .nova-card {
+      border-color: CanvasText;
+    }
+  }
+}

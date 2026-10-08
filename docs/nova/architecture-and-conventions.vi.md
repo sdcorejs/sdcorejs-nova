@@ -1,22 +1,20 @@
 # SD Nova — hợp đồng chung (draft r1)
 
-Ngày đối chiếu: 07/10/2026. Chủ sở hữu đề xuất: repo sdcorejs-nova do người dùng tạo. Đây là spec review trong workspace riêng, không phải snapshot đã duyệt, implementation, hoặc chứng cứ đã publish. Mọi tên export Nova bên dưới là **proposed**.
+Ngày đối chiếu: 07/10/2026. Đây là tài liệu thiết kế capability và conventions. API ngoài P0 vẫn là đề xuất; xem [tích hợp P0](p0-integration.vi.md) và [kiến trúc P0](p0-architecture.vi.md) cho phần nền tảng.
 
 ## Phạm vi và quyết định
 
 R-001: thư viện React Core UI độc lập cho trang end user, thương hiệu SD Nova, package @sdcorejs/nova. Không thay thế Angular Material Core. R-002: kiểm kê và định đoạt mọi export Angular phát hiện được. R-003: API React typed, accessibility, mobile, SSR và test có thể kiểm chứng. R-004: phần UI không chứa auth, tenant, REST conventions hoặc nghiệp vụ cụ thể.
 
-D-001 (user-selected): React. D-002 (user-accepted): shadcn/ui làm nguồn code/thiết kế primitive, Base UI làm nền interaction mặc định. D-003 (user-accepted): thẩm mỹ neutral tinh tế tham khảo OpenAI Platform; không kết luận Platform dùng shadcn. D-004 (recommended): một package với subpath exports; adapters nặng optional và lazy. D-005 (recommended): hỗ trợ React 19.x trước; chỉ thêm React 18.3 sau smoke riêng, không khai peer >=18 vô hạn. D-006 (recommended): bảng dữ liệu dùng TanStack Table bên trong subpath table, không public toàn bộ engine. D-007 (recommended): CSS biên dịch sẵn và semantic CSS variables, app không cần Tailwind. D-008: Apps SDK UI, Ant Design và Angular không là dependency Nova.
+D-001 (selected): React. D-002 (selected): shadcn/ui làm nguồn code/thiết kế primitive, Base UI làm nền interaction mặc định. D-003 (selected): thẩm mỹ neutral tinh tế tham khảo OpenAI Platform; không kết luận Platform dùng shadcn. D-004 (recommended): một package với subpath exports; adapters nặng optional và lazy. D-005 (recommended): hỗ trợ React 19.x trước; chỉ thêm React 18.3 sau smoke riêng, không khai peer >=18 vô hạn. D-006 (recommended): bảng dữ liệu dùng TanStack Table bên trong subpath table, không public toàn bộ engine. D-007 (recommended): CSS biên dịch sẵn và semantic CSS variables, app không cần Tailwind. D-008: Apps SDK UI, Ant Design và Angular không là dependency Nova.
 
-Các defaults D-004…D-007 là proposal có thể sửa ở review. Không có quyền tự tạo repo, viết implementation, commit, push hoặc publish. Kiến trúc public API/state ownership/dependency direction cần gate sau khi spec được duyệt; tài liệu này chỉ đóng băng candidate để review, không tạo approved architecture bằng giả định.
 
 ## Chứng cứ nguồn
 
-Canonical được đọc: sdcorejs-angular/versions/v19/projects/sdcorejs-angular; HEAD 4db0ac9a7ce3cc57a2d26c43ee375391db93198f; git describe v2.13-2-g4db0ac9a, checkout không có status changes được Git báo cáo. AGENTS xác nhận v19 source of truth, v20/v21/v22 là derived. So sánh theo file với tag v2.13 có trong checkout: tag-source-identical chỉ chứng minh source có ở tag; không chứng minh version npm đã phát hành. Hai commit sau tag là checkout-only delta, không được mô tả released. Không dùng tag v2.14/v2.15 ở ref khác làm baseline cho HEAD này.
+Source đối chiếu: sdcorejs-angular/versions/v19/projects/sdcorejs-angular; HEAD 4db0ac9a7ce3cc57a2d26c43ee375391db93198f; git describe v2.13-2-g4db0ac9a, v19 là source đối chiếu, v20/v21/v22 là các line dẫn xuất. So sánh theo file với tag v2.13 có trong checkout: tag-source-identical chỉ chứng minh source có ở tag; không chứng minh version npm đã phát hành. Hai commit sau tag là checkout-only delta, không được mô tả released. Không dùng tag v2.14/v2.15 ở ref khác làm baseline cho HEAD này.
 
 Parser TypeScript đi từ src/public-api.ts và secondary testing/index.ts, theo export *, named/type export và alias package; không quét mọi class nội bộ làm API. inventory.json lưu graph và locator line; inventory.csv định đoạt từng symbol. Đây là static export inventory, không chạy Angular build để chứng minh resolution hay consumer runtime. Angular tests/docs đọc để định hướng, chưa re-run vì không sửa Angular. Mature ở đây nghĩa capability có source ổn định tại baseline, không nghĩa đã audit chất lượng.
 
-Không phát hiện sdcorejs-nova trong Documents/sdcorejs và workspace nhiệm vụ đã kiểm tra. Có sdcorejs-react (package @sdcorejs/react 0.0.1, Ant Design); đây là repo khác, không migrate/gộp tự động. FileExplorer base có ở snapshot mới c421f687 và release-associated tag/archive v2.15; không ở older working HEAD4db0ac9. Selector/custom columns/consumer actions và typed raw adaptation không bị nhập như released enhancements từ nhiệm vụ khác. Chart đã bị loại trong changelog 2.9, không bịa entry hiện có.
 
 Nguồn upstream được mở ngày 07/10/2026:
 - [shadcn introduction](https://ui.shadcn.com/docs): code distribution để sở hữu và sửa source.
@@ -101,7 +99,7 @@ Release semver thực: 0.x preview có changelog/migration, 1.0 chỉ sau stable
 
 P0: tokens, provider/i18n, primitives, Field/value conventions, exports/CSS/SSR smoke. P1: overlay/feedback, form controls/date/selection, layout, read-only display, runtime cleanup hooks. P2: table/filter/entity/tree/task/file transfer/import/preview theo consumer usecases; không chặn P0 vì muốn parity toàn Angular. P3: optional editors/org-chart/audit/history/form renderer chỉ khi có nhu cầu end user rõ; business builders/auth infrastructure excluded. FileExplorer base P2 có provenance reference snapshot; adaptation mới vẫn cần review usecase.
 
-Recommended review defaults: React 19 only ban đầu; tokens CSS compiled; uncontrolled primitives có controlled mode; forms adapter optional RHF; date-only ISO string, datetime instant ISO + explicit zone; engine-heavy adapters optional. Cần owner xác nhận ở một vòng review: React 18 compatibility có cần ngay không; FileExplorer/import/editor có ưu tiên thực sự cho app đầu tiên không; API/core export naming giữ tên Nova ở provider nhưng component đơn giản Button/Field trong package namespace. Không cần trả lời hàng chục câu để đọc spec. Không có blocker cho authoring spec; chưa có repo Nova là blocker cho approved snapshot/implementation gate, không cho bundle review được ủy quyền.
+Recommended review defaults: React 19 only ban đầu; tokens CSS compiled; uncontrolled primitives có controlled mode; forms adapter optional RHF; date-only ISO string, datetime instant ISO + explicit zone; engine-heavy adapters optional. Cần owner xác nhận ở một vòng review: React 18 compatibility có cần ngay không; FileExplorer/import/editor có ưu tiên thực sự cho app đầu tiên không; API/core export naming giữ tên Nova ở provider nhưng component đơn giản Button/Field trong package namespace. Các lựa chọn ngoài P0 cần xác định khi triển khai capability tương ứng.
 
 ### Defaults state và orphaned exports
 
@@ -109,7 +107,7 @@ Uncontrolled default khi không có defaultValue: text/InlineText empty string, 
 
 ### Hai snapshot và secondary exports — correction provenance
 
-Selected working checkout HEAD4db0ac9 là snapshot cũ, không đại diện toàn bộ main mới. Reference commit c421f687bfba80a5dc9ec1b472d0c2c08f7b09f7 ngày 2026-10-05T12:27:40+07:00 (Merge Kanban and Segmented control into main), git describe v2.15+20 commits. Đã đọc source snapshot qua Git objects vào private task workspace, không checkout/reset canonical. Cả root barrel và mọi ng-package secondary entrypoint ở v19 được inventory, kể cả utilities/theme thiếu khỏi graph root cũ. Đối chiếu root/components/forms/services barrels và ng-package entrypoints của bốn Angular lines được lưu ở 04-source-provenance.json. Source package manifest khai version 19.2.15 không là chứng cứ tất cả c421 features đã publish. FileExplorer có release tag v2.15 commit564e63aae217ba2664f36e07fea2c74f0a338054 ngày 2026-09-25 và archived docs cho 19/20/21/22.2.15, .3.0. Official GitHub main index hiện export FileExplorer. GitHub Releases page không có entries; npm page trả403 và public registry socket bị môi trường chặn, nên npm tarball/version existence chưa independently verified. Theo user history base đã released; source/archive corroboration giữ riêng với npm verification. Kanban/Segmented/ImageEditor/Highlight mới trong c421 phải đọc reference_status trong CSV để phân biệt có trong v2.15 hay source sau tag; không suy release từ merge commit.
+Selected working checkout HEAD4db0ac9 là snapshot cũ, không đại diện toàn bộ main mới. Reference commit c421f687bfba80a5dc9ec1b472d0c2c08f7b09f7 ngày 2026-10-05T12:27:40+07:00 (Merge Kanban and Segmented control into main), git describe v2.15+20 commits. Đối chiếu source ở exact reference commit. Cả root barrel và mọi ng-package secondary entrypoint ở v19 được inventory, kể cả utilities/theme thiếu khỏi graph root cũ. Đối chiếu root/components/forms/services barrels và ng-package entrypoints của bốn Angular lines được lưu ở 04-source-provenance.json. Source package manifest khai version 19.2.15 không là chứng cứ tất cả c421 features đã publish. FileExplorer có release tag v2.15 commit564e63aae217ba2664f36e07fea2c74f0a338054 ngày 2026-09-25 và archived docs cho 19/20/21/22.2.15, .3.0. Official GitHub main index hiện export FileExplorer. Source/tag/archive là provenance riêng; npm tarball chưa được xác minh độc lập bằng các đối chiếu source này. Kanban/Segmented/ImageEditor/Highlight mới trong c421 phải đọc reference_status trong CSV để phân biệt có trong v2.15 hay source sau tag; không suy release từ merge commit.
 
 ### Accessible name và native props — amendment sau review
 
@@ -119,7 +117,6 @@ Mọi standalone control bắt buộc AccessibleName, aria-label/aria-labelledby
 
 - Working HEAD: 371 file wildcard graph, 866 symbols. Reference c421: 383 files, 936 symbols. Union inventory: 1000 unique symbol+source, 94 buckets, AST+all ng-package secondary. Relative missing: 0.
 - Baseline status của union: tag-v2.15-source-identical=721; snapshot-modified-after-v2.15=113; snapshot-only-vs-v2.15=102; tag-v2.13-source-identical=64. File-level diff đánh dấu mọi symbols trong changed file conservatively, không suy symbol mới hoặc feature released. head_status/reference_status cột riêng truy vết hai source snapshots; working HEAD có SCSS/docs thay sau v2.13 dù exported declaration files có thể identical.
-- Git status readonly không changes report; remote main FileExplorer index verified, npm metadata/tarball blocked. Không persist secret/credentials/private logs; repo absence chỉ inspected roots.
 - Nova tests/framework smoke/visual/a11y chưa chạy, đây là authored requirements. Inventory structural verification chạy thật theo report.
 
 ## Chỉ mục capability Angular → Nova
@@ -286,8 +283,3 @@ Nova adaptations được proposal riêng trên existing capabilities; Calendar 
 - F16 — SegmentedControl; P1; nguồn forms/segmented@c421f687.
 - X06 — ImageEditor; P3; nguồn components/image-editor@c421f687.
 - C18 — Highlight / findHighlightRanges; P1; nguồn components/highlight,utilities/extensions@c421f687.
-
-
-## Chuyển bộ draft vào repo Nova
-
-Bộ draft được tác giả tạo trước khi repo Nova tồn tại ở inspected roots. Ngày 07/10/2026, theo yêu cầu người dùng, repo sdcorejs/sdcorejs-nova đã được clone và bộ tài liệu đặt tại docs/nova. Nhận xét repo chưa tồn tại phía trên là provenance của thời điểm authoring, không phải trạng thái checkout hiện tại. Đây vẫn là design-only draft: chưa approved snapshot, implementation, commit hoặc push.

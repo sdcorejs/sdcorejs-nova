@@ -1,0 +1,182 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nova-space-2);
+    box-sizing: border-box;
+    min-block-size: var(--nova-control-md);
+    max-inline-size: 100%;
+    margin: 0;
+    padding: var(--nova-space-1) var(--nova-space-3);
+    border: var(--nova-border-width) solid transparent;
+    border-radius: var(--nova-radius-control);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+    font-weight: var(--nova-font-weight-strong);
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
+  }
+
+  .nova-button--sm {
+    min-block-size: var(--nova-control-sm);
+    padding: 0 var(--nova-space-2);
+  }
+
+  .nova-button--lg {
+    min-block-size: var(--nova-control-lg);
+    padding: var(--nova-space-2) var(--nova-space-4);
+  }
+
+  .nova-button--primary {
+    background: var(--nova-color-action);
+    color: var(--nova-color-on-action);
+  }
+
+  .nova-button--primary:hover:not(:disabled, [aria-disabled="true"]) {
+    background: var(--nova-color-action-hover);
+  }
+
+  .nova-button--secondary {
+    background: var(--nova-color-background);
+    color: var(--nova-color-text);
+    border-color: var(--nova-color-control-border);
+  }
+
+  .nova-button--ghost {
+    background: transparent;
+    color: var(--nova-color-text);
+  }
+
+  .nova-button--secondary:hover:not(:disabled, [aria-disabled="true"]),
+  .nova-button--ghost:hover:not(:disabled, [aria-disabled="true"]) {
+    background: var(--nova-color-surface-hover);
+  }
+
+  .nova-button--danger {
+    background: var(--nova-color-danger);
+    color: var(--nova-color-on-danger);
+  }
+
+  .nova-button:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  .nova-button:disabled {
+    background: var(--nova-color-disabled-surface);
+    color: var(--nova-color-disabled-text);
+    border-color: var(--nova-color-control-border);
+    cursor: not-allowed;
+  }
+
+  .nova-button--loading {
+    cursor: progress;
+  }
+
+  .nova-button__label {
+    min-inline-size: 0;
+  }
+
+  /* Loading indicator: absolutely positioned inside the button, so the width
+     and the visible label never change (C01: loading keeps width and name). */
+  .nova-button--loading::after {
+    content: "";
+    position: absolute;
+    inset-inline: 25%;
+    inset-block-end: 3px;
+    block-size: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    animation: nova-button-busy 0.8s ease-in-out infinite alternate;
+  }
+
+  .nova-icon-button {
+    padding: 0;
+    aspect-ratio: 1;
+    min-inline-size: var(--nova-control-md);
+  }
+
+  .nova-icon-button.nova-button--sm {
+    min-inline-size: var(--nova-control-sm);
+  }
+
+  .nova-icon-button.nova-button--lg {
+    min-inline-size: var(--nova-control-lg);
+  }
+
+  .nova-icon-button__icon {
+    display: inline-flex;
+    inline-size: 1.25em;
+    block-size: 1.25em;
+  }
+
+  .nova-icon-button__icon > svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nova-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nova-space-2);
+    min-inline-size: 0;
+  }
+
+  .nova-button-group--vertical {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Touch: the element's own box reaches 44×44 (no transparent pseudo hit area). */
+  @media (pointer: coarse) {
+    .nova-button,
+    .nova-button--sm,
+    .nova-icon-button.nova-button--sm {
+      min-block-size: var(--nova-hit-target);
+      min-inline-size: var(--nova-hit-target);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-button {
+      border-color: ButtonText;
+    }
+
+    .nova-button:focus-visible {
+      outline-color: Highlight;
+    }
+
+    .nova-button:disabled {
+      color: GrayText;
+      border-color: GrayText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-button {
+      transition: none;
+    }
+
+    .nova-button--loading::after {
+      animation: none;
+    }
+  }
+
+  @keyframes nova-button-busy {
+    from {
+      opacity: 0.35;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}

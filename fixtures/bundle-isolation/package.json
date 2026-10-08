@@ -1,0 +1,17 @@
+{
+  "name": "nova-fixture-bundle-isolation",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Imports only @sdcorejs/nova/button from the packed tarball; scripts/check-bundle.mjs inspects the production build.",
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.3"
+  }
+}

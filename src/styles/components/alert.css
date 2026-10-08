@@ -1,0 +1,96 @@
+@layer nova.tokens, nova.base, nova.components;
+
+@layer nova.components {
+  .nova-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--nova-space-3);
+    box-sizing: border-box;
+    min-inline-size: 0;
+    padding: var(--nova-space-3) var(--nova-space-4);
+    border: var(--nova-border-width) solid currentColor;
+    border-radius: var(--nova-radius-card);
+    font-family: var(--nova-font-family);
+    font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
+  }
+
+  .nova-alert__icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: 1.25em;
+    block-size: var(--nova-line-height-body);
+    align-items: center;
+  }
+
+  .nova-alert__icon > svg {
+    inline-size: 100%;
+    block-size: 1.25em;
+  }
+
+  .nova-alert__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--nova-space-1);
+    min-inline-size: 0;
+    color: var(--nova-color-text);
+    overflow-wrap: anywhere;
+  }
+
+  .nova-alert__title {
+    margin: 0;
+    font-weight: var(--nova-font-weight-strong);
+  }
+
+  .nova-alert__body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .nova-alert__body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .nova-alert__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nova-space-2);
+  }
+
+  .nova-alert__dismiss {
+    flex: none;
+    margin-block: calc(var(--nova-space-1) * -1);
+    margin-inline-end: calc(var(--nova-space-2) * -1);
+  }
+
+  .nova-alert--tip {
+    background: var(--nova-color-tip-surface);
+    color: var(--nova-color-tip-text);
+  }
+
+  .nova-alert--info {
+    background: var(--nova-color-info-surface);
+    color: var(--nova-color-info-text);
+  }
+
+  .nova-alert--success {
+    background: var(--nova-color-success-surface);
+    color: var(--nova-color-success-text);
+  }
+
+  .nova-alert--warning {
+    background: var(--nova-color-warning-surface);
+    color: var(--nova-color-warning-text);
+  }
+
+  .nova-alert--error {
+    background: var(--nova-color-error-surface);
+    color: var(--nova-color-error-text);
+  }
+
+  @media (forced-colors: active) {
+    .nova-alert {
+      border-color: CanvasText;
+    }
+  }
+}
