@@ -1,0 +1,2 @@
+import {Stepper} from '../../../src/components/stepper/index.js';import {NovaProvider} from '../../../src/providers/nova/index.js';
+export default function Steps(){return <NovaProvider locale="en"><Stepper label="Progress" interactive defaultValue="one" steps={[{id:'one',label:'First',status:'complete'},{id:'two',label:'Second',status:'pending'},{id:'off',label:'Blocked',disabled:true}]}/></NovaProvider>;}

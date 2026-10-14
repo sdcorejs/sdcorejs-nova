@@ -1,3 +1,4 @@
+import {AxeBuilder} from '@axe-core/playwright';
 import {test,expect} from '@playwright/test';
 test('production routes, skip focus and history preserve hash and loaded assets',async({page,browserName})=>{
  const failed:string[]=[];page.on('requestfailed',r=>failed.push(r.url()));page.on('pageerror',e=>failed.push(e.message));page.on('response',r=>{if(r.status()>=400)failed.push(r.url());});
@@ -29,13 +30,13 @@ test('compact navigation keeps restrained selected, hover and focus states in bo
    });
    if(width>=900){expect(metrics.height).toBeGreaterThanOrEqual(36);expect(metrics.height).toBeLessThanOrEqual(40);}else expect(metrics.height).toBeGreaterThanOrEqual(44);
    expect(metrics.padding).toBe('8px');expect(metrics.shadow).toBe('none');expect(metrics.weight).toBe('400');expect(metrics.background).not.toBe(metrics.surface);expect(metrics.backgroundRgb[3]).toBe(255);expect(Math.max(...metrics.backgroundRgb.slice(0,3))-Math.min(...metrics.backgroundRgb.slice(0,3))).toBeLessThanOrEqual(8);expect(metrics.contrast).toBeGreaterThanOrEqual(4.5);expect(metrics.icon).toBe(metrics.color);await expect(host.locator('.showcase-nav-dot')).toHaveCount(0);
-   const rows=await host.locator('.showcase-nav-unavailable').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().height));for(const height of rows)expect(height).toBeGreaterThanOrEqual(width<900?44:36);
+   const rows=await host.locator('.showcase-navigation a').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().height));for(const height of rows)expect(height).toBeGreaterThanOrEqual(width<900?44:36);
    await link.hover();expect(await link.evaluate(el=>getComputedStyle(el).backgroundColor)).not.toBe(metrics.background);
    await page.mouse.move(0,0);await page.keyboard.press('Tab');await link.focus();await expect(link).toBeFocused();const focus=await link.evaluate(el=>({visible:el.matches(':focus-visible'),width:parseFloat(getComputedStyle(el).outlineWidth),style:getComputedStyle(el).outlineStyle}));expect(focus.visible).toBe(true);expect(focus.width).toBeGreaterThanOrEqual(2);expect(focus.style).toBe('solid');
    if(width<900){await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Mở menu'})).toBeFocused();}
   }
  }
- await page.setViewportSize({width:1440,height:900});await page.goto('./#/missing');const unselected=page.locator('.showcase-sidebar .showcase-nav-active');await expect(unselected).not.toHaveAttribute('aria-current');expect(await unselected.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+ await page.setViewportSize({width:1440,height:900});await page.goto('./#/missing');const unselected=page.locator('.showcase-sidebar a[href="#/forms"]');await expect(unselected).not.toHaveAttribute('aria-current');expect(await unselected.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
 });
 test('backdrop closes and desktop resize restores visible fallback focus',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('./#/forms');const opener=page.getByRole('button',{name:'Mở menu'});await opener.click();const dialog=page.getByRole('dialog',{name:'Khám phá Nova'});await page.mouse.click(375,400);await expect(dialog).not.toBeVisible();await expect(opener).toBeFocused();expect(await page.evaluate(()=>document.body.style.overflow)).toBe('');
@@ -46,13 +47,37 @@ test('form Save and Reset are local demo interactions',async({page})=>{
  await page.getByRole('textbox',{name:'Tên hiển thị'}).fill('Minh Nova');await page.getByRole('button',{name:'Lưu bản mẫu',exact:true}).click();await expect(page.getByText('Đã giữ thay đổi trong bản mẫu')).toBeVisible();await expect(page.getByText('Chưa lưu vào tài khoản.',{exact:false})).toBeVisible();
  await page.getByRole('button',{name:'Đặt lại',exact:true}).click();await expect(page.getByRole('textbox',{name:'Tên hiển thị'})).toHaveValue('Nguyễn An');expect(dataRequests).toEqual([]);
 });
-test('mobile dialog initial focus, wrapping, inert background and Escape restore state',async({page})=>{
- await page.setViewportSize({width:390,height:844});await page.goto('./#/forms');const opener=page.getByRole('button',{name:'Mở menu'});await opener.click();const dialog=page.getByRole('dialog',{name:'Khám phá Nova'});await expect(dialog).toBeVisible();const close=dialog.getByRole('button',{name:'Đóng menu'});await expect(close).toBeFocused();
- await page.keyboard.press('Shift+Tab');await expect(dialog.getByRole('link',{name:'Biểu mẫu'})).toBeFocused();await page.keyboard.press('Tab');await expect(close).toBeFocused();expect(await page.evaluate(()=>document.body.style.overflow)).toBe('hidden');
- await page.evaluate(()=>document.querySelector<HTMLInputElement>('input')?.focus());await expect(page.getByRole('textbox',{name:'Tên hiển thị'})).not.toBeFocused();await close.focus();await page.keyboard.press('Escape');await expect(dialog).not.toBeVisible();await expect(opener).toBeFocused();expect(await page.evaluate(()=>document.body.style.overflow)).toBe('');
+test('mobile dialog initial focus, wrapping, background focus exclusion and Escape restore state',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto('./#/forms');const opener=page.getByRole('button',{name:'Mở menu'});await opener.click();const dialog=page.getByRole('dialog',{name:'Khám phá Nova'});await expect(dialog).toBeVisible();const close=dialog.getByRole('button',{name:'Đóng',exact:true});await expect(dialog.getByRole('link',{name:'Biểu mẫu',exact:true})).toBeFocused();
+ await page.keyboard.press('Shift+Tab');await expect(close).toBeFocused();await page.keyboard.press('Shift+Tab');await expect(dialog.getByRole('link',{name:'Tiện ích',exact:true})).toBeFocused();await page.keyboard.press('Tab');await expect(close).toBeFocused();expect(await page.evaluate(()=>document.body.style.overflow)).toBe('hidden');
+ await page.evaluate(()=>document.querySelector<HTMLInputElement>('input')?.focus());await expect(page.locator('main input[name="displayName"]')).not.toBeFocused();await expect.poll(()=>dialog.evaluate(node=>node.contains(document.activeElement))).toBe(true);await close.focus();await page.keyboard.press('Escape');await expect(dialog).not.toBeVisible();await expect(opener).toBeFocused();expect(await page.evaluate(()=>document.body.style.overflow)).toBe('');
  await opener.click();await dialog.getByRole('link',{name:'Biểu mẫu'}).click();await expect(dialog).not.toBeVisible();await expect(opener).toBeFocused();await expect(page).toHaveURL(/#\/forms$/);
 });
 test('responsive geometry, dark theme, mobile hit targets and single-line breadcrumb',async({page})=>{
  for(const width of [360,390,1440]){await page.setViewportSize({width,height:900});await page.goto('./#/forms');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);const breadcrumb=page.locator('.showcase-breadcrumb');const box=await breadcrumb.boundingBox();expect(box?.height).toBeLessThan(35);if(width<900){const b=await page.getByRole('button',{name:'Mở menu'}).boundingBox();expect(b?.height).toBeGreaterThanOrEqual(44);await page.getByRole('button',{name:'Mở menu'}).click();const link=await page.getByRole('dialog').getByRole('link',{name:'Biểu mẫu'}).boundingBox();expect(link?.height).toBeGreaterThanOrEqual(44);await page.keyboard.press('Escape');}}
  await page.getByRole('button',{name:'Giao diện tối'}).click();await expect(page.getByRole('button',{name:'Giao diện sáng'})).toBeVisible();expect(await page.locator('.showcase').evaluate(el=>getComputedStyle(el).backgroundColor)).not.toBe('rgb(255, 255, 255)');
+});
+
+test('P1 pages render in Vietnamese and English on desktop/mobile without overflow',async({page})=>{
+ test.setTimeout(60000);const english:Record<string,string>={actions:'Actions in context.',navigation:'Find your way.',overlays:'Room to focus.',dates:'Dates and times, clearly.',feedback:'Feedback that helps.',utilities:'Useful everyday details.'};
+ const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
+ for(const width of [1440,320])for(const route of ['actions','navigation','overlays','dates','feedback','utilities']){
+  await page.setViewportSize({width,height:900});await page.goto(`./#/${route}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  const vietnamese=page.getByRole('button',{name:'Tiếng Việt',exact:true});if(await vietnamese.isVisible())await vietnamese.click();await page.getByRole('button',{name:'English',exact:true}).click();await expect(page.getByRole('heading',{level:1})).toHaveText(english[route]!);await expect(page.getByRole('button',{name:'Tiếng Việt',exact:true})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ }
+ expect(errors).toEqual([]);
+});
+test('P1 showcase save announcement and keyboard dismiss retain useful focus',async({page})=>{await page.goto('./#/forms');const save=page.getByRole('button',{name:'Lưu bản mẫu',exact:true});await save.click();await expect(page.getByRole('status').filter({hasText:'Đã giữ thay đổi trong bản mẫu'})).toHaveAttribute('aria-live','polite');const dismiss=page.getByRole('button',{name:'Đóng thông báo',exact:true});await dismiss.focus();await dismiss.press('Enter');await expect(save).toBeFocused();});
+test('P1 routes and modal keyboard interactions work from the public shell',async({page})=>{await page.goto('./#/overlays');const opener=page.getByRole('button',{name:'Mở hộp thoại',exact:true});await opener.focus();await opener.press('Enter');await expect(page.getByRole('dialog',{name:'Chỉnh sửa hồ sơ'})).toBeVisible();await page.keyboard.press('Escape');await expect(opener).toBeFocused();await page.getByRole('link',{name:'Ngày và giờ',exact:true}).click();await expect(page.getByRole('heading',{level:1})).toHaveText('Đúng ngày, đúng thời điểm.');await page.reload();await expect(page.getByRole('grid')).toBeVisible();});
+test('P1 light/dark, mobile and 200% layout produce review screenshots',async({page},info)=>{for(const theme of ['light','dark'])for(const width of [1440,320]){await page.setViewportSize({width,height:900});await page.goto(`./?theme=${theme}#/dates`);await expect(page.getByRole('grid')).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath(`p1-dates-${theme}-${width}.png`),fullPage:true});}await page.setViewportSize({width:1440,height:900});await page.goto('./#/forms');await page.locator('html').evaluate(node=>{node.style.zoom='2';});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath('p1-forms-zoom-200.png'),fullPage:true});});
+
+test('P1 pages retain automated accessibility in light/dark and forced colors',async({page})=>{
+ test.setTimeout(120000);
+ for(const theme of ['light','dark'])for(const route of ['forms','actions','navigation','overlays','dates','feedback','utilities']){
+  await page.goto('./?theme='+theme+'#/'+route);await expect(page.getByRole('heading',{level:1})).toBeVisible();
+  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
+  expect(result.violations,theme+'/'+route).toEqual([]);
+ }
+ await page.emulateMedia({forcedColors:'active',reducedMotion:'reduce'});await page.setViewportSize({width:320,height:900});await page.goto('./#/dates');
+ await page.getByRole('button',{name:'Mở menu'}).click();const dialog=page.getByRole('dialog',{name:'Khám phá Nova'});await expect(dialog).toBeVisible();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Mở menu'})).toBeFocused();
 });

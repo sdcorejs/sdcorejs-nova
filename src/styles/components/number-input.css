@@ -1,0 +1,9 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-number-input { display: flex; align-items: center; gap: var(--nova-space-1); min-inline-size: 0; }
+ .nova-number-input__input { flex: 1 1 auto; min-inline-size: 0; }
+ .nova-number-input__step { flex: none; display: inline-flex; align-items: center; justify-content: center; min-inline-size: var(--nova-hit-target); min-block-size: var(--nova-hit-target); padding: var(--nova-space-1); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); }
+ .nova-number-input__step:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+ .nova-number-input__step:disabled { background: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); cursor: not-allowed; }
+ @media (forced-colors: active) { .nova-number-input__step { border-color: ButtonText; } .nova-number-input__step:focus-visible { outline-color: Highlight; } }
+}

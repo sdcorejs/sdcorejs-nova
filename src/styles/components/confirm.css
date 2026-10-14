@@ -1,0 +1,12 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-confirm__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--nova-space-2); margin-block-start: var(--nova-space-3); }
+ .nova-confirm__button { box-sizing: border-box; min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); max-inline-size: 100%; padding: var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; overflow-wrap: anywhere; cursor: pointer; }
+ .nova-confirm__button:hover { background: var(--nova-color-surface-hover); }
+ .nova-confirm__button[data-variant="primary"] { background: var(--nova-color-action); color: var(--nova-color-on-action); }
+ .nova-confirm__button[data-variant="primary"]:hover { background: var(--nova-color-action-hover); }
+ .nova-confirm__button[data-variant="danger"] { background: var(--nova-color-danger); color: var(--nova-color-on-danger); }
+ .nova-confirm__button:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+ @media (max-width: 640px) { .nova-confirm__button { flex: 1 1 auto; } }
+ @media (forced-colors: active) { .nova-confirm__button { border-color: ButtonText; background: ButtonFace; color: ButtonText; } .nova-confirm__button:focus-visible { outline-color: Highlight; } }
+}

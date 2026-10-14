@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('C15 renders zero and false as semantic values and never unsafe navigation',async({page})=>{await page.goto('/?scenario=p1-read-only-value');await expect(page.getByText('0',{exact:true})).toBeVisible();await expect(page.getByText('false',{exact:true})).toBeVisible();await expect(page.getByRole('link')).toHaveCount(0);await expect(page.locator('dl dt').first()).toHaveText('Zero');});

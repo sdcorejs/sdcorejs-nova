@@ -16,8 +16,24 @@ test('revision mismatch and malformed revision fail',()=>{rejects(dir=>writeFile
 test('dirty local preview metadata cannot pass deployment checks',()=>{const dir=mkdtempSync(path.join(tmpdir(),'nova-showcase-dirty-'));try{cpSync(output,dir,{recursive:true});const file=path.join(dir,'revision.json'),metadata=JSON.parse(readFileSync(file,'utf8'));metadata.workingTreeDirty=true;writeFileSync(file,JSON.stringify(metadata));assert.throws(()=>checkArtifact(dir,{expectedRevision:revision(),repositoryRoot:root,requireClean:true}),/dirty/);}finally{rmSync(dir,{recursive:true,force:true});}});
 test('bundle licenses and private transfer/source strings are checked',()=>{rejects(dir=>writeFileSync(path.join(dir,'THIRD_PARTY_BUNDLE_LICENSES.md'),'React'),/license/);rejects(dir=>{const f=path.join(dir,'index.html');writeFileSync(f,readFileSync(f,'utf8')+'<!-- Sentinel_private signed_transfer_url -->');},/private|forbidden/);});
 test('removing an entire transitive license section cannot evade bundle inventory validation',()=>{rejects(dir=>{const f=path.join(dir,'THIRD_PARTY_BUNDLE_LICENSES.md');writeFileSync(f,readFileSync(f,'utf8').replace(/## scheduler - [\s\S]*?(?=\n## |$)/,''));},/license inventory/);});
-test('workflow rejects write-all, missing browser gate and always-upload',()=>{const text=readFileSync(path.join(root,'.github/workflows/pages.yml'),'utf8');assert.throws(()=>checkWorkflow(text.replace('permissions:\n  contents: read','permissions: write-all')),/permission/);assert.throws(()=>checkWorkflow(text.replace('      - name: Showcase production browser checks\n        run: npm run test:showcase\n','')),/gate|order/);assert.throws(()=>checkWorkflow(text.replace('      - name: Upload checked static artifact only','      - name: Upload checked static artifact only\n        if: always()')),/conditional|upload|step/);});
-test('workflow cannot skip required checks through echo shell or default execution overrides',()=>{const text=readFileSync(path.join(root,'.github/workflows/pages.yml'),'utf8');assert.throws(()=>checkWorkflow(text.replace('        run: npm run test:showcase','        run: npm run test:showcase\n        shell: echo {0}')),/modifier/);assert.throws(()=>checkWorkflow(text.replace('jobs:','defaults:\n  run:\n    shell: echo {0}\n\njobs:')),/modifier/);});
-test('Pages workflow rejects permission escalation, missing read permission, unpinned action and non-main dispatch',()=>{const text=readFileSync(path.join(root,'.github/workflows/pages.yml'),'utf8');assert.throws(()=>checkWorkflow(text.replace('contents: read','contents: write')),/permission/);assert.throws(()=>checkWorkflow(text.replace('pages: read','pages: none')),/permission/);assert.throws(()=>checkWorkflow(text.replace(/actions\/checkout@[a-f0-9]{40}/,'actions/checkout@main')),/pin/);assert.throws(()=>checkWorkflow(text.replaceAll("if: github.ref == 'refs/heads/main'",'if: always()')),/main/);});
-// The positive case reads the actual build. Mutations are isolated temporary
-// copies, deleted by rejects(); they never alter the approved source/artifact.
+// Mutations must be effective on LF and CRLF checkouts before testing rejection.
+function rejectWorkflow(original,mutated,pattern){assert.notEqual(mutated,original,'workflow mutation must change the fixture');assert.throws(()=>checkWorkflow(mutated),pattern);}
+function workflowText(){return readFileSync(path.join(root,'.github/workflows/pages.yml'),'utf8').replace(/\r\n/g,'\n');}
+test('workflow rejects write-all, missing browser gate and always-upload',()=>{
+ const text=workflowText();
+ rejectWorkflow(text,text.replace('permissions:\n  contents: read','permissions: write-all'),/permission/);
+ rejectWorkflow(text,text.replace('      - name: Showcase production browser checks\n        run: npm run test:showcase\n',''),/gate|order/);
+ rejectWorkflow(text,text.replace('      - name: Upload checked static artifact only','      - name: Upload checked static artifact only\n        if: always()'),/conditional|upload|step/);
+});
+test('workflow cannot skip required checks through echo shell or default execution overrides',()=>{
+ const text=workflowText();
+ rejectWorkflow(text,text.replace('        run: npm run test:showcase','        run: npm run test:showcase\n        shell: echo {0}'),/modifier/);
+ rejectWorkflow(text,text.replace('jobs:','defaults:\n  run:\n    shell: echo {0}\n\njobs:'),/modifier/);
+});
+test('Pages workflow rejects permission escalation, missing read permission, unpinned action and non-main dispatch',()=>{
+ const text=workflowText();
+ rejectWorkflow(text,text.replace('contents: read','contents: write'),/permission/);
+ rejectWorkflow(text,text.replace('pages: read','pages: none'),/permission/);
+ rejectWorkflow(text,text.replace(/actions\/checkout@[a-f0-9]{40}/,'actions/checkout@main'),/pin/);
+ rejectWorkflow(text,text.replaceAll("if: github.ref == 'refs/heads/main'",'if: always()'),/main/);
+});

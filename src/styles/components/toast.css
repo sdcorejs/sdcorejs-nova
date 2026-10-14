@@ -1,0 +1,14 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-toast-viewport { position: fixed; z-index: 1; inset-inline-end: var(--nova-space-4); inset-block-end: calc(var(--nova-space-4) + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: var(--nova-space-2); inline-size: min(24rem, calc(100vw - 2 * var(--nova-space-4))); max-block-size: calc(100dvh - 2 * var(--nova-space-4)); overflow-y: auto; }
+ .nova-toast { position: relative; box-sizing: border-box; font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); padding: var(--nova-space-3); border: 1px solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); color: var(--nova-color-text); overflow-wrap: anywhere; }
+ .nova-toast[data-ending], .nova-toast[data-limited] { display: none; }
+ .nova-toast__title { font-weight: var(--nova-font-weight-strong); }
+ .nova-toast__description, .nova-toast__error { margin-block-start: var(--nova-space-1); }
+ .nova-toast__error { color: var(--nova-color-error-text); }
+ .nova-toast__controls { display: flex; align-items: center; justify-content: flex-end; gap: var(--nova-space-2); margin-block-start: var(--nova-space-2); }
+ .nova-toast__action, .nova-toast__close { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); border: 1px solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: transparent; color: inherit; font: inherit; cursor: pointer; }
+ .nova-toast__action[aria-disabled="true"] { cursor: wait; }
+ .nova-toast__action:focus-visible, .nova-toast__close:focus-visible, .nova-toast-viewport:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+ @media (forced-colors: active) { .nova-toast { border-color: CanvasText; background: Canvas; color: CanvasText; } .nova-toast__action:focus-visible, .nova-toast__close:focus-visible { outline-color: Highlight; } }
+}

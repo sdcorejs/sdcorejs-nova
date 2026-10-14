@@ -1,0 +1,3 @@
+@layer nova.components {
+  .nova-busy-boundary { display: grid; gap: var(--nova-space-2); }
+}

@@ -1,0 +1,16 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+  .nova-stepper { display:flex; gap:var(--nova-space-4); margin:0; padding:0; list-style:none; color:var(--nova-color-text); font-family:var(--nova-font-family); }
+  .nova-stepper__step { display:flex; align-items:center; min-width:0; flex:1; gap:var(--nova-space-3); }
+  .nova-stepper__presentation,.nova-stepper__control { display:flex; align-items:center; gap:var(--nova-space-3); min-width:0; }
+  .nova-stepper__control { min-height:44px; padding:var(--nova-space-2); border:1px solid transparent; border-radius:var(--nova-radius-control); color:inherit; background:transparent; font:inherit; text-align:start; cursor:pointer; }
+  .nova-stepper__control:disabled { opacity:.5; cursor:default; }
+  .nova-stepper__control:focus-visible { outline:2px solid var(--nova-color-focus-ring); outline-offset:2px; }
+  .nova-stepper__number { display:grid; place-items:center; flex-shrink:0; width:2rem; height:2rem; border:1px solid var(--nova-color-control-border); border-radius:50%; }
+  .nova-stepper__text { display:flex; flex-direction:column; min-width:0; overflow-wrap:anywhere; }
+  .nova-stepper__status { font-size:var(--nova-font-size-label); color:var(--nova-color-text-muted); }
+  .nova-stepper__step[aria-current="step"] .nova-stepper__number,.nova-stepper__control[aria-current="step"] .nova-stepper__number { font-weight:var(--nova-font-weight-strong); border-width:2px; }
+  .nova-stepper__connector { flex:1; min-width:var(--nova-space-3); border-block-start:1px solid var(--nova-color-control-border); }
+  @media(max-width:40rem) { .nova-stepper { flex-direction:column; } .nova-stepper__step { flex-wrap:wrap; } .nova-stepper__connector { flex-basis:100%; height:var(--nova-space-3); margin-inline-start:1rem; border-block-start:0; border-inline-start:1px solid var(--nova-color-control-border); } }
+  @media(forced-colors:active) { .nova-stepper__number,.nova-stepper__connector { border-color:CanvasText; } .nova-stepper__control:focus-visible { outline-color:Highlight; } }
+}

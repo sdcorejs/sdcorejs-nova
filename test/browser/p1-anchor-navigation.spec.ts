@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('C12 native anchor semantics scroll the declared root without changing the app route',async({page})=>{await page.goto('/?scenario=p1-anchor-navigation');const link=page.getByRole('link',{name:'Last',exact:true});await expect(link).toHaveAttribute('href','#last');await link.focus();await link.press('Enter');await expect(page.getByRole('heading',{name:'Last',exact:true})).toBeFocused();expect(new URL(page.url()).hash).toBe('');});

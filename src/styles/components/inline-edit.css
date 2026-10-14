@@ -1,0 +1,11 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+  .nova-inline-edit { min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); overflow-wrap: anywhere; }
+  .nova-inline-edit__face, .nova-inline-edit__actions button { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); max-inline-size: 100%; padding: var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; text-align: start; overflow-wrap: anywhere; cursor: pointer; }
+  .nova-inline-edit__face:hover:not(:disabled), .nova-inline-edit__actions button:hover:not(:disabled) { background: var(--nova-color-surface-hover); }
+  .nova-inline-edit__face:disabled, .nova-inline-edit__actions button:disabled, .nova-inline-edit__actions button[aria-disabled="true"] { color: var(--nova-color-disabled-text); cursor: default; }
+  .nova-inline-edit__face:focus-visible, .nova-inline-edit__actions button:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+  .nova-inline-edit__actions { display: flex; flex-wrap: wrap; gap: var(--nova-space-2); margin-block-start: var(--nova-space-2); }
+  .nova-inline-edit [role="alert"] { color: var(--nova-color-error-text); }
+  @media (forced-colors: active) { .nova-inline-edit__face:focus-visible, .nova-inline-edit__actions button:focus-visible { outline-color: Highlight; } }
+}

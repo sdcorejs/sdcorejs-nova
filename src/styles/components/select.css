@@ -1,0 +1,17 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-select__control { display:flex; align-items:stretch; min-inline-size:0; }
+ .nova-select__control > .nova-input { flex:1; min-inline-size:0; }
+ .nova-select__trigger { display:flex; align-items:center; justify-content:space-between; gap:var(--nova-space-2); text-align:start; cursor:pointer; }
+ .nova-select__clear { min-inline-size:44px; min-block-size:44px; font:inherit; color:var(--nova-color-text); background:var(--nova-color-background); border:var(--nova-border-width) solid var(--nova-color-control-border); border-radius:var(--nova-radius-control); cursor:pointer; }
+ .nova-select__clear:focus-visible { outline:var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset:var(--nova-focus-offset); }
+ .nova-select__disabled-option { margin:0; padding:0; border:0; min-inline-size:0; }
+ .nova-select__positioner { z-index:1; }
+ .nova-select__popup { box-sizing:border-box; min-inline-size:var(--anchor-width); max-inline-size:calc(100vw - 32px); max-block-size:var(--available-height); overflow:auto; font-family:var(--nova-font-family); font-size:var(--nova-font-size-body); line-height:var(--nova-line-height-body); color:var(--nova-color-text); background:var(--nova-color-background); border:var(--nova-border-width) solid var(--nova-color-border); border-radius:var(--nova-radius-overlay); padding:var(--nova-space-1); }
+ .nova-select__option { font:inherit; color:inherit; background:transparent; border:0; inline-size:100%; text-align:start; display:flex; align-items:center; justify-content:space-between; gap:var(--nova-space-2); min-block-size:44px; box-sizing:border-box; padding:var(--nova-space-2) var(--nova-space-3); border-radius:var(--nova-radius-control); cursor:default; }
+ .nova-select__option[data-highlighted] { background:var(--nova-color-surface-hover); outline:var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset:calc(-1 * var(--nova-focus-width)); }
+ .nova-select__option[data-disabled],.nova-select__clear:disabled { color:var(--nova-color-disabled-text); cursor:default; }
+ .nova-select__status:empty { padding:0; }
+ .nova-select__status { margin:0; padding:var(--nova-space-3); color:var(--nova-color-text-muted); }
+ @media(forced-colors:active) { .nova-select__popup,.nova-select__clear { border-color:CanvasText; } .nova-select__option[data-highlighted],.nova-select__clear:focus-visible { outline-color:Highlight; } }
+}

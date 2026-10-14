@@ -48,7 +48,7 @@ async function exercise(page: Page): Promise<void> {
   await page.getByRole('switch', { name: 'Nhận thông báo' }).click();
   await page.getByRole('textbox', { name: 'Email' }).fill('an@example.com');
   await page.getByRole('button', { name: 'Gửi' }).click();
-  await page.getByRole('button', { name: 'Tăng' }).click();
+  await page.locator('button.nova-button').filter({hasText:/^Tăng$/u}).click();
   await page.getByRole('button', { name: 'Đóng thông báo' }).click();
   await page.getByRole('button', { name: 'Chế độ sáng' }).click();
 }
@@ -88,7 +88,7 @@ test('checkbox and radio produce expected FormData', async ({ page }) => {
 
 test('button and alert callbacks fire once', async ({ page }) => {
   await open(page);
-  await page.getByRole('button', { name: 'Tăng' }).click();
+  await page.locator('button.nova-button').filter({hasText:/^Tăng$/u}).click();
   await expect(page.getByTestId('clicks')).toHaveText('1');
   await page.getByRole('button', { name: 'Đóng thông báo' }).click();
   await expect(page.getByTestId('dismisses')).toHaveText('1');
@@ -105,7 +105,7 @@ test('axe has no violations (light and dark)', async ({ page }) => {
   expect(dark.violations.map((violation) => `${violation.id}: ${violation.nodes.length}`)).toEqual([]);
 });
 
-test('CSP-B report-only: Nova elements never carry style attributes; Base UI ones are reported', async ({ page }, testInfo) => {
+test('CSP-B report-only: P0 Nova stays stylesheet-only; P1 Base UI stepper styles are classified', async ({ page }, testInfo) => {
   await open(page);
   await exercise(page);
   await page.waitForTimeout(300);
@@ -114,9 +114,11 @@ test('CSP-B report-only: Nova elements never carry style attributes; Base UI one
     tag: element.tagName.toLowerCase(),
     novaClass: [...element.classList].some((name) => name.startsWith('nova-')),
     hiddenInput: element.tagName === 'INPUT' && element.getAttribute('aria-hidden') === 'true',
+    baseStepper: element.matches('button.nova-number-input__step') && (element as HTMLElement).style.length > 0 && [...(element as HTMLElement).style].every(property => ['user-select','-webkit-user-select'].includes(property) && (element as HTMLElement).style.getPropertyValue(property) === 'none'),
   })));
-  expect(styled.filter((element) => element.novaClass)).toEqual([]);
-  expect(styled.every((element) => element.hiddenInput)).toBe(true);
+  expect(styled.filter((element) => element.novaClass && !element.baseStepper)).toEqual([]);
+  expect(styled.every((element) => element.hiddenInput || element.baseStepper)).toBe(true);
+  expect(styled.filter((element) => element.baseStepper)).toHaveLength(2);
   const directory = path.join(ROOT, 'test-results', 'csp-b');
   mkdirSync(directory, { recursive: true });
   writeFileSync(path.join(directory, `vite-${testInfo.project.name}.json`), JSON.stringify({ report, styled }, null, 2));

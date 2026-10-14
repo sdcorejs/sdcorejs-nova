@@ -1,0 +1,8 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+  .nova-highlight { overflow-wrap: anywhere; }
+  .nova-highlight mark { background: var(--nova-color-surface-hover); color: var(--nova-color-text); font-weight: 600; }
+  @media (forced-colors: active) {
+    .nova-highlight mark { background: Canvas; color: CanvasText; text-decoration: underline; }
+  }
+}

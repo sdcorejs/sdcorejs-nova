@@ -1,0 +1,2 @@
+import {useState} from 'react';import {CopyButton} from '../../../src/components/copy-button/index.js';import {ScrollArea} from '../../../src/components/scroll-area/index.js';import {NovaProvider} from '../../../src/providers/nova/index.js';
+export default function Clipboard(){const [large,set]=useState(true);return <NovaProvider locale="en"><CopyButton text="Đặng An"/><button onClick={()=>set(!large)}>Resize content</button><ScrollArea label="Notes" maxHeight="120px"><div style={{height:large?600:30}}>Long scrollable note</div></ScrollArea></NovaProvider>;}

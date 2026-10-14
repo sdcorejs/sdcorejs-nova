@@ -12,6 +12,9 @@ export const P0_JS_SUBPATHS = [
 export const P0_CSS_SUBPATHS = ['./tokens.css', './styles.css', './styles/*.css'];
 export const P0_SUBPATHS = [...P0_JS_SUBPATHS, ...P0_CSS_SUBPATHS];
 
+export const P1_JS_SUBPATHS = ["./accordion", "./action-menu", "./anchor-navigation", "./app-shell", "./busy-boundary", "./copy-button", "./date-picker", "./date-time-picker", "./dialog", "./highlight", "./inline-edit", "./inline-text", "./multi-select", "./number-input", "./popover", "./read-only-value", "./scroll-area", "./segmented-control", "./select", "./stepper", "./tabs", "./time-input", "./async-action", "./clipboard", "./form-validation", "./formatter", "./viewport", "./confirm", "./toast", "./unsaved-changes", "./adapters/react-hook-form", "./adapters/temporal"];
+
+const OPTIONAL_PEERS = {'react-hook-form':'~7.89.0','@js-temporal/polyfill':'~0.5.1'};
 const RUNTIME_DEPENDENCIES = ['@base-ui/react'];
 const PEERS = { react: '^19.0.0', 'react-dom': '^19.0.0' };
 const DEPENDENCY_FIELDS = ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'];
@@ -71,7 +74,7 @@ export function checkManifest(manifest) {
   if (manifest.type !== 'module') errors.push('type must be "module"');
 
   const exportsMap = isPlainObject(manifest.exports) ? manifest.exports : {};
-  for (const key of P0_JS_SUBPATHS) {
+  for (const key of [...P0_JS_SUBPATHS,...P1_JS_SUBPATHS]) {
     const target = exportsMap[key];
     if (!isPlainObject(target)) {
       errors.push(`exports["${key}"] must be an object with types and default`);
@@ -93,7 +96,7 @@ export function checkManifest(manifest) {
     }
   }
   for (const key of Object.keys(exportsMap)) {
-    if (!P0_SUBPATHS.includes(key)) errors.push(`exports["${key}"] is not a P0 public subpath`);
+    if (!P0_SUBPATHS.includes(key) && !P1_JS_SUBPATHS.includes(key)) errors.push(`exports["${key}"] is not an approved public subpath`);
   }
 
   const runtime = Object.keys(manifest.dependencies ?? {});
@@ -110,11 +113,9 @@ export function checkManifest(manifest) {
   }
 
   const peers = manifest.peerDependencies ?? {};
-  const peerKeys = Object.keys(peers);
-  if (peerKeys.length !== Object.keys(PEERS).length
-    || Object.entries(PEERS).some(([name, range]) => peers[name] !== range)) {
-    errors.push(`peerDependencies must be exactly ${JSON.stringify(PEERS)}`);
-  }
+  if(Object.entries(PEERS).some(([name,range])=>peers[name]!==range))errors.push(`peerDependencies must include ${JSON.stringify(PEERS)}`);
+  for(const [name,range] of Object.entries(peers))if(!(name in PEERS)&&(!(name in OPTIONAL_PEERS)||OPTIONAL_PEERS[name]!==range||manifest.peerDependenciesMeta?.[name]?.optional!==true))errors.push(`peerDependencies: unapproved or non-optional peer ${name}`);
+  for(const name of Object.keys(manifest.peerDependenciesMeta??{}))if(!(name in OPTIONAL_PEERS)||!(name in peers)||manifest.peerDependenciesMeta[name]?.optional!==true)errors.push(`peerDependenciesMeta: invalid optional peer ${name}`);
 
   const sideEffects = manifest.sideEffects;
   if (!Array.isArray(sideEffects) || sideEffects.length !== 1 || sideEffects[0] !== '**/*.css') {

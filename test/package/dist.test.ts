@@ -38,10 +38,11 @@ const SERVER_COMPATIBLE = [
 ];
 
 const read = (relative: string) => readFileSync(path.join(DIST, relative), 'utf8');
-const jsSubpaths = Object.entries(manifest.exports).filter(([key, target]) => key !== '.' && typeof target === 'object');
+const jsSubpaths = Object.entries(manifest.exports).filter(([key, target]) => key !== '.' && !key.startsWith('./adapters/') && typeof target === 'object');
 
+let declarations:ts.Program|undefined;
 function typeExports(file: string): string[] {
-  const program = ts.createProgram([file], { module: ts.ModuleKind.NodeNext, moduleResolution: ts.ModuleResolutionKind.NodeNext, noEmit: true, skipLibCheck: true });
+  const program = declarations??=ts.createProgram([path.join(DIST,'index.d.ts'),...Object.values(manifest.exports).filter(target=>typeof target==='object').map(target=>path.join(ROOT,(target as {types:string}).types))], { module: ts.ModuleKind.NodeNext, moduleResolution: ts.ModuleResolutionKind.NodeNext, noEmit: true, skipLibCheck: true });
   const typeChecker = program.getTypeChecker();
   const source = program.getSourceFile(file);
   const symbol = source ? typeChecker.getSymbolAtLocation(source) : undefined;
@@ -127,6 +128,8 @@ describe('root barrel (Q-01, INV-004)', () => {
     }
     expect(root).toEqual([...union].sort());
     expect(root).not.toContain('PortalScope');
+    expect(root).not.toContain('createTemporalAdapter');
+    expect(root).not.toContain('useNovaController');
     expect(root).not.toContain('useFieldControl');
   });
 

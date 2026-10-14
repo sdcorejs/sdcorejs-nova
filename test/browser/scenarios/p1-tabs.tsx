@@ -1,0 +1,2 @@
+import {Tabs,TabList,Tab,TabPanel} from '../../../src/components/tabs/index.js';import {NovaProvider} from '../../../src/providers/nova/index.js';
+export default function Tabbed(){return <NovaProvider locale="en"><Tabs defaultValue="a" activationMode="manual"><TabList label="Sections"><Tab value="a">A</Tab><Tab value="off" disabled>Disabled</Tab><Tab value="b">B</Tab></TabList><TabPanel value="a" keepMounted><label>Draft<input aria-label="Draft"/></label></TabPanel><TabPanel value="b" keepMounted>Second content</TabPanel></Tabs></NovaProvider>;}

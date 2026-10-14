@@ -18,7 +18,7 @@ function hasNotice(notices, name) {
   return new RegExp(`^##\\s+${escaped}\\b`, 'mu').test(notices);
 }
 
-export function checkProvenance({ files, provenance, notices, runtimeDependencies }) {
+export function checkProvenance({ files, provenance, notices, runtimeDependencies, optionalNoticeDependencies = [] }) {
   const errors = [];
   const entries = new Map((provenance?.copied ?? []).map((entry) => [entry.id, entry]));
   const byPath = new Map(files.map((file) => [file.path, file.content]));
@@ -49,7 +49,7 @@ export function checkProvenance({ files, provenance, notices, runtimeDependencie
     if (upstream.name && !hasNotice(notices, upstream.name)) errors.push(`${label}: THIRD_PARTY_NOTICES.md has no notice for ${upstream.name}`);
   }
 
-  for (const dependency of runtimeDependencies) {
+  for (const dependency of [...runtimeDependencies,...optionalNoticeDependencies]) {
     if (!hasNotice(notices, dependency)) errors.push(`THIRD_PARTY_NOTICES.md has no notice for runtime dependency ${dependency}`);
   }
   return errors;
@@ -76,6 +76,7 @@ export function loadRepositoryInput() {
     provenance: existsSync(path.join(ROOT, 'third_party', 'provenance.json')) ? JSON.parse(read('third_party/provenance.json')) : { copied: [] },
     notices: existsSync(path.join(ROOT, 'THIRD_PARTY_NOTICES.md')) ? read('THIRD_PARTY_NOTICES.md') : '',
     runtimeDependencies: Object.keys(manifest.dependencies ?? {}).sort(),
+    optionalNoticeDependencies: [...Object.entries(manifest.peerDependenciesMeta??{}).filter(([,meta])=>meta.optional===true).map(([name])=>name),...(manifest.peerDependenciesMeta?.['@js-temporal/polyfill']?.optional?['jsbi']:[])].sort(),
   };
 }
 
@@ -86,5 +87,5 @@ if (isCli) {
   const errors = checkProvenance(input);
   for (const error of errors) console.error(`check-provenance: ${error}`);
   if (errors.length) process.exit(1);
-  console.log(`check-provenance: OK — ${input.files.length} source files, ${input.provenance.copied.length} copied, notices for ${input.runtimeDependencies.join(', ')}`);
+  console.log(`check-provenance: OK — ${input.files.length} source files, ${input.provenance.copied.length} copied, notices for ${[...input.runtimeDependencies,...input.optionalNoticeDependencies].join(', ')}`);
 }
