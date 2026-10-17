@@ -1,6 +1,6 @@
 'use client';
 import { Dialog as Primitive } from '@base-ui/react/dialog';
-import { useCallback, useId, useInsertionEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { useCallback, useId, useInsertionEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject, type Ref } from 'react';
 
 import { cx } from '../../lib/cx.js';
 import { useControllableValue } from '../../lib/use-controllable-value.js';
@@ -10,6 +10,8 @@ import type { SurfaceProps, ValueProps } from '../../types/index.js';
 
 export type CloseReason = 'escape' | 'outside' | 'action';
 export type DialogProps = ValueProps<boolean> & SurfaceProps & {
+  /** Rendered popup surface; separate from initial and return focus ownership. */
+  ref?: Ref<HTMLDivElement>;
   title: ReactNode;
   description?: ReactNode;
   children: ReactNode;
@@ -36,7 +38,7 @@ function reachable(element: HTMLElement | null | undefined): element is HTMLElem
 
 // Sheet/Drawer only supply layout variants to this same state and focus owner.
 function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | 'end' | 'bottom'; size?: 'sm' | 'md' | 'lg'}) {
-  const {value, defaultValue, onValueChange, title, description, children, modal=true,
+  const {value, defaultValue, onValueChange, title, description, children, modal=true, ref: surfaceRef,
     initialFocusRef, returnFocusRef, onCloseRequest, closeDisabled=false,
     className, style, 'data-testid': testId, sheet=false, side='end', size='md'} = props;
   const scope = useNovaScope(), report = useDiagnostics('Dialog');
@@ -45,6 +47,29 @@ function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | '
   const heading = useRef<HTMLHeadingElement | null>(null), opener = useRef<HTMLElement | null>(null);
   const documentOwner = useRef<Document | null>(null), closeReason = useRef<CloseReason | null>(null);
   const [popupElement,setPopupElement]=useState<HTMLDivElement|null>(null);
+  const consumerRef = useRef(surfaceRef);
+  const consumerLease = useRef<{node: HTMLDivElement; ref: Ref<HTMLDivElement>; release: () => void} | null>(null);
+  // Abandoned renders must never publish a new consumer ref.
+  useInsertionEffect(() => {consumerRef.current = surfaceRef;}, [surfaceRef]);
+  const syncConsumerRef = useCallback((element: HTMLDivElement | null) => {
+    const previous = consumerLease.current, next = consumerRef.current;
+    if (previous?.node === element && previous.ref === next) return;
+    consumerLease.current = null;
+    previous?.release();
+    if (!element || !next) return;
+    let release: () => void;
+    if (typeof next === 'function') {
+      const cleanup = next(element);
+      release = typeof cleanup === 'function' ? cleanup : () => {next(null);};
+    } else {
+      next.current = element;
+      release = () => {next.current = null;};
+    }
+    consumerLease.current = {node: element, ref: next, release};
+  }, []);
+  // Replacing a consumer ref must not detach the private popup ref and
+  // recapture its opener while focus is already inside the dialog.
+  useLayoutEffect(() => {syncConsumerRef(popup.current);}, [surfaceRef, syncConsumerRef]);
   const focusOwner=useRef({open,modal});
   // Child focus-manager cleanup runs before parent layout-effect cleanup.
   // Publish the closing state first so its return focus is not recaptured.
@@ -77,12 +102,13 @@ function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | '
   }, [open, scope.portalContainer]);
   const assignPopup = useCallback((element: HTMLDivElement | null) => {
     popup.current = element;setPopupElement(element);
-    if (!element) return;
+    if (!element) {syncConsumerRef(null);return;}
     const owner = element.ownerDocument;
     documentOwner.current = owner;
     const active = owner.activeElement;
     opener.current = active && active !== owner.body && !element.contains(active) ? active as HTMLElement : null;
-  }, []);
+    syncConsumerRef(element);
+  }, [syncConsumerRef]);
   const initialFocus = useCallback((interaction: string) => {
     if(!focusOwner.current.open)return false;
     const candidate = initialFocusRef?.current;

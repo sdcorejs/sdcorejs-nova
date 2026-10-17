@@ -6,6 +6,8 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import {checkP2Inventory} from './check-p2-contracts.mjs';
+
 const DIRECTIVE = /^\s*(?:\/\/[^\n]*\n\s*|\/\*[\s\S]*?\*\/\s*)*['"](use (?:client|server))['"];?/u;
 const IMPORT = /(?:import|export)\s[^'"]*?from\s*['"]([^'"]+)['"]|import\s*['"]([^'"]+)['"]|import\(\s*['"]([^'"]+)['"]\s*\)/gu;
 
@@ -91,7 +93,8 @@ export function checkDist(root) {
 const isCli = process.argv[1]
   && path.resolve(process.argv[1]).toLowerCase() === fileURLToPath(import.meta.url).toLowerCase();
 if (isCli) {
-  const errors = checkDist(fileURLToPath(new URL('..', import.meta.url)));
+  const root=fileURLToPath(new URL('..',import.meta.url));
+  const errors = [...checkDist(root),...checkP2Inventory(root)];
   for (const error of errors) console.error(`check-dist: ${error}`);
   if (errors.length) process.exit(1);
   console.log('check-dist: directives, specifiers, root barrel and exports targets OK');

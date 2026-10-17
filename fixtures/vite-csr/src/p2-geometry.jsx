@@ -1,0 +1,3 @@
+import {useState} from 'react';
+import {ResizableDialog,Splitter} from '@sdcorejs/nova';
+export function P2Geometry(){const [open,setOpen]=useState(false),[sizes,setSizes]=useState([40,60]);return <section aria-label="P2 geometry" data-testid="p2-geometry"><h1>P2 geometry</h1><Splitter value={sizes} onValueChange={setSizes} minSizes={[10,10]}><div>First panel</div><div>Second panel</div></Splitter><output data-testid="p2-sizes">{JSON.stringify(sizes)}</output><button type="button" onClick={()=>setOpen(true)}>Open P2 resize dialog</button><ResizableDialog title="P2 resize dialog" value={open} onValueChange={setOpen}><p>Bounded native geometry</p></ResizableDialog></section>;}

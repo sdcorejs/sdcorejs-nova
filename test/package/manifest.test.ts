@@ -40,6 +40,7 @@ const validManifest = (): Manifest => ({
   type: 'module',
   exports: {
     ...Object.fromEntries([...JS_SUBPATHS,...P1_JS_SUBPATHS].map((key) => [key, { types: './dist/x.d.ts', default: './dist/x.js' }])),
+    ...Object.fromEntries(["./adapters/storage","./calendar-chips","./color-input","./data-table","./entity-picker","./file-explorer","./file-upload","./image-preview","./import-wizard","./job-progress","./pdf-preview","./query-bar","./query-builder","./resizable-dialog","./splitter","./tree-select","./tree","./file-transfer","./stored-state","./task","./task-provider","./query"].map(key=>[key,{types:'./dist/p2/index.d.ts',default:'./dist/p2/index.js'}])),
     ...Object.fromEntries(CSS_SUBPATHS.map((key) => [key, './dist/x.css'])),
   },
   dependencies: { '@base-ui/react': '~1.8.0' },
@@ -235,4 +236,12 @@ describe('manifest hardening (round 2 R2: runtime alias identity)', () => {
   it('still rejects a forbidden alias outside runtime maps', () => {
     expect(checkManifest({ ...validManifest(), devDependencies: { 'typescript-5.7': 'npm:antd@5' } }).join('\n')).toMatch(/antd/);
   });
+});
+
+// P2 public subpaths extend the original synthetic base and assertions.
+describe('P2 manifest additions',()=>{
+ const keys=["./adapters/storage","./calendar-chips","./color-input","./data-table","./entity-picker","./file-explorer","./file-upload","./image-preview","./import-wizard","./job-progress","./pdf-preview","./query-bar","./query-builder","./resizable-dialog","./splitter","./tree-select","./tree","./file-transfer","./stored-state","./task","./task-provider","./query"];
+ it.each(keys)('requires real P2 export %s',key=>{expect(manifest.exports?.[key]).toBeDefined();});
+ it.each(keys)('rejects missing P2 export %s',key=>{const candidate=validManifest();delete candidate.exports![key];expect(checkManifest(candidate).join('\n')).toContain('exports["'+key+'"]');});
+ it.each(keys)('rejects P2 source target %s',key=>{const candidate=validManifest();candidate.exports![key]={types:'./src/x.d.ts',default:'./src/x.js'};expect(checkManifest(candidate).join('\n')).toContain('exports["'+key+'"]');});
 });

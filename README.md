@@ -2,7 +2,7 @@
 
 SD Nova là Core UI React độc lập cho trang end user, package đề xuất `@sdcorejs/nova`, tham khảo capability của `@sdcorejs/angular` và dùng shadcn/Base UI làm nền.
 
-Trạng thái: P0 (12 dossier) đã merge tại `c7e4bbbf5a948208618bd4b54e492bd3a2f6d662`. P1 (26 dossier) có triển khai local, public exports và showcase VI/EN; đang hoàn tất kiểm chứng và review. Package vẫn **chưa publish** (`private: true`, phiên bản 0.0.0, license [MIT](LICENSE)). P2/P3 tiếp tục là đề xuất.
+Trạng thái: P0 (12 dossier) đã merge tại `c7e4bbbf5a948208618bd4b54e492bd3a2f6d662`. P1 (26 dossier) đã lưu commit local `83af685a76dd166f239567372efd3582ed9bbb5c`; AC-095–097 còn chờ nghiệm thu manual. P2 (14 dossier) có source MVP local, API/package/showcase VI/EN và kiểm chứng tự động; chưa commit. P2 workbook adapter thực (một phần AC-043) và PDF/screen reader AC-048–049 còn chờ. Package vẫn **chưa publish** (`private: true`, phiên bản 0.0.0, license [MIT](LICENSE)); P3 ngoài phạm vi triển khai này.
 
 - [Bắt đầu đọc bộ spec Nova r1](docs/nova/README.md)
 - [Mục lục tài liệu](docs/README.md)
@@ -10,8 +10,9 @@ Trạng thái: P0 (12 dossier) đã merge tại `c7e4bbbf5a948208618bd4b54e492bd
 - [Kiến trúc P0](docs/nova/p0-architecture.vi.md)
 - [API và tích hợp P1](docs/nova/p1-contract.vi.md)
 - [Phạm vi và kiểm chứng P1](docs/nova/p1-plan.vi.md)
+- [API, tích hợp và giới hạn kiểm chứng P2](docs/nova/p2-implementation.vi.md)
 
-Tài liệu có 59 spec, architecture/conventions candidate, inventory provenance và review độc lập. API P0/P1 có source local và declaration exports; P1 chưa phải bản đã merge hoặc phát hành. P2/P3 chưa được triển khai.
+Tài liệu có 59 spec, architecture/conventions candidate, inventory provenance và review độc lập. API P0/P1/P2 có source local và declaration exports; P1/P2 chưa merge hoặc phát hành. P2 bổ sung 22 subpath và 16 stylesheet component; adapter storage chỉ nằm tại `@sdcorejs/nova/adapters/storage`. Revision online không được xác minh lại trong đợt local này.
 
 Showcase consumer Vite/Pages đã có menu gọn với selected/hover/focus riêng; CI và deployment/public revision cần xác nhận bằng run thực tế. Xem [hướng dẫn showcase](docs/nova/showcase-pages.vi.md). npm release tiếp tục hoãn đến sau P1/P2 và review, owner tự đánh version tag.
 

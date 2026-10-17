@@ -1,6 +1,17 @@
 /* Consumer composition only. Nova color/type/spacing sources stay unchanged.
    New candidate page roles: sidebar 232px, content max960px, title28px/32px.
    Card padding32px and input height44px are scoped sizing candidates. */
+.showcase-p2-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+.showcase-p2-grid > *, .showcase-demo { min-width: 0; }
+.showcase-p2-code { display: block; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 13px; line-height: 1.6; margin-block: 12px; }
+.showcase-p2-summary { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-block: 12px; overflow-wrap: anywhere; }
+.showcase-p2-panel { padding: 16px; overflow-wrap: anywhere; min-width: 0; }
+.showcase-p2-transfers { padding-inline-start: 20px; overflow-wrap: anywhere; }
+.showcase-p2-transfers li { margin-block: 8px; }
+.showcase .nova-splitter { min-height: 180px; margin-block: 16px; }
+.showcase .nova-import-wizard { min-width: 0; }
+.showcase .nova-import-mapping { overflow-x: auto; }
+@media (max-width: 480px) { .showcase-p2-panel { padding: 8px; } }
 .showcase-body { margin: 0; }
 .showcase { min-height: 100dvh; display: grid; grid-template-columns: 232px minmax(0,1fr); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); color: var(--nova-color-text); background: var(--nova-color-background); }
 .showcase *, .showcase *::before, .showcase *::after { box-sizing: border-box; }

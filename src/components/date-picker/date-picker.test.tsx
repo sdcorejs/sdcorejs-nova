@@ -91,3 +91,9 @@ describe('F09 civil dates', () => {
     expect(input.validity.valid).toBe(true);expect(input.hasAttribute('aria-invalid')).toBe(false);
   });
 });
+
+it('F11 extraction preserves public single-date Calendar semantics',()=>{
+ render(<NovaProvider locale="en"><Calendar label="Single date" referenceDate="2024-01-31" defaultValue="2024-01-31"/></NovaProvider>);
+ expect(screen.getByRole('grid').hasAttribute('aria-multiselectable')).toBe(false);
+ expect(screen.getByRole('grid').querySelectorAll('[aria-selected="true"]')).toHaveLength(1);
+});

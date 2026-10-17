@@ -155,3 +155,48 @@ export type { ToastInput, ToastProviderProps } from './providers/toast/toast.js'
 
 export {UnsavedChangesProvider,useUnsavedChanges,useConfirmLeave} from './providers/unsaved-changes/unsaved-changes.js';
 export type {UnsavedOptions,LeavePrompt,UnsavedChangesProviderProps} from './providers/unsaved-changes/unsaved-changes.js';
+
+// P2 public contracts: explicit named leaves; storage factory stays subpath-only.
+export { CalendarChips } from './components/calendar-chips/index.js';
+export type { CalendarChipsProps } from './components/calendar-chips/index.js';
+export { ColorInput } from './components/color-input/index.js';
+export type { ColorInputProps } from './components/color-input/index.js';
+export { DataTable, TablePagination } from './components/data-table/index.js';
+export type { Column, DataTableProps, TablePaginationProps, PageState, Sort, TableState } from './components/data-table/index.js';
+export { EntityPicker } from './components/entity-picker/index.js';
+export type { EntityPickerProps } from './components/entity-picker/index.js';
+export { FileExplorer } from './components/file-explorer/index.js';
+export type { ExplorerItem, FileExplorerProps } from './components/file-explorer/index.js';
+export { FileUpload } from './components/file-upload/index.js';
+export type { FileUploadProps } from './components/file-upload/index.js';
+export { ImagePreview } from './components/image-preview/index.js';
+export type { ImagePreviewProps } from './components/image-preview/index.js';
+export { ImportWizard } from './components/import-wizard/index.js';
+export type { ImportColumn, ImportWizardProps, RowIssue, WorkbookAdapter } from './components/import-wizard/index.js';
+export { JobProgress } from './components/job-progress/index.js';
+export type { JobProgressProps } from './components/job-progress/index.js';
+export { PdfPreview } from './components/pdf-preview/index.js';
+export type { PdfPreviewProps, PdfAdapter } from './components/pdf-preview/index.js';
+export { QueryBar, FilterPanel } from './components/query-bar/index.js';
+export type { QueryBarProps } from './components/query-bar/index.js';
+export { QueryBuilder } from './components/query-builder/index.js';
+export type { QueryBuilderProps } from './components/query-builder/index.js';
+export { ResizableDialog } from './components/resizable-dialog/index.js';
+export type { DialogSize, ResizableDialogProps } from './components/resizable-dialog/index.js';
+export { Splitter } from './components/splitter/index.js';
+export type { SplitterProps } from './components/splitter/index.js';
+export { TreeSelect } from './components/tree-select/index.js';
+export type { TreeSelectProps } from './components/tree-select/index.js';
+export { Tree, TreeItem } from './components/tree/index.js';
+export type { TreeProps, TreeSource, TreeItemProps } from './components/tree/index.js';
+export { useFileTransfer } from './hooks/file-transfer/index.js';
+export type { TransferState, TransferAdapter } from './hooks/file-transfer/index.js';
+export { useStoredState } from './hooks/stored-state/index.js';
+export type { StorageAdapter, StoredStateOptions, StoredState } from './hooks/stored-state/index.js';
+export { useTask } from './hooks/task/index.js';
+export type { TaskState, TaskStatus, TaskSource, TaskConnection, UseTaskOptions, UseTaskResult } from './hooks/task/index.js';
+export { TaskProvider } from './providers/task/index.js';
+export type { TaskProviderProps } from './providers/task/index.js';
+export { serializeQuery } from './query/index.js';
+export type { QueryNode, FilterField, FilterRule, FilterValue } from './query/index.js';
+export type { FilterPanelProps } from './components/query-bar/index.js';

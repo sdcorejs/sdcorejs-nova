@@ -14,6 +14,8 @@ export const P0_SUBPATHS = [...P0_JS_SUBPATHS, ...P0_CSS_SUBPATHS];
 
 export const P1_JS_SUBPATHS = ["./accordion", "./action-menu", "./anchor-navigation", "./app-shell", "./busy-boundary", "./copy-button", "./date-picker", "./date-time-picker", "./dialog", "./highlight", "./inline-edit", "./inline-text", "./multi-select", "./number-input", "./popover", "./read-only-value", "./scroll-area", "./segmented-control", "./select", "./stepper", "./tabs", "./time-input", "./async-action", "./clipboard", "./form-validation", "./formatter", "./viewport", "./confirm", "./toast", "./unsaved-changes", "./adapters/react-hook-form", "./adapters/temporal"];
 
+export const P2_JS_SUBPATHS = ["./adapters/storage","./calendar-chips","./color-input","./data-table","./entity-picker","./file-explorer","./file-upload","./image-preview","./import-wizard","./job-progress","./pdf-preview","./query-bar","./query-builder","./resizable-dialog","./splitter","./tree-select","./tree","./file-transfer","./stored-state","./task","./task-provider","./query"];
+
 const OPTIONAL_PEERS = {'react-hook-form':'~7.89.0','@js-temporal/polyfill':'~0.5.1'};
 const RUNTIME_DEPENDENCIES = ['@base-ui/react'];
 const PEERS = { react: '^19.0.0', 'react-dom': '^19.0.0' };
@@ -74,7 +76,7 @@ export function checkManifest(manifest) {
   if (manifest.type !== 'module') errors.push('type must be "module"');
 
   const exportsMap = isPlainObject(manifest.exports) ? manifest.exports : {};
-  for (const key of [...P0_JS_SUBPATHS,...P1_JS_SUBPATHS]) {
+  for (const key of [...P0_JS_SUBPATHS,...P1_JS_SUBPATHS,...P2_JS_SUBPATHS]) {
     const target = exportsMap[key];
     if (!isPlainObject(target)) {
       errors.push(`exports["${key}"] must be an object with types and default`);
@@ -96,7 +98,7 @@ export function checkManifest(manifest) {
     }
   }
   for (const key of Object.keys(exportsMap)) {
-    if (!P0_SUBPATHS.includes(key) && !P1_JS_SUBPATHS.includes(key)) errors.push(`exports["${key}"] is not an approved public subpath`);
+    if (!P0_SUBPATHS.includes(key) && !P1_JS_SUBPATHS.includes(key) && !P2_JS_SUBPATHS.includes(key)) errors.push(`exports["${key}"] is not an approved public subpath`);
   }
 
   const runtime = Object.keys(manifest.dependencies ?? {});

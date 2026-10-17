@@ -1,0 +1,19 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-query-bar { min-inline-size:0; color:var(--nova-color-text); background:var(--nova-color-background); font-family:var(--nova-font-family); font-size:var(--nova-font-size-body); line-height:var(--nova-line-height-body); }
+ .nova-query-bar__chips,.nova-query-bar__actions { display:flex; flex-wrap:wrap; gap:var(--nova-space-2); margin-block:var(--nova-space-2); }
+ .nova-query-bar__draft { display:grid; gap:var(--nova-space-3); }
+ .nova-query-bar__rule { display:flex; align-items:start; gap:var(--nova-space-2); }
+ .nova-query-bar__editor { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; flex:1; gap:var(--nova-space-2); min-inline-size:0; }
+ .nova-query-bar__editor > .nova-button { justify-self:start; }
+ .nova-query-bar__date { display:grid; gap:var(--nova-space-1); font-weight:var(--nova-font-weight-strong); }
+ .nova-query-bar__choices { min-inline-size:0; border:var(--nova-border-width) solid var(--nova-color-border); border-radius:var(--nova-radius-control); }
+ .nova-query-bar__choices p { font-weight:normal; }
+ .nova-query-bar__choices .nova-button { max-inline-size:100%; white-space:normal; overflow-wrap:anywhere; }
+ .nova-query-bar .nova-button,.nova-query-bar__panel .nova-button,.nova-query-bar__editor .nova-select__trigger,.nova-query-bar__editor .nova-input,.nova-query-bar__editor .nova-textarea { min-block-size:var(--nova-hit-target); min-inline-size:var(--nova-hit-target); }
+ .nova-query-bar__chips .nova-button { white-space:normal; overflow-wrap:anywhere; }
+ .nova-query-bar__announcement:empty { display:none; }
+ .nova-query-bar [role="alert"],.nova-query-bar__panel [role="alert"] { color:var(--nova-color-danger); }
+ @media(max-width:47.99rem) { .nova-query-bar__desktop { display:none; } .nova-query-bar__editor { grid-template-columns:minmax(0,1fr); } .nova-query-bar__editor .nova-input { font-size:16px; } }
+ @media(forced-colors:active) { .nova-query-bar__choices { border-color:CanvasText; } }
+}

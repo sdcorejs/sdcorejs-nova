@@ -5,7 +5,10 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import {readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
+import {createHash} from 'node:crypto';
+import {P2_TARGETS,P2_COMPONENTS,verifyInstalledP2} from './check-p2-contracts.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
@@ -35,7 +38,8 @@ export function packTarball() {
   const destination=mkdtempSync(path.join(parent,'nova-pack-'));
   const [packed] = JSON.parse(run('npm', ['pack', '--json', '--ignore-scripts','--pack-destination',destination], ROOT));
   const files = packed.files.map((entry) => entry.path);
-  const missing = REQUIRED.filter((file) => !files.includes(file));
+  const p2Required=Object.values(P2_TARGETS).flatMap(file=>[file.slice(2),file.slice(2).replace('.js','.d.ts')]).concat(P2_COMPONENTS.map(component=>'dist/styles/'+component+'.css'));
+  const missing = [...REQUIRED,...p2Required].filter((file) => !files.includes(file));
   const leaked = files.filter((file) => /^(src|test|fixtures|scripts|\.sdcorejs)\//u.test(file) || /\.test\./u.test(file));
   if (missing.length || leaked.length) {
     throw new Error(`tarball contents wrong: missing [${missing.join(', ')}], leaked [${leaked.join(', ')}]`);
@@ -46,22 +50,24 @@ export function packTarball() {
 
 export function installFixture(name, tarball) {
   const dir = inside(FIXTURES, path.join(FIXTURES, name));
-  run('npm', existsSync(path.join(dir, 'package-lock.json')) ? ['ci', '--no-audit', '--no-fund'] : ['install', '--no-audit', '--no-fund'], dir);
-  run('npm', ['install', '--no-save', '--no-audit', '--no-fund', path.relative(dir, tarball).replaceAll('\\', '/')], dir);
+  run('npm', existsSync(path.join(dir, 'package-lock.json')) ? ['ci', '--offline', '--no-audit', '--no-fund'] : ['install', '--offline', '--no-audit', '--no-fund'], dir);
+  run('npm', ['install', '--offline', '--ignore-scripts', '--no-package-lock', '--no-save', '--no-audit', '--no-fund', path.relative(dir, tarball).replaceAll('\\', '/')], dir);
   run('npm', ['run', 'build'], dir);
 }
 
 
 // A separate consumer outside the repository cannot accidentally resolve engines
 // or React types from the development checkout's node_modules.
-export function verifyCoreWithoutPeers(tarball) {
+export async function verifyCoreWithoutPeers(tarball) {
   const dir=mkdtempSync(path.join(tmpdir(),'nova-core-without-peers-'));
+  const evidenceParent=path.join(ROOT,'.sdcorejs/tmp/p2-integration');mkdirSync(evidenceParent,{recursive:true});const evidence=mkdtempSync(path.join(evidenceParent,'packed-proof-'));
+  console.log('smoke-pack: isolated consumer '+dir+'; evidence '+evidence);
   writeFileSync(path.join(dir,'package.json'),JSON.stringify({
     name:'nova-core-without-peers',private:true,type:'module',
     dependencies:{react:'19.3.0','react-dom':'19.3.0'},
     devDependencies:{'@types/react':'19.3.0','@types/react-dom':'19.3.0'}
   },null,2));
-  run('npm',['install','--ignore-scripts','--omit=optional','--no-audit','--no-fund',tarball],dir);
+  run('npm',['install','--offline','--no-package-lock','--ignore-scripts','--omit=optional','--no-audit','--no-fund',tarball],dir);
   writeFileSync(path.join(dir,'consumer.mjs'),`
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
@@ -87,6 +93,10 @@ export const consumer=<UnsavedChangesProvider renderPrompt={()=>null}><DatePicke
   const args=['--noEmit','--strict','--skipLibCheck','false','--target','ES2022','--module','NodeNext','--moduleResolution','NodeNext','--jsx','react-jsx','consumer.tsx'];
   run('node',[path.join(ROOT,'node_modules/typescript/bin/tsc'),'--ignoreConfig',...args],dir);
   run('node',[path.join(ROOT,'node_modules/typescript-5.7/bin/tsc'),...args],dir);
+  const p2Types=readFileSync(path.join(ROOT,'test/types/p2-public-api.tsx'),'utf8');writeFileSync(path.join(dir,'p2-public-api.tsx'),p2Types);
+  const p2Args=args.map(arg=>arg==='consumer.tsx'?'p2-public-api.tsx':arg);run('node',[path.join(ROOT,'node_modules/typescript/bin/tsc'),'--ignoreConfig',...p2Args],dir);run('node',[path.join(ROOT,'node_modules/typescript-5.7/bin/tsc'),...p2Args],dir);
+  const proof=await verifyInstalledP2(dir,path.join(evidence,'p2-isolation'));const hash=file=>'sha256:v1:'+createHash('sha256').update(readFileSync(file)).digest('hex');
+  writeFileSync(path.join(evidence,'tarball-proof.json'),JSON.stringify({tarball,tarball_digest:hash(tarball),consumer:dir,public_type_fixture_digest:hash(path.join(dir,'p2-public-api.tsx')),installed:proof.installed,optional_peers_absent:true,typescript:['6.0.3','5.7.3']},null,2));
   console.log('smoke-pack: isolated runtime and TS 6 / 5.7 declarations PASS');
 }
 
@@ -98,7 +108,7 @@ if (isCli) {
     ? requested
     : readdirSync(FIXTURES).filter((name) => existsSync(path.join(FIXTURES, name, 'package.json'))).sort();
   const tarball = packTarball();
-  verifyCoreWithoutPeers(tarball);
+  await verifyCoreWithoutPeers(tarball);
   for (const name of fixtures) installFixture(name, tarball);
   console.log(`smoke-pack: OK — ${fixtures.join(', ')}`);
 }

@@ -1,3 +1,5 @@
+import {P2Demo} from './p2-demo.jsx';
+import {P2Geometry} from './p2-geometry.jsx';
 // Consumer page built only from the public subpaths of the packed tarball.
 import { useState } from 'react';
 
@@ -81,6 +83,8 @@ export function App() {
         <output data-testid="dismisses">{dismisses}</output>
         <DataState state="ready">{0}</DataState>
       <P1Consumer/>
+      <P2Demo/>
+      {globalThis.location?.pathname==='/p2-geometry'&&<P2Geometry/>}
       </main>
     </NovaProvider>
   );

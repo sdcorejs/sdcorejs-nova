@@ -1,0 +1,9 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-pdf-preview {min-inline-size:0;max-inline-size:100%;color:var(--nova-color-text);background:var(--nova-color-background);font-family:var(--nova-font-family);overflow-wrap:anywhere;}
+ .nova-pdf-preview__actions {display:flex;flex-wrap:wrap;align-items:center;gap:var(--nova-space-2);margin-block:var(--nova-space-2);}
+ .nova-pdf-preview__page {max-inline-size:100%;overflow:auto;position:relative;}
+ .nova-pdf-preview__page canvas {display:block;max-inline-size:100%;block-size:auto;}
+ .nova-pdf-preview__text-layer {user-select:text;}
+ @media (forced-colors:active) {.nova-pdf-preview {color:CanvasText;background:Canvas;}}
+}

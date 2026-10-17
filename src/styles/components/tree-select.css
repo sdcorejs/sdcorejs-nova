@@ -1,0 +1,2 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components { .nova-tree-select { min-inline-size: 0; } .nova-tree-select .nova-entity-picker__trigger { overflow-wrap: anywhere; } }

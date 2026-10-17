@@ -1,6 +1,6 @@
 # SD Nova — bộ spec review r1
 
-Core UI React độc lập cho trang end user, package đề xuất `@sdcorejs/nova`, nền shadcn/Base UI và visual tokens neutral riêng. Đây là bộ tài liệu thiết kế. Phạm vi P0 (12 dossier) đã được triển khai và kiểm cục bộ nhưng P0 này chưa được publish; xem [hướng dẫn tích hợp P0](p0-integration.vi.md). P1 hiện có triển khai local và consumer examples, đang hoàn tất kiểm chứng; xem [contract P1](p1-contract.vi.md) và [phạm vi/kiểm chứng P1](p1-plan.vi.md). P1 chưa merge/publish; P2/P3 tiếp tục là đề xuất.
+Core UI React độc lập cho trang end user, package `@sdcorejs/nova`, nền shadcn/Base UI và visual tokens neutral riêng. Bộ tài liệu gồm spec thiết kế và contract triển khai local. P0 (12 dossier) đã merge tại `c7e4bbbf5a948208618bd4b54e492bd3a2f6d662`, chưa publish npm; xem [hướng dẫn tích hợp P0](p0-integration.vi.md). P1 (26 dossier) đã lưu commit local `83af685a76dd166f239567372efd3582ed9bbb5c`, AC-095–097 còn chờ manual; xem [contract P1](p1-contract.vi.md) và [phạm vi/kiểm chứng P1](p1-plan.vi.md). P2 (14 dossier) có source MVP local, chưa commit; xem [API/tích hợp P2](p2-implementation.vi.md). P1/P2 chưa merge/deploy/publish; P3 ngoài phạm vi triển khai này. Revision online không được xác minh lại trong đợt local này.
 
 Đọc theo thứ tự:
 
@@ -88,7 +88,7 @@ Conventions P0: React 19 trước; CSS biên dịch sẵn; một package với s
 
 59 dossier, 188 acceptance cases; 60 snippet TypeScript/TSX qua kiểm tra cú pháp. Review API/design độc lập đã xử lý blocker trong phạm vi kiểm tra. Inventory có disposition cho mọi row và không dangling spec references. Barrels/secondary path parity được kiểm tra giữa v19–v22 ở cả hai snapshots.
 
-Với P0, typecheck ngữ nghĩa (TypeScript 6.0.3 và 5.7.3), test unit, SSR, trình duyệt ba engine và smoke production Vite/Next đã chạy cục bộ; kiểm thủ công trình đọc màn hình, zoom 200% và gõ Telex/VNI chưa được xác nhận. P1 đang được triển khai cục bộ và chưa xuất bản; P2, P3 còn là proposal. Các kiểm tra đó là acceptance requirements.
+Với P0, typecheck ngữ nghĩa (TypeScript 6.0.3 và 5.7.3), test unit, SSR, trình duyệt ba engine và smoke production Vite/Next đã chạy cục bộ; kiểm thủ công trình đọc màn hình, zoom 200% và gõ Telex/VNI chưa được xác nhận. P1 đã lưu commit local; P2 đã triển khai local theo plan, có gate tự động và consumer tarball. P1 AC-095–097, workbook adapter thực (một phần P2 AC-043) và PDF/screen reader P2 AC-048–049 vẫn pending/NOT RUN. Ảnh browser thực, native zoom và emulation không thay thế thiết bị thật hoặc nghiệm thu của owner; P3 còn là proposal. Xem [phạm vi API và bằng chứng P2](p2-implementation.vi.md).
 
 Showcase consumer Vite/Pages đã có menu gọn với selected/hover/focus riêng; CI và deployment/public revision cần xác nhận bằng run thực tế. Xem [hướng dẫn showcase](showcase-pages.vi.md). npm release tiếp tục hoãn đến sau P1/P2 và review, owner tự đánh version tag.
 
@@ -100,7 +100,7 @@ Overlay ở cấp gốc dùng `NovaProvider.portalContainer` khi được cung c
 
 Cha nonmodal cho phép container ngoài độc lập. Nếu cần modal con trong một host ngoài hoặc iframe độc lập, consumer đóng modal cha rồi mở overlay cấp gốc tại host đó. Focus owner theo `popup.ownerDocument` thực tế. Đóng hoặc đổi host phải dọn wrapper, khôi phục focus vào opener/return target còn truy cập được và trả lại các marker/scroll-lock do primitive quản lý.
 
-Các overlay P1 đang được triển khai và kiểm tra cục bộ. Hình học responsive, positioning khi scroll, keyboard trong browser, CSP, packed exports và kiểm thử production vẫn là các yêu cầu cần xác minh trước khi coi P1 hoàn tất.
+Các overlay P1 nằm trong commit local đã được kiểm tự động và tiếp tục chạy regression khi tích hợp P2. Hình học responsive, positioning, keyboard/focus, CSP, packed exports và production consumer có gate riêng; nghiệm thu screen reader, thiết bị thật và owner UI của P1 vẫn còn chờ. P2 bổ sung ResizableDialog/Splitter trong phạm vi geometry hữu hạn/clamped đã duyệt, không nới CSP headers.
 
 Popover nhận một trigger element duy nhất. Intrinsic `<button>` và component trả native button (gồm Nova Button) dùng native button mode. Intrinsic element khác dùng button semantics của primitive ngay từ SSR. Với custom component trả element non-native, consumer khai báo `role="button"` trên element truyền vào và forward toàn bộ primitive props/ref tới DOM; khai báo này chọn non-native mode. Nova không tự suy DOM output của một React component bất kỳ. Consumer handlers, ref và accessible name được giữ khi compose; Enter/Space của non-native trigger kích hoạt một lần.
 

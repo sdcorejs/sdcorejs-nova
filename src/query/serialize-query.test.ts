@@ -1,0 +1,19 @@
+import {describe,it,expect} from 'vitest';import {serializeQuery} from './serialize-query.js';import type {QueryNode} from './query-types.js';
+const rule=(id:string,value:unknown):QueryNode=>({kind:'rule',id,field:'f',operator:'eq',operand:{kind:'literal',value}} as QueryNode);
+describe('case-p2-d03-ac01-unit serializer',()=>{
+ it.each([0,false,null,'', '2026-10-16',Object.freeze([0,'0'])])('roundtrips raw semantic literal %j without UI IDs',value=>{const node:QueryNode={kind:'group',id:'ui-group',logic:'and',children:[rule('ui-rule',value)]};const output=serializeQuery(node);expect(JSON.parse(JSON.stringify(output))).toEqual({kind:'group',logic:'and',children:[{kind:'rule',field:'f',operator:'eq',operand:{kind:'literal',value}}]});expect(JSON.stringify(output)).not.toContain('ui-');expect(node.children[0]!.id).toBe('ui-rule');});
+ it('null is the empty query; a field operand is semantic JSON without metadata options',()=>{expect(serializeQuery(null)).toBeNull();expect(serializeQuery({kind:'rule',id:'r',field:'f',operator:'eq',operand:{kind:'field',field:'other'}})).toEqual({kind:'rule',field:'f',operator:'eq',operand:{kind:'field',field:'other'}});});
+ it('serializer has no hidden UI defaults for valid large/deep consumer trees',()=>{let node:QueryNode=rule('r',false);for(let i=0;i<80;i++)node={kind:'group',id:'g'+i,logic:'or',children:[node]};expect(()=>serializeQuery(node)).not.toThrow();expect(()=>serializeQuery({kind:'group',id:'many',logic:'and',children:Array.from({length:60},(_,i)=>rule('r'+i,i))})).not.toThrow();});
+});
+describe('case-p2-d03-ac03-unit serializer structural safety',()=>{
+ it.each([NaN,Infinity,undefined,{},[undefined],Array(1),[NaN]])('rejects non-JSON literals %j rather than changing them to null',value=>expect(()=>serializeQuery(rule('r',value))).toThrow(TypeError));
+ it('rejects sparse children, empty groups, duplicate/blank IDs and invalid discriminants',()=>{for(const node of [{kind:'group',id:'g',logic:'and',children:Array(1)},{kind:'group',id:'g',logic:'and',children:[]},{kind:'group',id:'g',logic:'xor',children:[rule('r',0)]},{kind:'group',id:'g',logic:'and',children:[rule('r',0),rule('r',1)]},rule('',0),{...rule('r',0),field:''},{...rule('r',0),operand:{kind:'sql',value:'x'}}])expect(()=>serializeQuery(node as QueryNode)).toThrow(TypeError);});
+ it('rejects cycles and shared node references without recursion overflow',()=>{const node:QueryNode={kind:'group',id:'g',logic:'and',children:[]};(node.children as QueryNode[]).push(node);expect(()=>serializeQuery(node)).toThrow(TypeError);});
+});
+// D03 R1 test-quality advisory: explicit objects keep array literals in one Vitest argument.
+describe('case-p2-d03-ac01-unit explicit mixed-key array serialization coverage',()=>{
+ it.each([{value:Object.freeze([0,'0'])}])('stringify/parse preserves every mixed typed key in $value',({value})=>{const node:QueryNode={kind:'group',id:'ui-group-array',logic:'or',children:[rule('ui-rule-array',value)]};const parsed:unknown=JSON.parse(JSON.stringify(serializeQuery(node)));expect(parsed).toEqual({kind:'group',logic:'or',children:[{kind:'rule',field:'f',operator:'eq',operand:{kind:'literal',value:[0,'0']}}]});expect(JSON.stringify(parsed)).not.toContain('ui-');expect(node.children[0]!.kind==='rule'&&node.children[0]!.operand.kind==='literal'&&node.children[0]!.operand.value).toBe(value);expect(value).toEqual([0,'0']);});
+});
+describe('case-p2-d03-ac03-unit explicit malformed literal-array coverage',()=>{
+ it.each([{name:'sparse slot',value:Array(1)},{name:'undefined entry',value:[undefined]},{name:'NaN entry',value:[NaN]},{name:'infinite entry',value:[Infinity]},{name:'negative infinite entry',value:[-Infinity]}])('rejects the full array containing $name without JSON null substitution',({value})=>{expect(()=>serializeQuery(rule('array-rule',value))).toThrow(TypeError);});
+});

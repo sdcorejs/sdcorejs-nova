@@ -1,0 +1,1 @@
+import type {FilterValue} from './filter-types.js';export type QueryNode={kind:'rule';id:string;field:string;operator:string;operand:{kind:'literal';value:FilterValue}|{kind:'field';field:string}}|{kind:'group';id:string;logic:'and'|'or';children:readonly QueryNode[]};

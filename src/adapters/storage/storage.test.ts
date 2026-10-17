@@ -1,0 +1,5 @@
+import {afterEach,expect,it,vi} from 'vitest';
+import {createLocalStorageAdapter} from './index.js';
+afterEach(()=>{localStorage.clear();vi.restoreAllMocks();});
+it('explicit browser factory reads/writes/removes localStorage only when its methods are called',async()=>{const get=vi.spyOn(Storage.prototype,'getItem'),set=vi.spyOn(Storage.prototype,'setItem'),remove=vi.spyOn(Storage.prototype,'removeItem');const adapter=createLocalStorageAdapter();expect(get).not.toHaveBeenCalled();expect(set).not.toHaveBeenCalled();await adapter.write('isolated-test','payload');expect(set).toHaveBeenCalledWith('isolated-test','payload');expect(await adapter.read('isolated-test')).toBe('payload');await adapter.remove('isolated-test');expect(remove).toHaveBeenCalledWith('isolated-test');expect(await adapter.read('isolated-test')).toBeNull();});
+it('adapter rejects browser access errors so hook can report honest error status',async()=>{vi.spyOn(Storage.prototype,'setItem').mockImplementation(()=>{throw new DOMException('private','QuotaExceededError');});await expect(createLocalStorageAdapter().write('isolated','value')).rejects.toHaveProperty('name','QuotaExceededError');});

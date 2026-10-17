@@ -17,6 +17,7 @@ import {InlineText} from '@sdcorejs/nova/inline-text';
 import {SegmentedControl} from '@sdcorejs/nova/segmented-control';
 import {useForm} from 'react-hook-form';
 import {useNovaController} from '@sdcorejs/nova/adapters/react-hook-form';
+import {ColorInput} from '@sdcorejs/nova/color-input';
 const INITIAL={name:'Nguyễn An',email:'an.nguyen@example.com',updates:true,digest:false,language:'vi'};
 export function FormsPage({locale='vi'}:{locale?:Locale}){
  const t=(vi:string,en:string)=>locale==='vi'?vi:en,save=useRef<HTMLButtonElement>(null);
@@ -41,8 +42,11 @@ export function FormsPage({locale='vi'}:{locale?:Locale}){
      <div className="showcase-confirmation" role="status" aria-live="polite" aria-atomic="true">{confirmed&&<Alert tone="success" title={t('Đã giữ thay đổi trong bản mẫu','Changes kept in this preview')} onDismiss={()=>{setConfirmed(false);save.current?.focus();}}>{t('Chỉ có hiệu lực trong trang đang mở. Chưa lưu vào tài khoản.','Only affects this open page. Not saved to an account.')}</Alert>}</div>
     </form>
     <P1Controls locale={locale}/>
+    <AccentColor locale={locale}/>
     <div className="showcase-context-note"><span className="showcase-note-rule"/><p>{t('Một màn hình, một việc cần làm.','One screen, one purpose.')}<br/><span>{t('Các control được nhóm theo nội dung, với khoảng thở vừa đủ.','Related controls grouped with room to breathe.')}</span></p></div>
  </>;
 }
+
+function AccentColor({locale}:{locale:Locale}){const [value,setValue]=useState<string|null>('#173B3F'),t=(vi:string,en:string)=>locale==='vi'?vi:en;return <Card className="showcase-demo"><h2>{t('Màu nhấn cá nhân','Personal accent color')}</h2><ColorInput label={t('Màu nhấn','Accent color')} value={value} onValueChange={setValue}/><p>{t('Màu đã nhận','Accepted color')}: <output aria-label="Accepted color">{value??t('Không có','None')}</output></p></Card>;}
 
 function P1Controls({locale}:{locale:Locale}){const t=(vi:string,en:string)=>locale==='vi'?vi:en,[selected,setSelected]=useState<readonly number[]>([0]),[mode,setMode]=useState<boolean|null>(false),[sent,setSent]=useState(false);const options=[{key:0,label:t('Không','Zero'),data:0},{key:1,label:t('Một','One'),data:1},{key:2,label:t('Hai','Two'),data:2}];const {control,handleSubmit}=useForm({defaultValues:{note:''}}),note=useNovaController({control,name:'note',rules:{required:t('Vui lòng nhập ghi chú.','Enter a note.')}});return <Card className="showcase-demo"><h2>{t('Biểu mẫu linh hoạt','Flexible forms')}</h2><form onSubmit={handleSubmit(()=>setSent(true))}><div className="showcase-demo-grid"><NumberInput label={t('Số lượng','Quantity')} defaultValue={0} name="quantity"/><Select label={t('Chọn một','Select one')} options={options} defaultValue={0} name="choice" clearable/><Combobox label={t('Tìm và chọn','Search and choose')} options={options} name="search"/><Autocomplete label={t('Thành phố','City')} suggestions={['Hà Nội','Đà Nẵng','Hồ Chí Minh']}/><MultiSelect label={t('Chọn nhiều','Select many')} options={options} value={selected} onValueChange={setSelected} name="many"/><ChipInput label={t('Nhãn','Tags')} defaultValue={['Nova']} name="tag"/><InlineText label={t('Tên ngắn','Short name')} defaultValue="Nova" clearable/><SegmentedControl label={t('Chế độ','Mode')} items={[{value:false,label:t('Gọn','Compact')},{value:true,label:t('Đầy đủ','Full')}]} value={mode} onValueChange={setMode}/><Input {...note} label={t('Ghi chú bắt buộc','Required note')}/></div><Button type="submit">{t('Gửi bản mẫu','Submit example')}</Button>{sent&&<p role="status">{t('Đã gửi trong trang đang mở.','Submitted in this open page.')}</p>}</form></Card>;}

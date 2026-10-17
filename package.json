@@ -207,6 +207,94 @@
     "./adapters/temporal": {
       "types": "./dist/adapters/temporal/index.d.ts",
       "default": "./dist/adapters/temporal/index.js"
+    },
+    "./adapters/storage": {
+      "types": "./dist/adapters/storage/index.d.ts",
+      "default": "./dist/adapters/storage/index.js"
+    },
+    "./calendar-chips": {
+      "types": "./dist/components/calendar-chips/index.d.ts",
+      "default": "./dist/components/calendar-chips/index.js"
+    },
+    "./color-input": {
+      "types": "./dist/components/color-input/index.d.ts",
+      "default": "./dist/components/color-input/index.js"
+    },
+    "./data-table": {
+      "types": "./dist/components/data-table/index.d.ts",
+      "default": "./dist/components/data-table/index.js"
+    },
+    "./entity-picker": {
+      "types": "./dist/components/entity-picker/index.d.ts",
+      "default": "./dist/components/entity-picker/index.js"
+    },
+    "./file-explorer": {
+      "types": "./dist/components/file-explorer/index.d.ts",
+      "default": "./dist/components/file-explorer/index.js"
+    },
+    "./file-upload": {
+      "types": "./dist/components/file-upload/index.d.ts",
+      "default": "./dist/components/file-upload/index.js"
+    },
+    "./image-preview": {
+      "types": "./dist/components/image-preview/index.d.ts",
+      "default": "./dist/components/image-preview/index.js"
+    },
+    "./import-wizard": {
+      "types": "./dist/components/import-wizard/index.d.ts",
+      "default": "./dist/components/import-wizard/index.js"
+    },
+    "./job-progress": {
+      "types": "./dist/components/job-progress/index.d.ts",
+      "default": "./dist/components/job-progress/index.js"
+    },
+    "./pdf-preview": {
+      "types": "./dist/components/pdf-preview/index.d.ts",
+      "default": "./dist/components/pdf-preview/index.js"
+    },
+    "./query-bar": {
+      "types": "./dist/components/query-bar/index.d.ts",
+      "default": "./dist/components/query-bar/index.js"
+    },
+    "./query-builder": {
+      "types": "./dist/components/query-builder/index.d.ts",
+      "default": "./dist/components/query-builder/index.js"
+    },
+    "./resizable-dialog": {
+      "types": "./dist/components/resizable-dialog/index.d.ts",
+      "default": "./dist/components/resizable-dialog/index.js"
+    },
+    "./splitter": {
+      "types": "./dist/components/splitter/index.d.ts",
+      "default": "./dist/components/splitter/index.js"
+    },
+    "./tree-select": {
+      "types": "./dist/components/tree-select/index.d.ts",
+      "default": "./dist/components/tree-select/index.js"
+    },
+    "./tree": {
+      "types": "./dist/components/tree/index.d.ts",
+      "default": "./dist/components/tree/index.js"
+    },
+    "./file-transfer": {
+      "types": "./dist/hooks/file-transfer/index.d.ts",
+      "default": "./dist/hooks/file-transfer/index.js"
+    },
+    "./stored-state": {
+      "types": "./dist/hooks/stored-state/index.d.ts",
+      "default": "./dist/hooks/stored-state/index.js"
+    },
+    "./task": {
+      "types": "./dist/hooks/task/index.d.ts",
+      "default": "./dist/hooks/task/index.js"
+    },
+    "./task-provider": {
+      "types": "./dist/providers/task/index.d.ts",
+      "default": "./dist/providers/task/index.js"
+    },
+    "./query": {
+      "types": "./dist/query/index.d.ts",
+      "default": "./dist/query/index.js"
     }
   },
   "files": [
@@ -240,7 +328,8 @@
     "preview:showcase": "vite preview --config showcase/vite.config.mjs --port 5203",
     "check:showcase": "node scripts/check-showcase.mjs && node --test test/showcase/artifact.test.mjs",
     "test:showcase": "playwright test --config test/showcase/playwright.config.ts",
-    "check:adapters": "node scripts/check-p1-adapters.mjs"
+    "check:adapters": "node scripts/check-p1-adapters.mjs",
+    "check:p2": "node scripts/check-p2-contracts.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",

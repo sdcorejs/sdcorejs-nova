@@ -1,0 +1,12 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-resizable-dialog { min-inline-size:0; min-block-size:0; }
+ .nova-resizable-dialog > .nova-dialog__body { flex:1 1 auto; padding-block-end:var(--nova-hit-target); }
+ .nova-resizable-dialog__handle { box-sizing:border-box; position:absolute; inset-inline-end:0; inset-block-end:0; min-inline-size:var(--nova-hit-target); min-block-size:var(--nova-hit-target); padding:var(--nova-space-2); border:0; border-radius:var(--nova-radius-control); background:var(--nova-color-background); color:var(--nova-color-text); font:inherit; cursor:nwse-resize; touch-action:none; }
+ .nova-resizable-dialog__handle:dir(rtl) { cursor:nesw-resize; }
+ .nova-resizable-dialog__handle:dir(rtl) > .nova-resizable-dialog__icon { transform:scaleX(-1); }
+ .nova-resizable-dialog__handle:disabled { cursor:default; color:var(--nova-color-disabled-text); }
+ .nova-resizable-dialog__handle:focus-visible { outline:var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset:calc(-1 * var(--nova-focus-width)); }
+ @media (max-width:640px) { .nova-resizable-dialog { inset:0; transform:none; max-inline-size:100%; max-block-size:100dvh; border-radius:0; padding-block-end:max(var(--nova-space-4),env(safe-area-inset-bottom)); } .nova-resizable-dialog:dir(rtl) { transform:none; } .nova-resizable-dialog__handle { display:none; } .nova-resizable-dialog > .nova-dialog__body { padding-block-end:0; } }
+ @media (forced-colors:active) { .nova-resizable-dialog, .nova-resizable-dialog__handle { background:Canvas; color:CanvasText; } .nova-resizable-dialog .nova-dialog__title, .nova-resizable-dialog .nova-dialog__description { color:CanvasText; } .nova-resizable-dialog__handle:focus-visible { outline-color:Highlight; } }
+}
