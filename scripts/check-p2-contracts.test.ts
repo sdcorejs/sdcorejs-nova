@@ -1,8 +1,17 @@
 // @vitest-environment node
-import {readFileSync} from 'node:fs';
+import {readdirSync,readFileSync} from 'node:fs';
+import {createSourceFile,isImportDeclaration,isStringLiteral,ScriptKind,ScriptTarget} from 'typescript';
 import {expect,it} from 'vitest';
 type Config={testMatch:string|string[];workers:number;retries:number;projects:{name:string}[];webServer:object;use:object};
 const checker=await import(new URL('./check-p2-contracts.mjs',import.meta.url).href) as {isInheritedOverlayStyle:(element:Record<string,unknown>)=>boolean;checkP2Contracts:(root:string)=>Promise<string[]>;isInheritedDialogStyle:(selector:string,property:string,value:string)=>boolean;isApprovedGeometry:(selector:string,property:string,value:string,bounds?:{width:number;height:number})=>boolean;additiveShowcaseConfig:(config:Config)=>Config};
+it('browser scenarios do not statically import private runtime artifacts',()=>{
+ const directory=new URL('../test/browser/scenarios/',import.meta.url);
+ const privateImports=readdirSync(directory).filter(name=>name.endsWith('.tsx')).flatMap(name=>{
+  const source=createSourceFile(name,readFileSync(new URL(name,directory),'utf8'),ScriptTarget.Latest,true,ScriptKind.TSX);
+  return source.statements.flatMap(statement=>isImportDeclaration(statement)&&isStringLiteral(statement.moduleSpecifier)&&/(?:^|\/)\.sdcorejs\//u.test(statement.moduleSpecifier.text.replaceAll('\\','/'))?[`${name}: ${statement.moduleSpecifier.text}`]:[]);
+ });
+ expect(privateImports).toEqual([]);
+});
 it('P2 public API/CSS/isolation contract gate passes the actual package',async()=>{expect(await checker.checkP2Contracts(new URL('../',import.meta.url).pathname.replace(/^\/(?:([A-Z]):)/,'$1:'))).toEqual([]);});
 it.each([['.nova-splitter__panel','flex-basis','0%'],['.nova-splitter__panel','flex-basis','100%'],['.nova-splitter__panel','flex-basis','1e-10%'],['.nova-splitter__panel','flex-basis','.5%'],['.nova-resizable-dialog','width','320px'],['.nova-resizable-dialog','height','2e2px']])('D002 accepts finite approved geometry %s %s %s',(s,p,v)=>{expect(checker.isApprovedGeometry(s,p,v,{width:1280,height:800})).toBe(true);});
 it.each([['.nova-other','width','320px'],['.nova-resizable-dialog.foo','width','320px'],['.nova-resizable-dialog','color','red'],['.nova-resizable-dialog','--width','320px'],['.nova-splitter__panel','width','20px'],['.nova-splitter__panel','flex-basis','101%'],['.nova-splitter__panel','flex-basis','-1%'],['.nova-splitter__panel','flex-basis','NaN%'],['.nova-splitter__panel','flex-basis','Infinity%'],['.nova-splitter__panel','flex-basis','1e999%'],['.nova-splitter__panel','flex-basis','calc(50%)'],['.nova-resizable-dialog','width','0px'],['.nova-resizable-dialog','width','-1px'],['.nova-resizable-dialog','width','100000px'],['.nova-resizable-dialog','width','1px;color:red'],['.nova-resizable-dialog','height','50%']])('D002 rejects unapproved geometry %s %s %s',(s,p,v)=>{expect(checker.isApprovedGeometry(s,p,v,{width:1280,height:800})).toBe(false);});

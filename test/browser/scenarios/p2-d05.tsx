@@ -5,7 +5,7 @@ import {NovaProvider} from '../../../src/providers/nova/index.js';
 import {FileExplorer,type ExplorerItem,type FileExplorerProps} from '../../../src/components/file-explorer/index.js';
 import {Button} from '../../../src/components/button/index.js';
 import {ImagePreview} from '../../../src/components/image-preview/index.js';
-import '../../../.sdcorejs/tmp/p2-d05/file-explorer.css';
+import '../../../dist/styles/file-explorer.css';
 type Raw={id:string;title:string};
 const file:ExplorerItem<Raw>={key:'f',name:'Đề án.txt',kind:'file',data:{id:'raw-file',title:'Raw title'}};
 const roots:readonly ExplorerItem<Raw>[]=[{key:0,name:'Archive',kind:'folder',data:{id:'archive',title:'Archive'}},{key:'0',name:'Slow',kind:'folder',data:{id:'slow',title:'Slow'}},{key:'empty',name:'Empty',kind:'folder',data:{id:'empty',title:'Empty'}},{key:'error',name:'Locked',kind:'folder',data:{id:'error',title:'Locked'}}];

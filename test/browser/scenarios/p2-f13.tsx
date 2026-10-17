@@ -4,8 +4,8 @@ import { renderToString } from 'react-dom/server';
 import { EntityPicker } from '../../../src/components/entity-picker/index.js';
 import { TreeSelect } from '../../../src/components/tree-select/index.js';
 import { NovaProvider } from '../../../src/providers/nova/index.js';
-import '../../../.sdcorejs/tmp/p2-f13/css/entity-picker.css';
-import '../../../.sdcorejs/tmp/p2-f13/css/tree-select.css';
+import '../../../dist/styles/entity-picker.css';
+import '../../../dist/styles/tree-select.css';
 type Item = {
     id: number | string;
     label: string;
