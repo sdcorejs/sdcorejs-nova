@@ -69,6 +69,7 @@ test('case-p2-d01-r1-browser external collapse preserves the overflow region aft
     visited.add(active.index);
     focusPath.push(active.label);
     await page.keyboard.press('Shift+Tab');
+    await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('*')).indexOf(document.activeElement!)), { message: `Shift+Tab must move focus from ${active.label}` }).not.toBe(active.index);
   }
   await expect(scroll, `Backward focus cycle: ${focusPath.join(' -> ')}`).toBeFocused();
   await page.getByRole('button', { name: 'Collapse rows externally', exact: true }).evaluate((button: HTMLButtonElement) => button.click());
