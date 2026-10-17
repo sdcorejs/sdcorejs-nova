@@ -50,8 +50,8 @@ export function packTarball() {
 
 export function installFixture(name, tarball) {
   const dir = inside(FIXTURES, path.join(FIXTURES, name));
-  run('npm', existsSync(path.join(dir, 'package-lock.json')) ? ['ci', '--offline', '--no-audit', '--no-fund'] : ['install', '--offline', '--no-audit', '--no-fund'], dir);
-  run('npm', ['install', '--offline', '--ignore-scripts', '--no-package-lock', '--no-save', '--no-audit', '--no-fund', path.relative(dir, tarball).replaceAll('\\', '/')], dir);
+  run('npm', existsSync(path.join(dir, 'package-lock.json')) ? ['ci', '--prefer-offline', '--no-audit', '--no-fund'] : ['install', '--prefer-offline', '--no-audit', '--no-fund'], dir);
+  run('npm', ['install', '--prefer-offline', '--ignore-scripts', '--no-package-lock', '--no-save', '--no-audit', '--no-fund', path.relative(dir, tarball).replaceAll('\\', '/')], dir);
   run('npm', ['run', 'build'], dir);
 }
 
@@ -67,7 +67,7 @@ export async function verifyCoreWithoutPeers(tarball) {
     dependencies:{react:'19.3.0','react-dom':'19.3.0'},
     devDependencies:{'@types/react':'19.3.0','@types/react-dom':'19.3.0'}
   },null,2));
-  run('npm',['install','--offline','--no-package-lock','--ignore-scripts','--omit=optional','--no-audit','--no-fund',tarball],dir);
+  run('npm',['install','--prefer-offline','--no-package-lock','--ignore-scripts','--omit=optional','--no-audit','--no-fund',tarball],dir);
   writeFileSync(path.join(dir,'consumer.mjs'),`
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
