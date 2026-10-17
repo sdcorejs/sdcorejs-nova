@@ -58,11 +58,19 @@ test('case-p2-d01-r1-browser external collapse preserves the overflow region aft
   const keep = table.getByRole('button', { name: 'Keep detail Number zero', exact: true });
   await keep.click();
   await keep.focus();
-  for (let step = 0; step < 10; step++) {
+  const visited = new Set<number>(), focusPath: string[] = [];
+  for (;;) {
     if (await scroll.evaluate(node => node === node.ownerDocument.activeElement)) break;
+    const active = await page.evaluate(() => {
+      const element = document.activeElement;
+      return { index: element ? Array.from(document.querySelectorAll('*')).indexOf(element) : -1, label: element ? `${element.tagName}: ${element.getAttribute('aria-label') ?? element.textContent?.trim().slice(0, 60) ?? ''}` : 'no active element' };
+    });
+    if (visited.has(active.index)) break;
+    visited.add(active.index);
+    focusPath.push(active.label);
     await page.keyboard.press('Shift+Tab');
   }
-  await expect(scroll).toBeFocused();
+  await expect(scroll, `Backward focus cycle: ${focusPath.join(' -> ')}`).toBeFocused();
   await page.getByRole('button', { name: 'Collapse rows externally', exact: true }).evaluate((button: HTMLButtonElement) => button.click());
   await expect(table.getByRole('button', { name: 'Expand row 1', exact: true })).toHaveAttribute('aria-expanded', 'false');
   await expect(scroll).toBeFocused();
