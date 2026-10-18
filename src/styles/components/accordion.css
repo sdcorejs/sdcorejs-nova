@@ -1,0 +1,17 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+  .nova-accordion { display: grid; min-inline-size: 0; }
+  .nova-accordion, .nova-collapsible { color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-collapsible { min-inline-size: 0; border-block-end: var(--nova-border-width) solid var(--nova-color-border); }
+  .nova-collapsible__header { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-2); }
+  .nova-collapsible__heading { flex: 1 1 12rem; min-inline-size: 0; margin: 0; font: inherit; }
+  .nova-collapsible__trigger { display: flex; align-items: center; justify-content: space-between; gap: var(--nova-space-2); inline-size: 100%; min-block-size: var(--nova-control-md); border: 0; border-radius: var(--nova-radius-control); padding: var(--nova-space-2); background: transparent; color: var(--nova-color-text); font: inherit; font-weight: 600; text-align: start; cursor: pointer; overflow-wrap: anywhere; }
+  .nova-collapsible__trigger:hover:not([aria-disabled="true"]) { background: var(--nova-color-surface-hover); }
+  .nova-collapsible__trigger[aria-disabled="true"] { color: var(--nova-color-text-muted); cursor: default; }
+  .nova-collapsible__trigger:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+  .nova-collapsible__actions { flex: none; }
+  .nova-collapsible__panel { padding: var(--nova-space-2); overflow-wrap: anywhere; min-inline-size: 0; }
+  .nova-collapsible__panel[hidden] { display: none; }
+  @media (max-width: 640px), (pointer: coarse) { .nova-collapsible__trigger { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); } }
+  @media (forced-colors: active) { .nova-collapsible__trigger:focus-visible { outline-color: Highlight; } .nova-collapsible { border-color: CanvasText; } }
+}

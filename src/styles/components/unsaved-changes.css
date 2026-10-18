@@ -1,0 +1,5 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+.nova-unsaved-changes__actions{display:flex;flex-wrap:wrap;gap:var(--nova-space-2)}
+
+}

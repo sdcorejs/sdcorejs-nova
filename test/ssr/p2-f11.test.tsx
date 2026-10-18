@@ -1,0 +1,6 @@
+import {renderToString} from 'react-dom/server';
+import {expect,it} from 'vitest';
+import {CalendarChips} from '../../src/components/calendar-chips/index.js';
+import {NovaProvider} from '../../src/providers/nova/index.js';
+it('case-p2-f11-ac01-ssr F11 date set SSR has no DOM access, clock, timezone or initial overlay',()=>{expect(typeof window).toBe('undefined');const previous=process.env.TZ;try{const tree=<NovaProvider locale="en"><CalendarChips label="Holidays" referenceDate="2024-02-29" defaultValue={['2024-02-29','2024-01-31','2024-02-29']} name="days"/></NovaProvider>;process.env.TZ='UTC';const html=renderToString(tree);process.env.TZ='Pacific/Honolulu';expect(renderToString(tree)).toBe(html);expect(html).toContain('Thursday, February 29, 2024');expect(html).not.toContain('role="grid"');expect(html).not.toContain('role="dialog"');expect(html.match(/name="days"/g)).toHaveLength(2);}finally{if(previous===undefined)delete process.env.TZ;else process.env.TZ=previous;}});
+it('F11 invalid and readonly values render safely without a DOM',()=>{expect(renderToString(<CalendarChips label="Days" referenceDate="2024-02-30"/>)).toContain('NOVA_DATE_INVALID_CONFIGURATION');expect(renderToString(<NovaProvider locale="en"><CalendarChips label="Days" referenceDate="2024-01-31" readOnly/></NovaProvider>)).toContain('No dates selected');});

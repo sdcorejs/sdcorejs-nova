@@ -1,0 +1,7 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-scroll-area { overflow: auto; min-inline-size: 0; max-inline-size: 100%; overscroll-behavior: contain; scrollbar-gutter: stable; }
+ .nova-scroll-area__content { min-inline-size: 0; }
+ .nova-scroll-area:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+ @media (forced-colors: active) { .nova-scroll-area:focus-visible { outline-color: Highlight; } }
+}

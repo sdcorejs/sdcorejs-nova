@@ -1,0 +1,8 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+  .nova-popover__positioner, .nova-tooltip__positioner { z-index: 1; }
+  .nova-popover, .nova-tooltip { box-sizing: border-box; max-inline-size: min(24rem, calc(100vw - 32px)); max-block-size: var(--available-height); overflow: auto; overflow-wrap: anywhere; font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); color: var(--nova-color-text); background: var(--nova-color-background); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-overlay); padding: var(--nova-space-4); }
+  .nova-tooltip { max-inline-size: min(18rem, calc(100vw - 32px)); padding: var(--nova-space-2) var(--nova-space-3); }
+  .nova-popover:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+  @media (forced-colors: active) { .nova-popover, .nova-tooltip { border-color: CanvasText; } .nova-popover:focus-visible { outline-color: Highlight; } }
+}

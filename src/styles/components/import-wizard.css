@@ -1,0 +1,14 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-import-wizard {display:flex;flex-direction:column;gap:var(--nova-space-4);min-inline-size:0;max-inline-size:100%;color:var(--nova-color-text);font-family:var(--nova-font-family);font-size:var(--nova-font-size-body);line-height:var(--nova-line-height-body);overflow-wrap:anywhere;}
+ .nova-import-wizard__mapping {display:grid;gap:var(--nova-space-3);}
+ .nova-import-wizard__mapping > div {display:flex;flex-direction:column;gap:var(--nova-space-2);min-inline-size:0;}
+ .nova-import-wizard__mapping select {box-sizing:border-box;inline-size:100%;min-block-size:var(--nova-space-7);padding:var(--nova-space-2);font:inherit;color:var(--nova-color-text);background:var(--nova-color-background);border:var(--nova-border-width) solid var(--nova-color-control-border);border-radius:var(--nova-radius-control);}
+ .nova-import-wizard__footer {display:flex;flex-wrap:wrap;gap:var(--nova-space-2);padding-block:var(--nova-space-3);}
+ .nova-import-wizard__footer .nova-button {min-block-size:var(--nova-space-7);}
+ .nova-import-wizard__ack {display:flex;align-items:center;gap:var(--nova-space-2);min-block-size:var(--nova-space-7);}
+ .nova-import-wizard [role="alert"] {color:var(--nova-color-danger);}
+ .nova-import-wizard :where(select,input,a,[tabindex="-1"]):focus-visible {outline:var(--nova-focus-width) solid var(--nova-color-focus-ring);outline-offset:var(--nova-focus-offset);}
+ .nova-import-wizard .nova-data-table__scroll {max-inline-size:100%;}
+ @media (forced-colors:active) {.nova-import-wizard__mapping select {border-color:ButtonText;} .nova-import-wizard :focus-visible {outline-color:Highlight;}}
+}

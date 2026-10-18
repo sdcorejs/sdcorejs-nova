@@ -1,6 +1,17 @@
 /* Consumer composition only. Nova color/type/spacing sources stay unchanged.
    New candidate page roles: sidebar 232px, content max960px, title28px/32px.
    Card padding32px and input height44px are scoped sizing candidates. */
+.showcase-p2-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+.showcase-p2-grid > *, .showcase-demo { min-width: 0; }
+.showcase-p2-code { display: block; overflow-wrap: anywhere; white-space: pre-wrap; font-size: 13px; line-height: 1.6; margin-block: 12px; }
+.showcase-p2-summary { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-block: 12px; overflow-wrap: anywhere; }
+.showcase-p2-panel { padding: 16px; overflow-wrap: anywhere; min-width: 0; }
+.showcase-p2-transfers { padding-inline-start: 20px; overflow-wrap: anywhere; }
+.showcase-p2-transfers li { margin-block: 8px; }
+.showcase .nova-splitter { min-height: 180px; margin-block: 16px; }
+.showcase .nova-import-wizard { min-width: 0; }
+.showcase .nova-import-mapping { overflow-x: auto; }
+@media (max-width: 480px) { .showcase-p2-panel { padding: 8px; } }
 .showcase-body { margin: 0; }
 .showcase { min-height: 100dvh; display: grid; grid-template-columns: 232px minmax(0,1fr); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); color: var(--nova-color-text); background: var(--nova-color-background); }
 .showcase *, .showcase *::before, .showcase *::after { box-sizing: border-box; }
@@ -71,7 +82,7 @@
 .showcase-skip:focus { transform: none; }
 .showcase-nav-active:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
 @media(max-width: 1100px) { .showcase-form-footer { align-items: flex-start; flex-direction: column; gap: var(--nova-space-4); } .showcase-actions { align-self: flex-end; } }
-@media(max-width: 899px) { .showcase { display: block; } .showcase-sidebar { display: none; } .showcase .showcase-menu-button { display: inline-flex; } .showcase-topbar { min-height: 64px; padding: var(--nova-space-3) var(--nova-space-4); } .showcase-main { padding-top: var(--nova-space-6); } }
+@media(max-width: 47.999rem) { .showcase-topbar { min-height: 64px; padding: var(--nova-space-3) var(--nova-space-4); } .showcase-main { padding-top: var(--nova-space-6); } }
 @media(max-width: 640px) {
  .showcase-main { padding: var(--nova-space-5) var(--nova-space-4); }
  .showcase h1 { font-size: 24px; line-height: 32px; letter-spacing: -.5px; }
@@ -91,3 +102,42 @@
  .showcase-page-footer { padding: var(--nova-space-5) var(--nova-space-4) max(var(--nova-space-5), env(safe-area-inset-bottom)); flex-direction: column; gap: var(--nova-space-1); }
  .showcase-context-note { margin-top: var(--nova-space-5); }
 }
+
+/* Public P1 AppShell composition, retaining the approved 232px compact menu. */
+.showcase.nova-app-shell { display:grid; grid-template-columns:232px minmax(0,1fr); grid-template-rows:auto 1fr; }
+.showcase>.nova-app-shell__header { grid-column:2; grid-row:1; padding:0; border:0; }
+.showcase>.nova-app-shell__body { display:contents; }
+.showcase .nova-app-shell__main { grid-column:2; grid-row:2; width:100%; max-width:960px; padding:var(--nova-space-7) var(--nova-space-6) var(--nova-space-6); margin-inline:auto; }
+.showcase .nova-sidebar { grid-column:1; grid-row:1/-1; position:sticky; top:0; width:232px; height:100dvh; }
+.showcase .nova-sidebar__trigger { display:none; }
+.showcase .showcase-sidebar { position:static; width:232px; }
+.showcase-navigation.nova-navigation a { padding:8px; min-block-size:36px; font-weight:400; margin-block-end:4px; }
+.showcase-navigation.nova-navigation a[aria-current=page] { font-weight:400; background:color-mix(in srgb,var(--nova-color-surface-hover) 40%,var(--nova-color-surface)); }
+.showcase-navigation.nova-navigation a:hover { background:var(--nova-color-surface-hover); }
+.showcase-demo { margin-block:var(--nova-space-5); padding:var(--nova-space-5); display:grid; gap:var(--nova-space-4); min-inline-size:0; }
+.showcase-demo h2 { font-size:20px; line-height:28px; }
+.showcase-demo-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--nova-space-4); align-items:start; }
+.showcase-demo-grid>.showcase-demo { margin-block:0; }
+.showcase-demo-row { display:flex; flex-wrap:wrap; gap:var(--nova-space-3); align-items:center; }
+.showcase-demo form { display:grid; gap:var(--nova-space-4); }
+.nova-sidebar__drawer .showcase-sidebar { width:auto; height:auto; min-height:65dvh; padding:0; border:0; background:transparent; }
+@media(max-width:47.999rem) {
+ .showcase.nova-app-shell { grid-template-columns:minmax(0,1fr); }
+ .showcase>.nova-app-shell__header,.showcase .nova-app-shell__main { grid-column:1; }
+ .showcase .nova-sidebar { display:contents; }
+ .showcase .nova-sidebar__trigger { display:block; position:absolute; top:14px; left:12px; z-index:1; font-size:13px; padding:8px; }
+ .showcase-topbar { padding-left:100px; min-height:72px; }
+ .showcase .nova-app-shell__main { padding:24px 16px; }
+
+ .showcase-navigation.nova-navigation a { min-block-size:44px; }
+ .showcase-demo-grid { grid-template-columns:minmax(0,1fr); }
+ .showcase-demo { padding:16px; }
+}
+
+@media(max-width:47.999rem){.showcase-demo:has(>.nova-calendar){margin-inline:-16px;padding-inline:5px;}.showcase-topbar>.showcase-actions{width:auto;}.showcase-topbar .nova-button{flex:none;}.nova-sidebar__drawer .showcase-sidebar{display:flex;}}
+
+.showcase-language-short{display:none;}
+.showcase .nova-sidebar__desktop{background:var(--nova-color-surface);}
+@media(max-width:47.999rem){.showcase-language-full{display:none;}.showcase-language-short{display:inline;}.showcase .showcase-breadcrumb{display:block;}.showcase-breadcrumb li:first-child{display:none;}}
+
+@media(max-width:47.999rem){.nova-dialog.nova-sheet:has(.nova-sidebar__drawer){inset-block:0;inset-inline-start:0;inset-inline-end:auto;inline-size:min(300px,calc(100vw - 32px));max-inline-size:calc(100vw - 32px);max-block-size:100dvh;border-radius:0;}}

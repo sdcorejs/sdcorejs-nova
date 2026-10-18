@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('C18 accent-insensitive marks preserve text and treat HTML as text in forced colors',async({page})=>{await page.emulateMedia({forcedColors:'active'});await page.goto('/?scenario=p1-highlight');await expect(page.locator('mark').first()).toHaveText('Đặng');await expect(page.getByTestId('text')).toContainText('<script>alert(1)</script>');expect(await page.locator('[data-testid=text] script').count()).toBe(0);await expect(page.locator('mark').last()).toHaveText('0');});

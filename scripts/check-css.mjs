@@ -3,6 +3,7 @@
 // - every rule lives in the nova layer that matches the file kind
 // - every selector is scoped by a `.nova-*` class; no :root/html/body
 // - custom properties are only `--nova-*` and are only declared on `.nova-theme`
+// - P1 popup sizing may read the two Base UI geometry variables at exact component boundaries
 // - outside tokens.css every `var(--nova-*)` carries the exact light fallback
 // CLI: `node scripts/check-css.mjs` checks dist/tokens.css, dist/styles/*.css, dist/styles.css.
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -144,9 +145,10 @@ export function checkCss(css, { kind, filename = 'stylesheet.css' }) {
   const allowedLayers = LAYERS_BY_KIND[kind];
   if (!allowedLayers) return [`${filename}: unknown kind ${kind}`];
 
-  function checkVar(variable) {
+  function checkVar(variable, geometry = new Set()) {
     const name = variable.name.ident;
     if (!name.startsWith('--nova-')) {
+      if (geometry.has(name)) return;
       fail(`var(${name}) uses a custom property outside --nova-*`);
       return;
     }
@@ -161,7 +163,7 @@ export function checkCss(css, { kind, filename = 'stylesheet.css' }) {
     }
   }
 
-  function checkDeclarations(block, scopedToTheme) {
+  function checkDeclarations(block, scopedToTheme, selectors = [], layer) {
     for (const declaration of [...(block?.declarations ?? []), ...(block?.importantDeclarations ?? [])]) {
       // lightningcss also reports untyped standard properties (e.g. outline-offset
       // with var()) as `custom`; only dashed names are custom properties.
@@ -170,11 +172,22 @@ export function checkCss(css, { kind, filename = 'stylesheet.css' }) {
         if (!name.startsWith('--nova-')) fail(`custom property ${name} is outside --nova-*`);
         else if (!scopedToTheme) fail(`declares ${name} outside .nova-theme`);
       }
-      visitValues(declaration, checkVar);
+      // Values containing var() are unparsed declarations in Lightning CSS.
+      const property = declaration.property === 'unparsed' ? declaration.value.propertyId?.property : declaration.property;
+      const geometry = new Set();
+      if (layer === 'nova.components' && (kind === 'component' || kind === 'bundle')) {
+        const scopes = property === 'min-inline-size' || property === 'min-width'
+          ? {variable:'--anchor-width',classes:['nova-select__popup','nova-multi-select__popup']}
+          : property === 'max-block-size' || property === 'max-height'
+            ? {variable:'--available-height',classes:['nova-select__popup','nova-multi-select__popup','nova-popover','nova-tooltip','nova-action-menu']}
+            : null;
+        if (scopes && selectors.length > 0 && selectors.every(selector => subjectIs(selector, name => scopes.classes.includes(name)))) geometry.add(scopes.variable);
+      }
+      visitValues(declaration, variable => checkVar(variable, geometry));
     }
   }
 
-  function checkStyleRule(rule) {
+  function checkStyleRule(rule, layer) {
     let themeScoped = rule.value.selectors.length > 0;
     for (const selector of rule.value.selectors) {
       const info = selectorParts(selector, { classes: [], types: [], pseudo: [] });
@@ -188,17 +201,17 @@ export function checkCss(css, { kind, filename = 'stylesheet.css' }) {
       }
       if (!subjectIs(selector, isThemeClass)) themeScoped = false;
     }
-    checkDeclarations(rule.value.declarations, themeScoped);
-    for (const nested of rule.value.rules ?? []) checkNested(nested);
+    checkDeclarations(rule.value.declarations, themeScoped, rule.value.selectors, layer);
+    for (const nested of rule.value.rules ?? []) checkNested(nested, layer);
   }
 
-  function checkNested(rule) {
-    if (rule.type === 'style') checkStyleRule(rule);
-    else if (NESTED_AT_RULES.has(rule.type)) for (const inner of rule.value.rules) checkNested(inner);
+  function checkNested(rule, layer) {
+    if (rule.type === 'style') checkStyleRule(rule, layer);
+    else if (NESTED_AT_RULES.has(rule.type)) for (const inner of rule.value.rules) checkNested(inner, layer);
     else if (rule.type === 'keyframes') {
       const name = rule.value.name?.value ?? '';
       if (!String(name).startsWith('nova-')) fail(`@keyframes ${name} is outside the nova- namespace`);
-      for (const frame of rule.value.keyframes) checkDeclarations(frame.declarations, false);
+      for (const frame of rule.value.keyframes) checkDeclarations(frame.declarations, false, [], layer);
     } else fail(`@${rule.type} is not allowed inside a nova layer`);
   }
 
@@ -222,7 +235,7 @@ export function checkCss(css, { kind, filename = 'stylesheet.css' }) {
         fail(`rule in layer "${name || '<anonymous>'}" is outside the ${kind} nova layer(s) ${allowedLayers.join(', ')}`);
         continue;
       }
-      for (const inner of rule.value.rules) checkNested(inner);
+      for (const inner of rule.value.rules) checkNested(inner, name);
     } else {
       fail(`${rule.type} rule outside nova layers`);
     }

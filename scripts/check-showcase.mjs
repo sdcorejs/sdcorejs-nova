@@ -14,6 +14,7 @@ const root=path.resolve(import.meta.dirname,'..');
 const pins={checkout:'3d3c42e5aac5ba805825da76410c181273ba90b1','setup-node':'820762786026740c76f36085b0efc47a31fe5020','configure-pages':'45bfe0192ca1faeb007ade9deae92b16b8254a0d','upload-pages-artifact':'fc324d3547104276b827a68afc52ff2a11cc49c9','deploy-pages':'368f82528645a54fb793d4d04e342629a3f51346'};
 function ensure(value,message){if(!value)throw new Error(message);}
 function walk(dir,prefix=''){return readdirSync(dir).flatMap(name=>{const file=path.join(dir,name),relative=prefix+name,stat=lstatSync(file);ensure(!stat.isSymbolicLink(),'artifact path symlink forbidden');if(stat.isDirectory())return walk(file,relative+'/');ensure(stat.isFile()&&stat.nlink===1,'artifact non-regular file or hardlink forbidden');return [relative];});}
+const APPROVED_FAVICON_URI="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%23171717%22%2F%3E%3Ctext%20x%3D%227%22%20y%3D%2225%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2228%22%20font-weight%3D%22600%22%20fill%3D%22%23fff%22%3En%3C%2Ftext%3E%3C%2Fsvg%3E";
 export function checkArtifact(output,{expectedRevision,repositoryRoot=root,requireClean=false}={}){
  const files=walk(output),allowed=/^(?:index\.html|revision\.json|LICENSE|THIRD_PARTY_NOTICES\.md|THIRD_PARTY_BUNDLE_LICENSES\.md|assets\/[A-Za-z0-9_-]+\.(?:js|css))$/;
  ensure(files.every(f=>allowed.test(f)),'artifact allowlist violation');
@@ -21,8 +22,25 @@ export function checkArtifact(output,{expectedRevision,repositoryRoot=root,requi
  const text=f=>readFileSync(path.join(output,f),'utf8');
  for(const file of files)ensure(!/\.sdcorejs|Sentinel_|signed_transfer|libfile_|sourceMappingURL|C:[\\/]+Users[\\/]+/i.test(text(file)),`private/forbidden content in ${file}`);
  const html=text('index.html'),links=[...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(m=>m[1]);
+ // Generated HTML has no comments; reject comment delimiters instead of guessing browser tokenization.
+ ensure(!/<!--|-->/u.test(html),'favicon/link markup cannot contain HTML comments');
+ const tags=[...html.matchAll(/<link\b[^>]*>/gi)].map(match=>match[0].replace(/\s+/g,' ').replace(/\s*\/?>$/,'>'));
+ const canonical='<link rel="icon" type="image/svg+xml" href="'+APPROVED_FAVICON_URI+'">';
+ const stylesheet=/^<link rel="stylesheet" crossorigin href="\/sdcorejs-nova\/assets\/[A-Za-z0-9_-]+\.css">$/u;
+ ensure(tags.filter(tag=>tag===canonical).length===1&&tags.every(tag=>tag===canonical||stylesheet.test(tag)),'favicon/link contract mismatch');
+ ensure(links.filter(link=>link===APPROVED_FAVICON_URI).length===1,'favicon reference count mismatch');
  ensure(links.some(l=>l.endsWith('.js'))&&links.some(l=>l.endsWith('.css')),'missing built assets');
- for(const link of links){ensure(link.startsWith('/sdcorejs-nova/assets/'),'asset project base mismatch');const decoded=decodeURIComponent(link.slice('/sdcorejs-nova/'.length));ensure(!decoded.includes('..')&&!decoded.includes('\\')&&allowed.test(decoded),'unsafe asset path');ensure(files.includes(decoded),`asset missing ${decoded}`);}
+ for(const link of links){if(link===APPROVED_FAVICON_URI)continue;ensure(link.startsWith('/sdcorejs-nova/assets/'),'asset project base mismatch');const decoded=decodeURIComponent(link.slice('/sdcorejs-nova/'.length));ensure(!decoded.includes('..')&&!decoded.includes('\\')&&allowed.test(decoded),'unsafe asset path');ensure(files.includes(decoded),`asset missing ${decoded}`);}
+
+ // Compare the complete emitted shell with its reviewed source template. Raw tag regexes alone cannot distinguish bogus comments or inert text.
+ const sourceHTML=readFileSync(path.join(repositoryRoot,'showcase/index.html'),'utf8').replace(/\r\n/g,'\n');
+ const sourceEntry='<script type="module" src="/src/main.tsx"></script>';
+ const scripts=files.filter(file=>/^assets\/[A-Za-z0-9_-]+\.js$/u.test(file)),styles=files.filter(file=>/^assets\/[A-Za-z0-9_-]+\.css$/u.test(file));
+ ensure(scripts.length===1&&styles.length===1&&sourceHTML.split(sourceEntry).length===2&&sourceHTML.split('  </head>').length===2,'favicon/index template or asset contract mismatch');
+ const emitted=sourceHTML.replace(sourceEntry,'').replace('  </head>','    <script type="module" crossorigin src="/sdcorejs-nova/'+scripts[0]+'"></script>\n    <link rel="stylesheet" crossorigin href="/sdcorejs-nova/'+styles[0]+'">\n  </head>');
+ const normalizeShell=value=>value.replace(/\r\n/g,'\n').replace(/<link\b[^>]*>/gi,tag=>tag.replace(/\s+/g,' ').replace(/\s*\/?>$/,'>')).replace(/>\s+</g,'><').trim();
+ const expected=normalizeShell(emitted),iconFirst=expected.replace(canonical,'').replace('<head>','<head>'+canonical);
+ ensure([expected,iconFirst].includes(normalizeShell(html)),'favicon/index template or asset contract mismatch');
  const revision=JSON.parse(text('revision.json'));ensure(/^[a-f0-9]{40}$/.test(revision.commit)&&revision.commit===expectedRevision,'revision mismatch or invalid');
  ensure(JSON.stringify(Object.keys(revision).sort())===JSON.stringify(['assets','commit','workingTreeDirty']),'revision contains unknown public metadata');
  ensure(typeof revision.workingTreeDirty==='boolean'&&Array.isArray(revision.assets),'revision metadata malformed');

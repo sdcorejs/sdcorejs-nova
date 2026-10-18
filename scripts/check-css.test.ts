@@ -170,3 +170,25 @@ describe('check-css guaranteed scope (round 2 R4)', () => {
     expect(check(`${ORDER}\n@layer nova.tokens { .nova-theme[data-nova-theme="dark"]:not([hidden]) { --nova-color-text: #f4f4f5; } }`, 'tokens')).toEqual([]);
   });
 });
+
+describe('P1 Base UI geometry reads stay limited to component sizing',()=>{
+  it.each(['nova-select__popup','nova-multi-select__popup'])('accepts anchor width only on %s minimum width',name=>{
+    expect(check(component('.'+name+'{min-inline-size:var(--anchor-width)}'))).toEqual([]);
+  });
+  it.each(['nova-select__popup','nova-multi-select__popup','nova-popover','nova-tooltip','nova-action-menu'])('accepts available height only on %s maximum height',name=>{
+    expect(check(component('.'+name+'{max-block-size:var(--available-height)}'))).toEqual([]);
+  });
+  it.each([
+    '.nova-input{min-inline-size:var(--anchor-width)}',
+    '.nova-select__popup{color:var(--anchor-width)}',
+    '.nova-select__popup{min-inline-size:var(--unknown-width)}',
+    '.nova-select__popup{--anchor-width:10px}',
+    '.nova-select__popup,.nova-input{min-inline-size:var(--anchor-width)}',
+    '.nova-select__popup{max-block-size:var(--anchor-width)}',
+  ])('rejects geometry outside its exact read boundary: %s',css=>{
+    expect(check(component(css)).length).toBeGreaterThan(0);
+  });
+  it.each(['base','bundle'] as const)('keeps geometry variables forbidden in the base layer of %s files',kind=>{
+    expect(check(ORDER+'@layer nova.base{.nova-select__popup{min-inline-size:var(--anchor-width)}}',kind).length).toBeGreaterThan(0);
+  });
+});

@@ -7,6 +7,9 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import {verifyInstalledP2} from './check-p2-contracts.mjs';
+import {mkdirSync,mkdtempSync} from 'node:fs';
+
 const COMPONENT = /@sdcorejs\/nova\/dist\/components\/([^/]+)\//u;
 const OTHER_COMPONENT_CSS = /\.nova-(alert|avatar|badge|breadcrumb|card|checkbox|data-state|empty|field|input|link|progress|radio|skeleton|spinner|switch)[\w-]*\s*[{,.:[]/u;
 
@@ -72,6 +75,8 @@ if (isCli) {
     : checkBundle(analysis, { entry: 'button' });
   for (const error of errors) console.error(`check-bundle: ${error}`);
   if (errors.length) process.exit(1);
+  const root=fileURLToPath(new URL('../',import.meta.url)),parent=path.join(root,'.sdcorejs/tmp/p2-integration');mkdirSync(parent,{recursive:true});
+  await verifyInstalledP2(path.join(root,'fixtures/bundle-isolation'),mkdtempSync(path.join(parent,'bundle-proof-')));
   const nova = analysis.modules.filter((module) => module.includes('@sdcorejs/nova/'));
   console.log(`check-bundle: OK — ${analysis.modules.length} modules (${nova.length} from @sdcorejs/nova, only components/button), one react, one react-dom, CSS ${analysis.css.length} bytes`);
 }

@@ -1,0 +1,26 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+  .nova-data-table { min-inline-size: 0; color: var(--nova-color-text); background: var(--nova-color-background); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-data-table__toolbar, .nova-table-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-3); padding-block: var(--nova-space-3); }
+  .nova-data-table__scroll { max-inline-size: 100%; overflow: auto; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); }
+  .nova-data-table__scroll:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+  .nova-data-table__table { inline-size: 100%; border-collapse: collapse; text-align: start; }
+  .nova-data-table__table caption { padding: var(--nova-space-3); text-align: start; font-weight: var(--nova-font-weight-strong); }
+  .nova-data-table__table th, .nova-data-table__table td { padding: var(--nova-space-3); border-block-start: var(--nova-border-width) solid var(--nova-color-border); text-align: start; vertical-align: top; overflow-wrap: anywhere; }
+  .nova-data-table__table th { font-weight: var(--nova-font-weight-strong); background: var(--nova-color-surface); }
+  .nova-data-table__table tr[aria-selected="true"], .nova-data-table__card:has([aria-checked="true"]) { background: var(--nova-color-surface-hover); }
+  .nova-data-table__details { padding-block: var(--nova-space-3); overflow-wrap: anywhere; }
+  .nova-data-table__mobile { display: none; }
+  .nova-data-table__mobile [role="list"] { display: flex; flex-direction: column; gap: var(--nova-space-3); }
+  .nova-data-table__card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--nova-space-3); padding: var(--nova-space-4); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); overflow-wrap: anywhere; }
+  @media (max-width: 640px) {
+    .nova-data-table .nova-checkbox { min-inline-size: var(--nova-hit-target); min-block-size: var(--nova-hit-target); }
+    .nova-data-table__scroll--mobile-renderer { display: none; }
+    .nova-data-table__mobile { display: flex; flex-direction: column; gap: var(--nova-space-3); }
+  }
+  @media (forced-colors: active) {
+    .nova-data-table__scroll, .nova-data-table__card, .nova-data-table__table td, .nova-data-table__table th { border-color: CanvasText; }
+    .nova-data-table__table tr[aria-selected="true"] { outline: var(--nova-border-width) solid Highlight; }
+    .nova-data-table__scroll:focus-visible { outline-color: Highlight; }
+  }
+}

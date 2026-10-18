@@ -1,0 +1,16 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+.nova-query-builder{min-inline-size:0;color:var(--nova-color-text);background:var(--nova-color-background);font-family:var(--nova-font-family);font-size:var(--nova-font-size-body);line-height:var(--nova-line-height-body);}
+.nova-query-builder__group,.nova-query-builder__rule{min-inline-size:0;margin-block:var(--nova-space-2);padding:var(--nova-space-3);border:var(--nova-border-width) solid var(--nova-color-border);border-radius:var(--nova-radius-control);}
+.nova-query-builder__actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--nova-space-2);margin-block:var(--nova-space-2);}
+.nova-query-builder__children{padding-inline-start:var(--nova-space-2);}
+.nova-query-builder__compare,.nova-query-builder__readonly{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--nova-space-2);}
+.nova-query-builder label{display:grid;gap:var(--nova-space-1);min-inline-size:0;}
+.nova-query-builder input,.nova-query-builder select,.nova-query-builder .nova-button{min-block-size:var(--nova-hit-target);min-inline-size:var(--nova-hit-target);max-inline-size:100%;}
+.nova-query-builder select{color:var(--nova-color-text);background:var(--nova-color-background);border:var(--nova-border-width) solid var(--nova-color-border);border-radius:var(--nova-radius-control);font:inherit;}
+.nova-query-builder__accepted{overflow-wrap:anywhere;}
+.nova-query-builder [role="alert"]{color:var(--nova-color-danger);}
+.nova-query-builder select:focus-visible{outline:var(--nova-focus-width) solid var(--nova-color-focus-ring);outline-offset:var(--nova-focus-offset);}
+@media(max-width:47.99rem){.nova-query-builder__group,.nova-query-builder__rule{padding:var(--nova-space-2);}.nova-query-builder__children{padding-inline-start:0;}.nova-query-builder .nova-query-bar__editor,.nova-query-builder__compare,.nova-query-builder__readonly{grid-template-columns:minmax(0,1fr);}.nova-query-builder input,.nova-query-builder select{font-size:16px;}}
+@media(forced-colors:active){.nova-query-builder__group,.nova-query-builder__rule{border-color:CanvasText;}}
+}

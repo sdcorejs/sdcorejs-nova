@@ -1,3 +1,5 @@
+import {Highlight} from '@sdcorejs/nova/highlight';
+import {View} from '@sdcorejs/nova/read-only-value';
 // Server Component page: server-compatible Nova components are rendered here
 // directly (no client boundary); interactive parts live in ./client-demo.jsx.
 import { Badge } from '@sdcorejs/nova/badge';
@@ -24,7 +26,7 @@ export default function Page() {
         <Skeleton />
         <Button variant="secondary">Nút từ Server Component</Button>
         <Checkbox label="Checkbox từ Server Component" name="server-flag" />
-        <ClientDemo />
+        <Highlight text="Đặng An" term="dang"/><View label="P1 server zero" value={0} display={0}/><ClientDemo />
       </main>
     </NovaProvider>
   );

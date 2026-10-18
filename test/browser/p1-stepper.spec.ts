@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('C10 interactive progress uses ordinary buttons and exposes exactly the current step',async({page})=>{await page.goto('/?scenario=p1-stepper');const second=page.getByRole('button',{name:/Second/});await second.focus();await second.press('Enter');await expect(second).toHaveAttribute('aria-current','step');await expect(page.getByRole('button',{name:/First/})).not.toHaveAttribute('aria-current','step');await expect(page.getByRole('button',{name:/Blocked/})).toBeDisabled();});

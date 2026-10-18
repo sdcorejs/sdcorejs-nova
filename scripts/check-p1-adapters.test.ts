@@ -1,0 +1,6 @@
+// @vitest-environment node
+import {expect,it} from 'vitest';
+const {checkRootGraph,checkOptionalPeers}=await import(new URL('./check-p1-adapters.mjs',import.meta.url).href);
+it('rejects optional engine leakage through nested runtime, declaration and dynamic imports',()=>{for(const entry of ['dist/index.js','dist/index.d.ts']){const extension=entry.endsWith('.d.ts')?'.d.ts':'.js';const files:Record<string,string>={[entry]:"export {useThing} from './nested.js';",['dist/nested'+extension]:"import('react-hook-form');"};expect(checkRootGraph((name:string)=>files[name],entry).join(' ')).toContain('optional engine');}});
+it('accepts an engine-free graph and rejects an adapter re-export even before it imports its peer',()=>{expect(checkRootGraph((name:string)=>name==='dist/index.js'?"export {Thing} from './thing.js';":'export const Thing=1;')).toEqual([]);expect(checkRootGraph((name:string)=>name==='dist/index.js'?"export {useNovaController} from './adapters/react-hook-form/index.js';":'export const useNovaController=1;').join(' ')).toContain('isolated adapter');});
+it('rejects mandatory or loosely pinned engines',()=>{expect(checkOptionalPeers({dependencies:{'react-hook-form':'7.89.0'}})).toHaveLength(2);});

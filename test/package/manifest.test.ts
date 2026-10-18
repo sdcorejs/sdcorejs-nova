@@ -4,9 +4,10 @@ import { describe, expect, it } from 'vitest';
 
 type Checker = {
   checkManifest: (manifest: unknown) => string[];
+  P1_JS_SUBPATHS: string[];
   checkLockfile: (lockfile: unknown) => string[];
 };
-const { checkLockfile, checkManifest } = (await import(
+const { checkLockfile, checkManifest, P1_JS_SUBPATHS } = (await import(
   new URL('../../scripts/check-package.mjs', import.meta.url).href
 )) as Checker;
 
@@ -38,7 +39,8 @@ const FORBIDDEN = [
 const validManifest = (): Manifest => ({
   type: 'module',
   exports: {
-    ...Object.fromEntries(JS_SUBPATHS.map((key) => [key, { types: './dist/x.d.ts', default: './dist/x.js' }])),
+    ...Object.fromEntries([...JS_SUBPATHS,...P1_JS_SUBPATHS].map((key) => [key, { types: './dist/x.d.ts', default: './dist/x.js' }])),
+    ...Object.fromEntries(["./adapters/storage","./calendar-chips","./color-input","./data-table","./entity-picker","./file-explorer","./file-upload","./image-preview","./import-wizard","./job-progress","./pdf-preview","./query-bar","./query-builder","./resizable-dialog","./splitter","./tree-select","./tree","./file-transfer","./stored-state","./task","./task-provider","./query"].map(key=>[key,{types:'./dist/p2/index.d.ts',default:'./dist/p2/index.js'}])),
     ...Object.fromEntries(CSS_SUBPATHS.map((key) => [key, './dist/x.css'])),
   },
   dependencies: { '@base-ui/react': '~1.8.0' },
@@ -47,6 +49,11 @@ const validManifest = (): Manifest => ({
 });
 
 describe('package manifest contract', () => {
+  it.each(P1_JS_SUBPATHS)('rejects missing required P1 public subpath %s', key => {
+    const candidate=validManifest();delete candidate.exports![key];
+    expect(checkManifest(candidate).join('\n')).toContain('exports["'+key+'"]');
+  });
+
   it('declares every P0 subpath with types+default', () => {
     expect(manifest.type).toBe('module');
     const exportsMap = manifest.exports ?? {};
@@ -67,7 +74,7 @@ describe('package manifest contract', () => {
   });
 
   it('peers react/react-dom ^19.0.0 and only @base-ui/react at runtime', () => {
-    expect(manifest.peerDependencies).toEqual({ react: '^19.0.0', 'react-dom': '^19.0.0' });
+    expect(manifest.peerDependencies).toEqual({ react: '^19.0.0', 'react-dom': '^19.0.0','react-hook-form':'~7.89.0','@js-temporal/polyfill':'~0.5.1' });
     expect(Object.keys(manifest.dependencies ?? {})).toEqual(['@base-ui/react']);
     expect(manifest.dependencies?.['@base-ui/react']).toMatch(/^~1\.\d+\.\d+$/);
     expect(checkManifest({ ...validManifest(), dependencies: { '@base-ui/react': '~1.8.0', react: '^19.0.0' } }))
@@ -229,4 +236,12 @@ describe('manifest hardening (round 2 R2: runtime alias identity)', () => {
   it('still rejects a forbidden alias outside runtime maps', () => {
     expect(checkManifest({ ...validManifest(), devDependencies: { 'typescript-5.7': 'npm:antd@5' } }).join('\n')).toMatch(/antd/);
   });
+});
+
+// P2 public subpaths extend the original synthetic base and assertions.
+describe('P2 manifest additions',()=>{
+ const keys=["./adapters/storage","./calendar-chips","./color-input","./data-table","./entity-picker","./file-explorer","./file-upload","./image-preview","./import-wizard","./job-progress","./pdf-preview","./query-bar","./query-builder","./resizable-dialog","./splitter","./tree-select","./tree","./file-transfer","./stored-state","./task","./task-provider","./query"];
+ it.each(keys)('requires real P2 export %s',key=>{expect(manifest.exports?.[key]).toBeDefined();});
+ it.each(keys)('rejects missing P2 export %s',key=>{const candidate=validManifest();delete candidate.exports![key];expect(checkManifest(candidate).join('\n')).toContain('exports["'+key+'"]');});
+ it.each(keys)('rejects P2 source target %s',key=>{const candidate=validManifest();candidate.exports![key]={types:'./src/x.d.ts',default:'./src/x.js'};expect(checkManifest(candidate).join('\n')).toContain('exports["'+key+'"]');});
 });

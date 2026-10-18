@@ -1,0 +1,5 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+.nova-time-input{min-inline-size:0}.nova-time-range-input{display:flex;flex-wrap:wrap;gap:var(--nova-space-3)}.nova-time-range-input>.nova-field{flex:1;min-inline-size:8rem}
+
+}

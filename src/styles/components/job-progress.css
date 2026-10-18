@@ -1,0 +1,9 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-job-progress { display: grid; gap: var(--nova-space-2); min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+ .nova-job-progress > p { margin: 0; overflow-wrap: anywhere; }
+ .nova-job-progress__message { overflow-wrap: anywhere; }
+ .nova-job-progress__actions { display: flex; flex-wrap: wrap; gap: var(--nova-space-2); }
+ @media (max-width: 375px), (pointer: coarse) { .nova-job-progress__actions > button { min-block-size: 44px; min-inline-size: 44px; } }
+ @media (forced-colors: active) { .nova-job-progress { color: CanvasText; } }
+}

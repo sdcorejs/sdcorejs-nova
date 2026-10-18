@@ -67,7 +67,7 @@ test('next start pages hydrate with 0 recoverable errors and 0 console errors', 
   const { errors } = await watch(page);
   await page.goto(origin);
   await expect(page.getByTestId('hydrated')).toHaveAttribute('data-hydrated', 'true');
-  await page.getByRole('button', { name: 'Tăng' }).click();
+  await page.locator('button.nova-button').filter({hasText:/^Tăng$/u}).click();
   await expect(page.getByTestId('clicks')).toHaveText('1');
   await page.getByRole('checkbox', { name: 'Đồng ý' }).click();
   await expect(page.getByRole('checkbox', { name: 'Đồng ý' })).toHaveAttribute('aria-checked', 'true');
@@ -111,7 +111,7 @@ test('CSP-A with per-request nonce has 0 violations', async ({ page, request }) 
   await watch(page);
   await page.goto(origin);
   await expect(page.getByTestId('hydrated')).toHaveAttribute('data-hydrated', 'true');
-  await page.getByRole('button', { name: 'Tăng' }).click();
+  await page.locator('button.nova-button').filter({hasText:/^Tăng$/u}).click();
   await page.getByRole('radio', { name: 'Hai' }).click();
   await page.waitForTimeout(300);
   expect((await violations(page)).filter((violation) => violation.disposition === 'enforce')).toEqual([]);
@@ -140,7 +140,7 @@ test('system theme first paint uses media query without markup change', async ({
   await expect(page.getByTestId('resolved-theme')).toHaveText('dark');
 });
 
-test('CSP-B report-only: only Base UI hidden-input style attributes are reported', async ({ page }, testInfo) => {
+test('CSP-B report-only: only Base UI hidden-input and stepper style attributes are reported', async ({ page }, testInfo) => {
   await watch(page);
   await page.goto(origin);
   await expect(page.getByTestId('hydrated')).toHaveAttribute('data-hydrated', 'true');
@@ -150,9 +150,11 @@ test('CSP-B report-only: only Base UI hidden-input style attributes are reported
     tag: element.tagName.toLowerCase(),
     novaClass: [...element.classList].some((name) => name.startsWith('nova-')),
     hiddenInput: element.tagName === 'INPUT' && element.getAttribute('aria-hidden') === 'true',
+    baseStepper: element.matches('button.nova-number-input__step') && (element as HTMLElement).style.length > 0 && [...(element as HTMLElement).style].every(property => ['user-select','-webkit-user-select'].includes(property) && (element as HTMLElement).style.getPropertyValue(property) === 'none'),
   })));
-  expect(styled.filter((element) => element.novaClass)).toEqual([]);
-  expect(styled.every((element) => element.hiddenInput)).toBe(true);
+  expect(styled.filter((element) => element.novaClass && !element.baseStepper)).toEqual([]);
+  expect(styled.every((element) => element.hiddenInput || element.baseStepper)).toBe(true);
+  expect(styled.filter((element) => element.baseStepper)).toHaveLength(2);
   expect(report.every((violation) => violation.directive === 'style-src-attr')).toBe(true);
   const directory = path.join(ROOT, 'test-results', 'csp-b');
   mkdirSync(directory, { recursive: true });

@@ -1,0 +1,26 @@
+@layer nova.tokens, nova.base, nova.components;
+@layer nova.components {
+ .nova-image-preview {min-inline-size:0;max-inline-size:100%;color:var(--nova-color-text);background:var(--nova-color-background);font-family:var(--nova-font-family);overflow-wrap:anywhere;}
+ .nova-image-preview__actions {display:flex;flex-wrap:wrap;align-items:center;gap:var(--nova-space-2);margin-block:var(--nova-space-2);}
+ .nova-image-preview {outline-offset:var(--nova-focus-offset);}
+ .nova-image-preview:focus-visible {outline:var(--nova-focus-width) solid var(--nova-color-focus-ring);}
+ .nova-image-preview__viewport {max-inline-size:100%;overflow:auto;}
+ .nova-image-preview__image {display:block;max-inline-size:100%;block-size:auto;object-fit:contain;}
+ .nova-image-preview[data-zoom="25"] .nova-image-preview__image {transform:scale(0.25);transform-origin:top left;}
+ .nova-image-preview[data-zoom="50"] .nova-image-preview__image {transform:scale(0.5);transform-origin:top left;}
+ .nova-image-preview[data-zoom="75"] .nova-image-preview__image {transform:scale(0.75);transform-origin:top left;}
+ .nova-image-preview[data-zoom="100"] .nova-image-preview__image {transform:scale(1);transform-origin:top left;}
+ .nova-image-preview[data-zoom="125"] .nova-image-preview__image {transform:scale(1.25);transform-origin:top left;}
+ .nova-image-preview[data-zoom="150"] .nova-image-preview__image {transform:scale(1.5);transform-origin:top left;}
+ .nova-image-preview[data-zoom="175"] .nova-image-preview__image {transform:scale(1.75);transform-origin:top left;}
+ .nova-image-preview[data-zoom="200"] .nova-image-preview__image {transform:scale(2);transform-origin:top left;}
+ .nova-image-preview[data-zoom="225"] .nova-image-preview__image {transform:scale(2.25);transform-origin:top left;}
+ .nova-image-preview[data-zoom="250"] .nova-image-preview__image {transform:scale(2.5);transform-origin:top left;}
+ .nova-image-preview[data-zoom="275"] .nova-image-preview__image {transform:scale(2.75);transform-origin:top left;}
+ .nova-image-preview[data-zoom="300"] .nova-image-preview__image {transform:scale(3);transform-origin:top left;}
+ .nova-image-preview[data-zoom="325"] .nova-image-preview__image {transform:scale(3.25);transform-origin:top left;}
+ .nova-image-preview[data-zoom="350"] .nova-image-preview__image {transform:scale(3.5);transform-origin:top left;}
+ .nova-image-preview[data-zoom="375"] .nova-image-preview__image {transform:scale(3.75);transform-origin:top left;}
+ .nova-image-preview[data-zoom="400"] .nova-image-preview__image {transform:scale(4);transform-origin:top left;}
+ @media (forced-colors:active) {.nova-image-preview {color:CanvasText;background:Canvas;}}
+}

@@ -2,6 +2,19 @@
 // deduplicated per owner (a NovaProvider instance, or a component instance
 // outside a provider). No module-level store (INV-001).
 export type DiagnosticCode =
+  | 'NOVA_DATE_INVALID_CONFIGURATION'
+  | 'NOVA_MULTI_SELECT_INVALID_CONFIGURATION'
+  | 'NOVA_SELECT_DUPLICATE_KEY'
+  | 'NOVA_SELECT_NONFINITE_KEY'
+  | 'NOVA_NUMBER_INVALID_CONFIGURATION'
+  | 'NOVA_CONFIRM_SERVER_CALL'
+  | 'NOVA_ANCHOR_DUPLICATE_ID'
+  | 'NOVA_ANCHOR_MISSING_ID'
+  | 'NOVA_TABS_UNKNOWN_VALUE'
+  | 'NOVA_MENU_DEPTH'
+  | 'NOVA_NESTED_PORTAL_CONTAINER'
+  | 'NOVA_INLINE_TEXT_INVALID_MIN_CHARS'
+  | 'NOVA_RELATIVE_INVALID_INTERVAL'
   | 'NOVA_CONTROLLED_MODE_CHANGE'
   | 'NOVA_MISSING_TRANSLATION'
   | 'NOVA_INVALID_TIMEZONE'
@@ -19,6 +32,19 @@ export type DiagnosticCode =
   | 'NOVA_ALERT_UNNAMED';
 
 const MESSAGES: Readonly<Record<DiagnosticCode, string>> = {
+  NOVA_DATE_INVALID_CONFIGURATION: 'civil values, reference date, bounds, initial month and week start must form a valid date configuration',
+  NOVA_MULTI_SELECT_INVALID_CONFIGURATION: 'maxSelected and maxItems must be finite non-negative integers; invalid limits are ignored',
+  NOVA_SELECT_DUPLICATE_KEY: 'options must have unique typed keys',
+  NOVA_SELECT_NONFINITE_KEY: 'numeric option and selection keys must be finite',
+  NOVA_NUMBER_INVALID_CONFIGURATION: 'number value and bounds must be finite, min must not exceed max, and step must be positive and finite',
+  NOVA_CONFIRM_SERVER_CALL: 'server confirmation invocation is cancelled; request a decision from a client event',
+  NOVA_ANCHOR_DUPLICATE_ID: 'anchor IDs must be unique; ambiguous navigation is omitted',
+  NOVA_ANCHOR_MISSING_ID: 'anchor target is missing from the current scroll root; the native link remains available',
+  NOVA_TABS_UNKNOWN_VALUE: 'selected tab is missing or disabled; showing the first enabled tab without emitting a change',
+  NOVA_MENU_DEPTH: 'action menus support one submenu level; deeper groups are omitted',
+  NOVA_NESTED_PORTAL_CONTAINER: 'nested overlays use the active parent portal subtree when the requested container is outside it; close the parent before opening an independent overlay in an external host',
+  NOVA_INLINE_TEXT_INVALID_MIN_CHARS: 'minChars must be finite and at least 2; using visual size 2',
+  NOVA_RELATIVE_INVALID_INTERVAL: 'relative update interval must be positive and finite; using 60000ms',
   NOVA_CONTROLLED_MODE_CHANGE: 'switched between controlled and uncontrolled; keeping the mount mode',
   NOVA_MISSING_TRANSLATION: 'missing translation keys fall back to en',
   NOVA_INVALID_TIMEZONE: 'invalid IANA timeZone; falling back to UTC',
