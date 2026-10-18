@@ -51,6 +51,10 @@ test('case-p2-d01-ac01-ssr-browser hydrates deterministic native tables without 
 });
 
 test('case-p2-d01-r1-browser external collapse preserves the overflow region after deliberate keyboard navigation', async ({ page }) => {
+  await page.addInitScript(() => {
+    const keys: unknown[] = []; Reflect.set(window, '__d01FocusKeys', keys);
+    document.addEventListener('keydown', event => queueMicrotask(() => keys.push({ key: event.key, shift: event.shiftKey, prevented: event.defaultPrevented, active: document.activeElement?.outerHTML, hasFocus: document.hasFocus() })));
+  });
   await page.goto('/?scenario=p2-d01');
   const table = page.getByRole('table', { name: 'Files', exact: true });
   const scroll = page.getByRole('region', { name: 'Files', exact: true });
@@ -69,7 +73,24 @@ test('case-p2-d01-r1-browser external collapse preserves the overflow region aft
     visited.add(active.index);
     focusPath.push(active.label);
     await page.keyboard.press('Shift+Tab');
-    await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('*')).indexOf(document.activeElement!)), { message: `Shift+Tab must move focus from ${active.label}` }).not.toBe(active.index);
+    try {
+      await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('*')).indexOf(document.activeElement!)), { message: `Shift+Tab must move focus from ${active.label}` }).not.toBe(active.index);
+    } catch (error) {
+      try {
+        console.info('D01_FOCUS_DIAGNOSTIC', JSON.stringify(await page.evaluate(() => ({ active: document.activeElement?.outerHTML, hasFocus: document.hasFocus(), selection: window.getSelection()?.anchorNode?.parentElement?.outerHTML, keys: Reflect.get(window, '__d01FocusKeys') }))));
+        const native = await page.context().newPage();
+        try {
+          await native.setContent('<div tabindex="0" role="region" aria-label="Native"><table><tr><td><button>Before</button><div><span>Detail</span><button>Keep</button><button>Close</button></div></td></tr></table></div><button>After</button>');
+          const nativeKeep = native.getByRole('button', { name: 'Keep', exact: true });
+          await nativeKeep.click(); await nativeKeep.focus();
+          await native.keyboard.press('Shift+Tab'); await new Promise(resolve => setTimeout(resolve, 500));
+          console.info('D01_NATIVE_SHIFT_TAB', JSON.stringify(await native.evaluate(() => ({ active: document.activeElement?.outerHTML, hasFocus: document.hasFocus() }))));
+          await nativeKeep.focus(); await native.keyboard.press('Alt+Shift+Tab'); await new Promise(resolve => setTimeout(resolve, 500));
+          console.info('D01_NATIVE_ALT_SHIFT_TAB', JSON.stringify(await native.evaluate(() => ({ active: document.activeElement?.outerHTML, hasFocus: document.hasFocus() }))));
+        } finally { await native.close(); }
+      } catch { /* Diagnostic failures must not replace the original assertion. */ }
+      throw error;
+    }
   }
   await expect(scroll, `Backward focus cycle: ${focusPath.join(' -> ')}`).toBeFocused();
   await page.getByRole('button', { name: 'Collapse rows externally', exact: true }).evaluate((button: HTMLButtonElement) => button.click());
