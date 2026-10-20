@@ -10,8 +10,10 @@
   .nova-data-table__error .nova-data-state--error { flex: 1 1 auto; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--nova-space-2) var(--nova-space-3); min-inline-size: 0; padding: 0; text-align: start; }
   .nova-data-table__error .nova-data-state__message { flex: 1 1 12rem; min-inline-size: 0; }
 
-  /* Frame: the scroll region opens it, the pagination closes it (separated by its top border). */
-  .nova-data-table__scroll { box-sizing: border-box; max-inline-size: 100%; overflow: auto; border: var(--nova-border-width) solid var(--nova-color-border); border-block-end: 0; border-start-start-radius: var(--nova-radius-card); border-start-end-radius: var(--nova-radius-card); background: var(--nova-color-background); }
+  /* Frame: the scroll region opens it, the pagination closes it (separated by its top border).
+     position: relative keeps absolutely positioned descendants (the visually hidden expand
+     header) inside the scroll region, so a wide table never widens the page. */
+  .nova-data-table__scroll { position: relative; box-sizing: border-box; max-inline-size: 100%; overflow: auto; border: var(--nova-border-width) solid var(--nova-color-border); border-block-end: 0; border-start-start-radius: var(--nova-radius-card); border-start-end-radius: var(--nova-radius-card); background: var(--nova-color-background); }
   .nova-data-table__scroll:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
   .nova-data-table > .nova-data-table__empty { border-inline: var(--nova-border-width) solid var(--nova-color-border); }
   .nova-data-table > .nova-table-pagination { border: var(--nova-border-width) solid var(--nova-color-border); border-end-start-radius: var(--nova-radius-card); border-end-end-radius: var(--nova-radius-card); }

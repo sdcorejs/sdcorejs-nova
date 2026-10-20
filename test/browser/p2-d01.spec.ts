@@ -110,4 +110,7 @@ test('case-p2-d01-design-r2-browser compact desktop table controls and 44px narr
   expect(previous!.x + previous!.width).toBeLessThanOrEqual(next!.x);
   const narrow = (await expand.boundingBox())!; expect(narrow.width).toBeGreaterThanOrEqual(44); expect(narrow.height).toBeGreaterThanOrEqual(44);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  // A visually hidden (absolutely positioned) node at the far end of a scrolling table stays inside the scroll region.
+  await table.evaluate(node => { const scroll = node.closest('.nova-data-table__scroll')!, cell = node.querySelector('thead tr')!.lastElementChild!, probe = node.ownerDocument.createElement('span'); probe.className = 'nova-visually-hidden'; probe.textContent = 'probe'; node.style.minInlineSize = (scroll.clientWidth + 600) + 'px'; cell.append(probe); });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
