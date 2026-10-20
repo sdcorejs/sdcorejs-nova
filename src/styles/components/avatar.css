@@ -27,13 +27,13 @@
   .nova-avatar--sm {
     inline-size: 24px;
     block-size: 24px;
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .nova-avatar--lg {
     inline-size: 44px;
     block-size: 44px;
-    font-size: var(--nova-font-size-body);
+    font-size: 16px;
   }
 
   .nova-avatar__image {
@@ -51,10 +51,27 @@
     white-space: nowrap;
   }
 
+  /* Stroked person icon: 16 in md, 14 in sm, 20 in lg. */
   .nova-avatar__icon {
-    inline-size: 60%;
-    block-size: 60%;
+    flex: none;
+    inline-size: 16px;
+    block-size: 16px;
     color: var(--nova-color-text-muted);
+  }
+
+  .nova-avatar--sm .nova-avatar__icon {
+    inline-size: 14px;
+    block-size: 14px;
+  }
+
+  .nova-avatar--lg .nova-avatar__icon {
+    inline-size: 20px;
+    block-size: 20px;
+  }
+
+  /* "+N" uses the size class of the group's avatars; digits keep a stable width. */
+  .nova-avatar--overflow {
+    font-variant-numeric: tabular-nums;
   }
 
   .nova-avatar-group {

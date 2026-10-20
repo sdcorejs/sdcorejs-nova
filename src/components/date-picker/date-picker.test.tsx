@@ -97,3 +97,12 @@ it('F11 extraction preserves public single-date Calendar semantics',()=>{
  expect(screen.getByRole('grid').hasAttribute('aria-multiselectable')).toBe(false);
  expect(screen.getByRole('grid').querySelectorAll('[aria-selected="true"]')).toHaveLength(1);
 });
+it('round 2: range endpoints mark the in-between days for presentation only and glyphs are SVG icons',async()=>{
+ const user=userEvent.setup();render(<NovaProvider locale="en"><DateRangePicker label="Dates" referenceDate="2026-10-14" defaultValue={{start:'2026-10-12',end:'2026-10-15'}}/></NovaProvider>);
+ const triggers=screen.getAllByRole('button',{name:'Open calendar'});expect(triggers[0]!.textContent).toBe('');expect(triggers[0]!.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
+ await user.click(triggers[1]!);
+ const cell=(day:number)=>screen.getByRole('button',{name:new RegExp(`October ${day}, 2026`)}).parentElement!;
+ expect(cell(12).getAttribute('data-range')).toBe('start');expect(cell(13).getAttribute('data-range')).toBe('middle');expect(cell(14).getAttribute('data-range')).toBe('middle');expect(cell(15).getAttribute('data-range')).toBe('end');expect(cell(16).hasAttribute('data-range')).toBe(false);
+ expect(cell(15).getAttribute('aria-selected')).toBe('true');expect(cell(12).getAttribute('aria-selected')).toBe('false');
+ for(const name of ['Previous month','Next month'])expect(screen.getByRole('button',{name}).textContent).toBe('');
+});

@@ -1,6 +1,7 @@
 'use client';
 import {useCallback,useId,useRef,useState,type Ref} from 'react';
 import {cx} from '../../lib/cx.js';
+import {Icon} from '../../lib/icons.js';
 import {useNovaScope} from '../../providers/nova/context.js';
 import type {SurfaceProps} from '../../types/index.js';
 import {Button} from '../button/button.js';
@@ -38,7 +39,8 @@ export function FileUpload({accept,multiple=false,maxFileBytes,maxFiles,disabled
  if(invalid)return <div ref={ref} className={cx('nova-file-upload',className)} style={style} data-testid={testId} data-nova-config-error="NOVA_UPLOAD_INVALID_CONFIGURATION"><span role="alert">{strings.invalid}</span></div>;
  return <div ref={ref} className={cx('nova-file-upload',className)} style={style} data-testid={testId} data-disabled={disabled||undefined} onDragOver={event=>event.preventDefault()} onDrop={event=>{event.preventDefault();if(!disabled)choose(Array.from(event.dataTransfer.files));}}>
   <input ref={input} id={id} className="nova-file-upload__input" hidden type="file" aria-label={strings.choose} accept={accept} multiple={multiple} disabled={disabled} aria-invalid={visibleErrors.length>0||undefined} aria-describedby={visibleErrors.length?id+'-errors':undefined} onChange={event=>{const files=Array.from(event.currentTarget.files??[]);event.currentTarget.value='';choose(files);}}/>
-  <Button ref={chooserRef} size="lg" variant="secondary" disabled={disabled} aria-invalid={visibleErrors.length>0||undefined} aria-describedby={visibleErrors.length?id+'-errors':undefined} onClick={()=>{if(!disabled)input.current?.click();}}>{strings.drop}</Button>
+  <span className="nova-file-upload__icon" aria-hidden="true"><Icon name="upload"/></span>
+  <Button ref={chooserRef} variant="secondary" disabled={disabled} aria-invalid={visibleErrors.length>0||undefined} aria-describedby={visibleErrors.length?id+'-errors':undefined} onClick={()=>{if(!disabled)input.current?.click();}}>{strings.drop}</Button>
   {visibleErrors.length>0&&<div id={id+'-errors'} role="alert"><ul className="nova-file-upload__errors">{visibleErrors.map((message,index)=><li key={index}>{message}</li>)}</ul></div>}
  </div>;
 }

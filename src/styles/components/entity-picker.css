@@ -1,19 +1,42 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
-  .nova-entity-picker { min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); }
-  .nova-entity-picker__trigger { box-sizing: border-box; display: block; inline-size: 100%; min-block-size: var(--nova-control-md); padding: var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; text-align: start; overflow-wrap: anywhere; cursor: pointer; }
+  .nova-entity-picker { display: flex; flex-direction: column; align-items: stretch; gap: var(--nova-space-1); min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  /* Trigger reads like a Select: control border, one-line value, chevron at the end. */
+  .nova-entity-picker__trigger { box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) 16px; align-items: center; column-gap: var(--nova-space-1); inline-size: 100%; min-block-size: var(--nova-control-md); margin: 0; padding: 0 10px 0 var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; text-align: start; cursor: pointer; transition: border-color var(--nova-duration) ease; }
+  .nova-entity-picker__trigger:hover:not(:disabled, [aria-readonly="true"]) { border-color: var(--nova-color-text-muted); }
+  .nova-entity-picker__trigger[aria-expanded="true"] { border-color: var(--nova-color-text); }
+  .nova-entity-picker__trigger[aria-invalid="true"] { border-color: var(--nova-color-error-text); }
+  .nova-entity-picker__value { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nova-entity-picker__placeholder { color: var(--nova-color-text-muted); }
+  .nova-entity-picker__chevron { display: block; color: var(--nova-color-text-muted); transition: transform var(--nova-duration) ease; }
+  .nova-entity-picker__trigger[aria-expanded="true"] > .nova-entity-picker__chevron { transform: rotate(180deg); }
   .nova-entity-picker__trigger:focus-visible, .nova-entity-picker__search input:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
-  .nova-entity-picker__trigger:disabled { color: var(--nova-color-disabled-text); cursor: default; }
-  .nova-entity-picker__trigger[aria-readonly="true"] { cursor: text; }
+  .nova-entity-picker__trigger:disabled { border-color: var(--nova-color-border); background: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); cursor: not-allowed; }
+  .nova-entity-picker__trigger:disabled > .nova-entity-picker__placeholder { color: var(--nova-color-disabled-text); }
+  .nova-entity-picker__trigger[aria-readonly="true"] { border-color: var(--nova-color-border); background: var(--nova-color-surface); cursor: default; }
+  .nova-entity-picker__trigger:disabled > .nova-entity-picker__chevron, .nova-entity-picker__trigger[aria-readonly="true"] > .nova-entity-picker__chevron { color: var(--nova-color-control-border); }
+  .nova-entity-picker > [role="alert"] { margin: 0; color: var(--nova-color-error-text); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
+  .nova-entity-picker > .nova-button { align-self: flex-start; }
   .nova-entity-picker__validity { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .nova-entity-picker__summary { padding-block: var(--nova-space-3); color: var(--nova-color-text-muted); overflow-wrap: anywhere; }
-  .nova-entity-picker__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--nova-space-2); position: sticky; inset-block-end: 0; padding-block: var(--nova-space-3); background: var(--nova-color-background); }
-  .nova-entity-picker__search { display: grid; gap: var(--nova-space-2); margin-block-end: var(--nova-space-3); }
-  .nova-entity-picker__search input { box-sizing: border-box; min-inline-size: 0; inline-size: 100%; min-block-size: var(--nova-control-md); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-control); padding: var(--nova-space-2); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; }
+  .nova-entity-picker__summary { padding-block: var(--nova-space-2) var(--nova-space-3); color: var(--nova-color-text-muted); overflow-wrap: anywhere; }
+  .nova-entity-picker__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--nova-space-2); position: sticky; inset-block-end: 0; margin-block-start: var(--nova-space-3); padding-block: var(--nova-space-3); border-block-start: var(--nova-border-width) solid var(--nova-color-border); background: var(--nova-color-background); }
+  /* Search is a regular 36px text input with its label above. */
+  .nova-entity-picker__search { display: grid; gap: var(--nova-space-1); margin-block-end: var(--nova-space-3); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
+  .nova-entity-picker__search input { box-sizing: border-box; min-inline-size: 0; inline-size: 100%; min-block-size: var(--nova-control-md); margin: 0; padding: 0 var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); font-weight: normal; }
+  .nova-entity-picker__search input:hover { border-color: var(--nova-color-text-muted); }
   @media (min-width: 641px) {
     .nova-entity-picker__dialog.nova-sheet[data-side="bottom"] { inset-block-start: 50%; inset-block-end: auto; inset-inline-start: 50%; inset-inline-end: auto; transform: translate(-50%, -50%); inline-size: 48rem; max-inline-size: calc(100vw - 32px); max-block-size: calc(100dvh - 32px); border-radius: var(--nova-radius-overlay); }
     .nova-entity-picker__dialog.nova-sheet[data-side="bottom"]:dir(rtl) { transform: translate(50%, -50%); }
   }
-  @media (max-width: 640px), (pointer: coarse) { .nova-entity-picker__trigger, .nova-entity-picker__search input, .nova-entity-picker__actions .nova-button { min-block-size: var(--nova-hit-target); } .nova-entity-picker__search input { font-size: 16px; } }
-  @media (forced-colors: active) { .nova-entity-picker__trigger, .nova-entity-picker__search input { border-color: ButtonText; } .nova-entity-picker__trigger:focus-visible, .nova-entity-picker__search input:focus-visible { outline-color: Highlight; } }
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-entity-picker__trigger, .nova-entity-picker__search input, .nova-entity-picker__actions .nova-button { min-block-size: var(--nova-hit-target); }
+    .nova-entity-picker__trigger { padding-inline-end: var(--nova-space-3); font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }
+    .nova-entity-picker__search input { font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }
+  }
+  @media (forced-colors: active) {
+    .nova-entity-picker__trigger, .nova-entity-picker__search input { border-color: ButtonText; }
+    .nova-entity-picker__trigger:disabled { border-color: GrayText; color: GrayText; }
+    .nova-entity-picker__trigger:focus-visible, .nova-entity-picker__search input:focus-visible { outline-color: Highlight; }
+  }
+  @media (prefers-reduced-motion: reduce) { .nova-entity-picker__trigger, .nova-entity-picker__chevron { transition: none; } }
 }

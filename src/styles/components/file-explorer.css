@@ -1,25 +1,62 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
-  .nova-file-explorer { background: var(--nova-color-background); color: var(--nova-color-text); font-family: var(--nova-font-family); min-inline-size: 0; max-inline-size: 100%; container-type: inline-size; }
+  .nova-file-explorer { background: var(--nova-color-background); color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); min-inline-size: 0; max-inline-size: 100%; container-type: inline-size; }
   .nova-file-explorer__toolbar, .nova-file-explorer__tools, .nova-file-explorer__navigation { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-2); }
   .nova-file-explorer__toolbar { justify-content: space-between; margin-block-end: var(--nova-space-3); }
   .nova-file-explorer__navigation { flex: 1 1 100%; min-inline-size: 0; }
   .nova-file-explorer__navigation > .nova-breadcrumb { flex: 1 1 0%; }
-  .nova-file-explorer__tools { flex: 1; justify-content: flex-end; }
-  .nova-file-explorer__tools [role="group"] { display: flex; flex-wrap: wrap; }
-  .nova-file-explorer__search { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; max-inline-size: 100%; }
-  .nova-file-explorer__search input { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: 44px; border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); padding: var(--nova-space-2); color: var(--nova-color-text); background: var(--nova-color-surface); font: inherit; font-size: var(--nova-font-size-input-mobile); }
-  .nova-file-explorer__search input:focus-visible { outline: 2px solid var(--nova-color-focus-ring); outline-offset: 2px; }
+  .nova-file-explorer__tools { flex: 1; align-items: flex-end; justify-content: flex-end; }
+  .nova-file-explorer__back > .nova-button__label, .nova-file-explorer__open > .nova-button__label { display: inline-flex; align-items: center; gap: var(--nova-space-1); min-inline-size: 0; }
+  .nova-file-explorer__back .nova-icon { flex: none; }
+  .nova-file-explorer__navigation > .nova-button.nova-file-explorer__back:disabled { border-color: transparent; background: transparent; color: var(--nova-color-disabled-text); }
+  .nova-file-explorer__back:dir(rtl) .nova-icon { transform: scaleX(-1); }
+  /* Crumbs read as Breadcrumb links, not bold 36px buttons. */
+  .nova-file-explorer__navigation .nova-button.nova-file-explorer__crumb { display: inline-block; min-block-size: 0; max-inline-size: 100%; margin: 0; padding: 2px var(--nova-space-1); border: 0; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font-weight: normal; text-align: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nova-file-explorer__navigation .nova-button.nova-file-explorer__crumb:hover { background: transparent; color: var(--nova-color-text); text-decoration: underline; text-underline-offset: 2px; }
+  .nova-file-explorer__navigation .nova-breadcrumb__current { font-weight: 500; }
+  .nova-file-explorer__search { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; max-inline-size: 100%; font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
+  .nova-file-explorer__search input { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: var(--nova-control-md); margin: 0; padding: 0 var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); color: var(--nova-color-text); background: var(--nova-color-background); font: inherit; font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); font-weight: normal; }
+  .nova-file-explorer__search input:hover { border-color: var(--nova-color-text-muted); }
+  .nova-file-explorer__search input:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+  /* List / Grid stay two pressed-state buttons, drawn as a segmented pair. */
+  .nova-file-explorer__views { display: inline-flex; flex-wrap: nowrap; gap: 2px; box-sizing: border-box; min-block-size: var(--nova-control-md); padding: 2px; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); }
+  .nova-file-explorer__views > .nova-button { min-block-size: 30px; padding: 0 10px; border: var(--nova-border-width) solid transparent; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font-weight: 500; white-space: nowrap; }
+  .nova-file-explorer__views > .nova-button:hover:not(:disabled) { background: transparent; color: var(--nova-color-text); }
+  .nova-file-explorer__views > .nova-button[aria-pressed="true"] { border-color: var(--nova-color-control-border); background: var(--nova-color-background); color: var(--nova-color-text); }
+  .nova-file-explorer__views > .nova-button:focus-visible { outline-offset: 0; }
   .nova-file-explorer__layout { display: grid; grid-template-columns: minmax(160px, 1fr) minmax(0, 4fr); gap: var(--nova-space-4); }
   .nova-file-explorer__content, .nova-file-explorer__folders { min-inline-size: 0; }
+  .nova-file-explorer__folders { padding-inline-end: var(--nova-space-2); border-inline-end: var(--nova-border-width) solid var(--nova-color-border); }
+  .nova-file-explorer__folders .nova-tree__content { padding-block: 2px; }
+  .nova-file-explorer__folders .nova-tree__content > .nova-button { justify-content: flex-start; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 0 6px; font-weight: normal; text-align: start; }
   .nova-file-explorer__chooser { display: none; }
   .nova-file-explorer__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: var(--nova-space-3); }
-  .nova-file-explorer__card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--nova-space-2); padding: var(--nova-space-3); border: 1px solid var(--nova-color-border); border-radius: var(--nova-radius-card); min-inline-size: 0; overflow-wrap: anywhere; }
-  .nova-file-explorer__scroll { overflow: auto; max-inline-size: 100%; }
+  .nova-file-explorer__card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--nova-space-2); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); min-inline-size: 0; overflow-wrap: anywhere; transition: border-color var(--nova-duration) ease; }
+  .nova-file-explorer__card:hover { border-color: var(--nova-color-control-border); }
+  .nova-file-explorer__scroll { overflow: auto; max-inline-size: 100%; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); }
+  .nova-file-explorer__scroll:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
   .nova-file-explorer__table { inline-size: 100%; border-collapse: collapse; }
-  .nova-file-explorer__table th, .nova-file-explorer__table td { text-align: start; padding: var(--nova-space-2); border-block-end: 1px solid var(--nova-color-border); overflow-wrap: anywhere; }
-  .nova-file-explorer__preview { margin-block-start: var(--nova-space-4); padding: var(--nova-space-3); border: 1px solid var(--nova-color-border); border-radius: var(--nova-radius-card); }
+  .nova-file-explorer__table caption { padding: var(--nova-space-2) var(--nova-space-3); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); text-align: start; }
+  .nova-file-explorer__table th, .nova-file-explorer__table td { padding: var(--nova-space-1) var(--nova-space-3); text-align: start; border-block-end: var(--nova-border-width) solid var(--nova-color-border); overflow-wrap: anywhere; }
+  .nova-file-explorer__table th { block-size: 40px; background: var(--nova-color-surface); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
+  .nova-file-explorer__table tbody tr:last-child > td { border-block-end: 0; }
+  .nova-file-explorer__table tbody tr:hover > td { background: var(--nova-color-surface); }
+  /* Name cell: decorative file/folder icon + name as a compact link-like button. */
+  .nova-file-explorer .nova-button.nova-file-explorer__open { justify-content: flex-start; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 0 6px; font-weight: 500; text-align: start; }
+  .nova-file-explorer__open .nova-icon { flex: none; color: var(--nova-color-text-muted); }
+  .nova-file-explorer__preview { margin-block-start: var(--nova-space-4); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); }
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-file-explorer__search input { min-block-size: var(--nova-hit-target); font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }
+    .nova-file-explorer__views { padding: 0; gap: 0; }
+    .nova-file-explorer__views > .nova-button, .nova-file-explorer .nova-button.nova-file-explorer__open, .nova-file-explorer__folders .nova-tree__content > .nova-button { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
+    .nova-file-explorer__navigation .nova-button.nova-file-explorer__crumb { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); line-height: 24px; padding-block: 10px; }
+    .nova-file-explorer__folders .nova-tree__content { padding-block: 0; }
+  }
   @container (max-width: 600px) { .nova-file-explorer__layout { display: block; } .nova-file-explorer__folders { display: none; } .nova-file-explorer__chooser { display: inline-flex; } .nova-file-explorer__tools { justify-content: flex-start; } }
-  @media (forced-colors: active) { .nova-file-explorer__card, .nova-file-explorer__search input { border-color: CanvasText; } }
-  @media (prefers-reduced-motion: reduce) { .nova-file-explorer * { scroll-behavior: auto; } }
+  @media (forced-colors: active) {
+    .nova-file-explorer__card, .nova-file-explorer__search input, .nova-file-explorer__views, .nova-file-explorer__scroll { border-color: CanvasText; }
+    .nova-file-explorer__views > .nova-button[aria-pressed="true"] { border-color: Highlight; }
+    .nova-file-explorer__search input:focus-visible, .nova-file-explorer__scroll:focus-visible { outline-color: Highlight; }
+  }
+  @media (prefers-reduced-motion: reduce) { .nova-file-explorer * { scroll-behavior: auto; } .nova-file-explorer__card { transition: none; } }
 }

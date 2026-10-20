@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type Ref } from 'react';
 import { en } from '../../i18n/en.js';
 import {useNativeFormReset} from '../../lib/p1-async-lifecycle.js';
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { reportDiagnostic } from '../../lib/diagnostics.js';
 import { useControllableValue } from '../../lib/use-controllable-value.js';
 import { useDiagnostics, useNovaScope } from '../../providers/nova/context.js';
@@ -41,7 +42,7 @@ export function InlineText(props:InlineTextProps) {
   const native=nativeProps(props);
   if(!control.ok)return <FieldControlError code={control.code} component="InlineText"/>;
   return control.wrap(
-    <span className={cx('nova-inline-text',`nova-inline-text--${chrome}`,className)} style={style} data-testid={testId}>
+    <span className={cx('nova-inline-text',`nova-inline-text--${chrome}`,clearable && !disabled && !readOnly && 'nova-inline-text--clearable',className)} style={style} data-testid={testId}>
       <input {...native} ref={connect} id={control.id} type="text" size={size} value={current} className="nova-input nova-inline-text__input"
         disabled={disabled} readOnly={readOnly} required={control.required || undefined} aria-label={control.ariaLabel} aria-labelledby={control.ariaLabelledby} aria-describedby={control.ariaDescribedby} aria-invalid={control.invalid || undefined}
         onInput={event=>{native.onInput?.(event);if(!event.defaultPrevented)setValue(event.currentTarget.value);}}
@@ -53,7 +54,7 @@ export function InlineText(props:InlineTextProps) {
           if(event.defaultPrevented || disabled || readOnly || composing.current || event.nativeEvent.isComposing || event.keyCode===229)return;
           if(event.key==='Enter')onEnter?.();else if(event.key==='Escape')onEscape?.();
         }}/>
-      {clearable && current!=='' && !disabled && !readOnly && <button className="nova-inline-text__clear" type="button" aria-label={scope.strings.forms.clear ?? en.forms.clear} aria-controls={control.id} onMouseDown={event=>event.preventDefault()} onClick={()=>{setValue('');input?.focus();}}><span aria-hidden="true">×</span></button>}
+      {clearable && current!=='' && !disabled && !readOnly && <button className="nova-inline-text__clear" type="button" aria-label={scope.strings.forms.clear ?? en.forms.clear} aria-controls={control.id} onMouseDown={event=>event.preventDefault()} onClick={()=>{setValue('');input?.focus();}}><Icon name="close"/></button>}
     </span>,
   );
 }

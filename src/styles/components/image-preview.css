@@ -1,7 +1,14 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
  .nova-image-preview {min-inline-size:0;max-inline-size:100%;color:var(--nova-color-text);background:var(--nova-color-background);font-family:var(--nova-font-family);overflow-wrap:anywhere;}
- .nova-image-preview__actions {display:flex;flex-wrap:wrap;align-items:center;gap:var(--nova-space-2);margin-block:var(--nova-space-2);}
+ /* Compact toolbar: 28px buttons with zoom icons; labels stay visible. */
+ .nova-image-preview__actions {display:flex;flex-wrap:wrap;align-items:center;gap:var(--nova-space-1);margin-block:var(--nova-space-2);}
+ .nova-image-preview__actions > .nova-button > .nova-button__label {display:inline-flex;align-items:center;gap:var(--nova-space-1);}
+ .nova-image-preview__actions .nova-icon {flex:none;}
+ .nova-image-preview__actions > output {min-inline-size:44px;text-align:center;font-variant-numeric:tabular-nums;}
+ .nova-image-preview > [role="alert"] {padding:var(--nova-space-3);color:var(--nova-color-error-text);}
+ .nova-image-preview__viewport {border-radius:var(--nova-radius-card);background:var(--nova-color-surface);}
+ @media (max-width:640px),(pointer:coarse) {.nova-image-preview__actions > .nova-button {min-block-size:var(--nova-hit-target);min-inline-size:var(--nova-hit-target);}}
  .nova-image-preview {outline-offset:var(--nova-focus-offset);}
  .nova-image-preview:focus-visible {outline:var(--nova-focus-width) solid var(--nova-color-focus-ring);}
  .nova-image-preview__viewport {max-inline-size:100%;overflow:auto;}

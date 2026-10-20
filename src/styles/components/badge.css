@@ -1,29 +1,32 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
+  /* Fixed 22px pill, one line: a long label is truncated with an ellipsis (the full
+     text stays in the DOM / accessible name). The transparent border only shows in
+     forced colors. */
   .nova-badge {
     display: inline-flex;
     align-items: center;
-    gap: var(--nova-space-1);
+    gap: 6px;
     box-sizing: border-box;
     max-inline-size: 100%;
-    padding: 2px var(--nova-space-2);
+    block-size: 22px;
+    padding: 0 var(--nova-space-2);
     border: var(--nova-border-width) solid transparent;
-    border-radius: 999px;
+    border-radius: 11px;
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-label);
     line-height: var(--nova-line-height-label);
-    font-weight: var(--nova-font-weight-strong);
-    white-space: normal;
-    overflow-wrap: anywhere;
+    font-weight: 500;
+    white-space: nowrap;
     vertical-align: middle;
   }
 
   .nova-badge__icon {
     display: inline-flex;
     flex: none;
-    inline-size: 1em;
-    block-size: 1em;
+    inline-size: 16px;
+    block-size: 16px;
   }
 
   .nova-badge__icon > svg {
@@ -33,12 +36,13 @@
 
   .nova-badge__label {
     min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .nova-badge--neutral {
-    border-color: var(--nova-color-border);
-    background: var(--nova-color-surface);
-    color: var(--nova-color-text);
+    background: var(--nova-color-surface-hover);
+    color: var(--nova-color-text-muted);
   }
 
   .nova-badge--success {

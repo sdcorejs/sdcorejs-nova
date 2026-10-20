@@ -182,3 +182,15 @@ it('case-p2-d01-r1-unit keyboard navigation revokes stale detail pointer focus o
   rerender(<Table {...props} expandedKeys={[]} />);
   expect(document.activeElement).toBe(scroll);
 });
+it('case-p2-d01-design-r2-unit decorative icons replace text glyphs while names and header semantics stay unchanged', () => {
+  render(<Table state={{ ...initial, sort: [{ columnId: 'title', direction: 'asc' }] }} rowActions={[{ id: 'inspect', label: 'Inspect', onAction: () => {} }]} renderExpanded={row => <span>{row.title}</span>} expandedKeys={[]} onExpandedKeysChange={() => {}} />);
+  const sort = screen.getByRole('button', { name: 'Title' });
+  expect(sort.textContent).toBe('Title'); expect(sort.querySelector('svg[aria-hidden="true"]')).toBeTruthy();
+  const expand = screen.getByRole('button', { name: 'Expand row 1' });
+  expect(expand.textContent).toBe(''); expect(expand.getAttribute('aria-expanded')).toBe('false'); expect(expand.querySelector('svg[aria-hidden="true"]')).toBeTruthy();
+  expect(screen.getByRole('columnheader', { name: 'Expand row' })).toBeTruthy(); expect(screen.getByRole('columnheader', { name: 'Row actions' })).toBeTruthy();
+  expect(screen.getByRole('button', { name: 'Row actions 1' }).textContent).toBe('Row actions 1');
+  const navigation = screen.getByRole('navigation', { name: 'Table pagination' });
+  for (const name of ['Previous page', 'Next page']) { const button = within(navigation).getByRole('button', { name }); expect(button.textContent).toBe(''); expect(button.querySelector('svg[aria-hidden="true"]')).toBeTruthy(); }
+  expect(navigation.textContent).toBe('Rows per page: 10Page 3 of 5');
+});

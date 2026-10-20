@@ -107,7 +107,7 @@ export function Navigation({label, items, currentId, onNavigate, renderLink, cla
   }
   const link = (item: NavLink) => {
     const href = sanitizeHref(item.href);
-    const content = <>{item.icon && <span aria-hidden="true">{item.icon}</span>}<span>{item.label}</span></>;
+    const content = <>{item.icon && <span aria-hidden="true" className="nova-navigation__icon">{item.icon}</span>}<span>{item.label}</span></>;
     if (item.disabled || href === null) return <span className="nova-navigation__disabled" aria-disabled="true">{content}</span>;
     const current = item.id === currentId;
     const linkProps = {
@@ -121,7 +121,7 @@ export function Navigation({label, items, currentId, onNavigate, renderLink, cla
   };
   return <nav aria-label={label} className={cx('nova-navigation', className)} style={style} data-testid={testId}>
     <ul>{items.map(item => <li key={item.id}>{'children' in item ? <>
-      <span className="nova-navigation__group">{item.icon && <span aria-hidden="true">{item.icon}</span>}{item.label}</span>
+      <span className="nova-navigation__group">{item.icon && <span aria-hidden="true" className="nova-navigation__icon">{item.icon}</span>}{item.label}</span>
       <ul aria-label={item.label}>{item.children.map(child => <li key={child.id}>{link(child)}</li>)}</ul>
     </> : link(item)}</li>)}</ul>
   </nav>;

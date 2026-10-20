@@ -1,36 +1,45 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
+  /* Tone surface, a 30% tone border and body text in the text colour; the tone
+     colour (currentColor) is only used by the icon. Radius 8: alerts sit inside cards. */
   .nova-alert {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--nova-space-3);
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    grid-template-rows: var(--nova-line-height-body) auto;
+    align-items: start;
+    column-gap: var(--nova-space-3);
     box-sizing: border-box;
     min-inline-size: 0;
-    padding: var(--nova-space-3) var(--nova-space-4);
-    border: var(--nova-border-width) solid currentColor;
-    border-radius: var(--nova-radius-card);
+    padding-block: var(--nova-space-3);
+    padding-inline: var(--nova-space-4) var(--nova-space-3);
+    border: var(--nova-border-width) solid;
+    border-radius: 8px;
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
   }
 
+  /* Fixed 16px box aligned to the first 20px text line. */
   .nova-alert__icon {
     display: inline-flex;
-    flex: none;
-    inline-size: 1.25em;
-    block-size: var(--nova-line-height-body);
-    align-items: center;
+    grid-column: 1;
+    grid-row: 1;
+    inline-size: 16px;
+    block-size: 16px;
+    margin-block-start: 2px;
   }
 
   .nova-alert__icon > svg {
+    display: block;
     inline-size: 100%;
-    block-size: 1.25em;
+    block-size: 100%;
   }
 
   .nova-alert__content {
     display: flex;
-    flex: 1 1 auto;
+    grid-column: 2;
+    grid-row: 1 / span 2;
     flex-direction: column;
     gap: var(--nova-space-1);
     min-inline-size: 0;
@@ -57,33 +66,41 @@
     gap: var(--nova-space-2);
   }
 
-  .nova-alert__dismiss {
-    flex: none;
-    margin-block: calc(var(--nova-space-1) * -1);
-    margin-inline-end: calc(var(--nova-space-2) * -1);
+  /* sm icon button centred on the first 20px line (it overflows that row into the
+     padding, so the row never grows); its column only exists when it is rendered. */
+  .nova-alert > .nova-alert__dismiss {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
   }
 
   .nova-alert--tip {
+    border-color: color-mix(in srgb, var(--nova-color-tip-text) 30%, transparent);
     background: var(--nova-color-tip-surface);
     color: var(--nova-color-tip-text);
   }
 
   .nova-alert--info {
+    border-color: color-mix(in srgb, var(--nova-color-info-text) 30%, transparent);
     background: var(--nova-color-info-surface);
     color: var(--nova-color-info-text);
   }
 
   .nova-alert--success {
+    border-color: color-mix(in srgb, var(--nova-color-success-text) 30%, transparent);
     background: var(--nova-color-success-surface);
     color: var(--nova-color-success-text);
   }
 
   .nova-alert--warning {
+    border-color: color-mix(in srgb, var(--nova-color-warning-text) 30%, transparent);
     background: var(--nova-color-warning-surface);
     color: var(--nova-color-warning-text);
   }
 
   .nova-alert--error {
+    border-color: color-mix(in srgb, var(--nova-color-error-text) 30%, transparent);
     background: var(--nova-color-error-surface);
     color: var(--nova-color-error-text);
   }

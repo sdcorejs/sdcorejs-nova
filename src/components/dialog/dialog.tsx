@@ -3,6 +3,7 @@ import { Dialog as Primitive } from '@base-ui/react/dialog';
 import { useCallback, useId, useInsertionEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject, type Ref } from 'react';
 
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { useControllableValue } from '../../lib/use-controllable-value.js';
 import { useDiagnostics, useNovaScope } from '../../providers/nova/context.js';
 import { PortalScope } from '../../providers/nova/portal-scope.js';
@@ -160,7 +161,7 @@ function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | '
             <Primitive.Title ref={heading} id={`${id}-title`} tabIndex={-1} className="nova-dialog__title">{title}</Primitive.Title>
             {description != null && <Primitive.Description id={`${id}-description`} className="nova-dialog__description">{description}</Primitive.Description>}
           </div>
-          <Primitive.Close className="nova-dialog__close" disabled={closeDisabled} aria-label={scope.strings.common.close}><span aria-hidden="true">×</span></Primitive.Close>
+          <Primitive.Close className="nova-dialog__close" disabled={closeDisabled} aria-label={scope.strings.common.close}><Icon name="close"/></Primitive.Close>
         </div>
         <div ref={body} className="nova-dialog__body">{children}</div>
       </Primitive.Popup>

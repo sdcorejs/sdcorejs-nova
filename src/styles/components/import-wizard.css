@@ -1,14 +1,30 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
- .nova-import-wizard {display:flex;flex-direction:column;gap:var(--nova-space-4);min-inline-size:0;max-inline-size:100%;color:var(--nova-color-text);font-family:var(--nova-font-family);font-size:var(--nova-font-size-body);line-height:var(--nova-line-height-body);overflow-wrap:anywhere;}
- .nova-import-wizard__mapping {display:grid;gap:var(--nova-space-3);}
- .nova-import-wizard__mapping > div {display:flex;flex-direction:column;gap:var(--nova-space-2);min-inline-size:0;}
- .nova-import-wizard__mapping select {box-sizing:border-box;inline-size:100%;min-block-size:var(--nova-space-7);padding:var(--nova-space-2);font:inherit;color:var(--nova-color-text);background:var(--nova-color-background);border:var(--nova-border-width) solid var(--nova-color-control-border);border-radius:var(--nova-radius-control);}
- .nova-import-wizard__footer {display:flex;flex-wrap:wrap;gap:var(--nova-space-2);padding-block:var(--nova-space-3);}
- .nova-import-wizard__footer .nova-button {min-block-size:var(--nova-space-7);}
- .nova-import-wizard__ack {display:flex;align-items:center;gap:var(--nova-space-2);min-block-size:var(--nova-space-7);}
- .nova-import-wizard [role="alert"] {color:var(--nova-color-danger);}
- .nova-import-wizard :where(select,input,a,[tabindex="-1"]):focus-visible {outline:var(--nova-focus-width) solid var(--nova-color-focus-ring);outline-offset:var(--nova-focus-offset);}
- .nova-import-wizard .nova-data-table__scroll {max-inline-size:100%;}
- @media (forced-colors:active) {.nova-import-wizard__mapping select {border-color:ButtonText;} .nova-import-wizard :focus-visible {outline-color:Highlight;}}
+  .nova-import-wizard { display: flex; flex-direction: column; gap: var(--nova-space-4); min-inline-size: 0; max-inline-size: 100%; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); overflow-wrap: anywhere; }
+  .nova-import-wizard > [role="status"]:empty { display: none; }
+  .nova-import-wizard > [role="status"] { color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
+  .nova-import-wizard__mapping { display: grid; gap: var(--nova-space-3); }
+  .nova-import-wizard__mapping > div { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; }
+  .nova-import-wizard__mapping > div > label { font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
+  /* Native selects use the Nova 36px control frame (44px on touch). */
+  .nova-import-wizard__mapping select { box-sizing: border-box; inline-size: 100%; min-block-size: var(--nova-control-md); margin: 0; padding: 0 var(--nova-space-2) 0 var(--nova-space-3); font: inherit; color: var(--nova-color-text); background-color: var(--nova-color-background); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); cursor: pointer; }
+  .nova-import-wizard__mapping select:hover:not(:disabled) { border-color: var(--nova-color-text-muted); }
+  .nova-import-wizard__mapping select[aria-invalid="true"] { border-color: var(--nova-color-error-text); }
+  .nova-import-wizard__mapping select:disabled { border-color: var(--nova-color-border); background-color: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); cursor: not-allowed; }
+  .nova-import-wizard [role="alert"] { color: var(--nova-color-error-text); }
+  /* Issue summary reads like the form error summary. */
+  .nova-import-wizard > [role="alert"] { padding: var(--nova-space-3) var(--nova-space-4); border: var(--nova-border-width) solid var(--nova-color-error-text); border-radius: var(--nova-radius-card); background: var(--nova-color-error-surface); color: var(--nova-color-text); }
+  .nova-import-wizard > [role="alert"] > ul { margin: 0; padding-inline-start: var(--nova-space-5); }
+  .nova-import-wizard > [role="alert"] a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .nova-import-wizard__ack { display: flex; align-items: center; gap: var(--nova-space-2); min-block-size: var(--nova-control-md); cursor: pointer; }
+  .nova-import-wizard__ack > input { flex: none; inline-size: 16px; block-size: 16px; margin: 0; accent-color: var(--nova-color-action); }
+  .nova-import-wizard__footer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-2); padding-block-start: var(--nova-space-3); border-block-start: var(--nova-border-width) solid var(--nova-color-border); }
+  .nova-import-wizard :where(select, input, a, [tabindex="-1"]):focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+  .nova-import-wizard .nova-data-table__scroll { max-inline-size: 100%; }
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-import-wizard__mapping select, .nova-import-wizard__ack, .nova-import-wizard__footer .nova-button { min-block-size: var(--nova-hit-target); }
+    .nova-import-wizard__mapping select { font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }
+    .nova-import-wizard__footer .nova-button { min-inline-size: var(--nova-hit-target); }
+  }
+  @media (forced-colors: active) { .nova-import-wizard__mapping select, .nova-import-wizard > [role="alert"] { border-color: ButtonText; } .nova-import-wizard :focus-visible { outline-color: Highlight; } }
 }

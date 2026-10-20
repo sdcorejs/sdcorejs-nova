@@ -11,6 +11,12 @@
     animation: nova-skeleton-pulse 1.4s ease-in-out infinite;
   }
 
+  /* A text line placeholder: a 12px bar (radius 4) that sits inside a 20px line. */
+  .nova-skeleton--text {
+    block-size: 12px;
+    border-radius: 4px;
+  }
+
   .nova-skeleton--rect {
     block-size: 4rem;
   }

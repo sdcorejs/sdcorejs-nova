@@ -1,9 +1,17 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
- .nova-job-progress { display: grid; gap: var(--nova-space-2); min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
- .nova-job-progress > p { margin: 0; overflow-wrap: anywhere; }
- .nova-job-progress__message { overflow-wrap: anywhere; }
- .nova-job-progress__actions { display: flex; flex-wrap: wrap; gap: var(--nova-space-2); }
- @media (max-width: 375px), (pointer: coarse) { .nova-job-progress__actions > button { min-block-size: 44px; min-inline-size: 44px; } }
- @media (forced-colors: active) { .nova-job-progress { color: CanvasText; } }
+  .nova-job-progress { display: grid; gap: var(--nova-space-2); min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-job-progress > p { margin: 0; overflow-wrap: anywhere; }
+  /* Status reads as a badge with a tone per task state (text keeps the meaning). */
+  .nova-job-progress > .nova-job-progress__status { justify-self: start; display: inline-flex; align-items: center; gap: 6px; box-sizing: border-box; max-inline-size: 100%; min-block-size: 22px; padding: 2px var(--nova-space-2); border: var(--nova-border-width) solid transparent; border-radius: 999px; background: var(--nova-color-surface-hover); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: 500; }
+  .nova-job-progress__status::before { content: ""; flex: none; inline-size: 6px; block-size: 6px; border-radius: 50%; background: currentColor; }
+  .nova-job-progress__status[data-status="running"] { background: var(--nova-color-info-surface); color: var(--nova-color-info-text); }
+  .nova-job-progress__status[data-status="succeeded"] { background: var(--nova-color-success-surface); color: var(--nova-color-success-text); }
+  .nova-job-progress__status[data-status="failed"], .nova-job-progress__status[data-connection="error"] { background: var(--nova-color-error-surface); color: var(--nova-color-error-text); }
+  .nova-job-progress__status[data-connection="reconnecting"] { background: var(--nova-color-warning-surface); color: var(--nova-color-warning-text); }
+  .nova-job-progress > [role="alert"] { color: var(--nova-color-error-text); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
+  .nova-job-progress__message { overflow-wrap: anywhere; }
+  .nova-job-progress__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--nova-space-2); }
+  @media (max-width: 640px), (pointer: coarse) { .nova-job-progress__actions > .nova-button { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); } }
+  @media (forced-colors: active) { .nova-job-progress { color: CanvasText; } .nova-job-progress > .nova-job-progress__status { border-color: CanvasText; } }
 }

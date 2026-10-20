@@ -1,2 +1,6 @@
 @layer nova.tokens, nova.base, nova.components;
-@layer nova.components { .nova-tree-select { min-inline-size: 0; } .nova-tree-select .nova-entity-picker__trigger { overflow-wrap: anywhere; } }
+@layer nova.components {
+  /* The trigger shares the EntityPicker Select-like frame (one-line value, chevron). */
+  .nova-tree-select { min-inline-size: 0; }
+  .nova-entity-picker__dialog .nova-tree { padding: var(--nova-space-1); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; }
+}

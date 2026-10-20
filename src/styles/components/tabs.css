@@ -1,15 +1,20 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
-  .nova-tabs { color: var(--nova-color-text); font-family: var(--nova-font-family); }
-  .nova-tabs__list { display: flex; gap: var(--nova-space-1); overflow-x: auto; border-block-end: var(--nova-border-width) solid var(--nova-color-border); scrollbar-width: thin; }
-  .nova-tabs__list[aria-orientation="vertical"] { flex-direction: column; border-block-end: 0; border-inline-end: var(--nova-border-width) solid var(--nova-color-border); }
-  .nova-tabs__tab { flex: none; min-block-size: var(--nova-control-md); padding: var(--nova-space-2) var(--nova-space-3); border: 0; border-block-end: 2px solid transparent; background: transparent; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; overflow-wrap: anywhere; }
-  .nova-tabs__tab[aria-selected="true"] { color: var(--nova-color-text); border-block-end-color: currentColor; }
-  .nova-tabs__tab:hover:not(:disabled) { background: var(--nova-color-surface-hover); }
-  .nova-tabs__tab:disabled { color: var(--nova-color-disabled-text); cursor: default; }
+  .nova-tabs { color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-tabs__list { display: flex; gap: var(--nova-space-1); min-inline-size: 0; overflow-x: auto; border-block-end: var(--nova-border-width) solid var(--nova-color-border); scrollbar-width: thin; }
+  .nova-tabs__list[aria-orientation="vertical"] { flex-direction: column; overflow: visible; border-block-end: 0; border-inline-end: var(--nova-border-width) solid var(--nova-color-border); }
+  /* 36px tab (44 on coarse/narrow), 500 for every tab so selection never shifts the width. */
+  .nova-tabs__tab { position: relative; display: inline-flex; flex: none; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box; min-block-size: var(--nova-control-md); margin: 0; padding: 0 var(--nova-space-3); border: 0; border-start-start-radius: var(--nova-radius-control); border-start-end-radius: var(--nova-radius-control); border-end-start-radius: 0; border-end-end-radius: 0; background: transparent; color: var(--nova-color-text-muted); font: inherit; font-weight: 500; white-space: nowrap; cursor: pointer; }
+  .nova-tabs__list[aria-orientation="vertical"] .nova-tabs__tab { justify-content: flex-start; padding-block: var(--nova-space-2); border-start-start-radius: var(--nova-radius-control); border-end-start-radius: var(--nova-radius-control); border-start-end-radius: 0; border-end-end-radius: 0; text-align: start; white-space: normal; overflow-wrap: anywhere; }
+  .nova-tabs__tab:hover:not(:disabled) { background: var(--nova-color-surface); color: var(--nova-color-text); }
+  .nova-tabs__tab[aria-selected="true"] { color: var(--nova-color-text); }
+  /* Selected indicator: 2px inside the tab, at the bottom (horizontal) or inline end (vertical). */
+  .nova-tabs__tab[aria-selected="true"]::after { content: ""; position: absolute; inset-inline: var(--nova-space-2); inset-block-end: 0; border-block-end: 2px solid var(--nova-color-text); border-radius: 1px; }
+  .nova-tabs__list[aria-orientation="vertical"] .nova-tabs__tab[aria-selected="true"]::after { inset-inline: auto calc(-1 * var(--nova-border-width)); inset-block: 6px; border-block-end: 0; border-inline-end: 2px solid var(--nova-color-text); }
+  .nova-tabs__tab:disabled { color: var(--nova-color-disabled-text); cursor: not-allowed; }
   .nova-tabs__tab:focus-visible, .nova-tabs__panel:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
   .nova-tabs__panel { padding-block: var(--nova-space-4); }
   .nova-tabs__panel[hidden] { display: none; }
   @media (max-width: 640px), (pointer: coarse) { .nova-tabs__tab { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); } }
-  @media (forced-colors: active) { .nova-tabs__tab[aria-selected="true"] { border-color: Highlight; } .nova-tabs__tab:focus-visible, .nova-tabs__panel:focus-visible { outline-color: Highlight; } }
+  @media (forced-colors: active) { .nova-tabs__tab[aria-selected="true"]::after { border-color: Highlight; } .nova-tabs__tab:focus-visible, .nova-tabs__panel:focus-visible { outline-color: Highlight; } }
 }

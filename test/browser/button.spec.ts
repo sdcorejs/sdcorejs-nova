@@ -48,6 +48,40 @@ test.describe('coarse pointer', () => {
       for (let j = i + 1; j < boxes.length; j += 1) expect(overlaps(boxes[i]!, boxes[j]!), `${ids[i]}/${ids[j]}`).toBe(false);
     }
   });
+
+  // Round 2: the IconButton element is the 44×44 target; its visible surface is 32×32
+  // (transparent 6px border + padding-box background), not a pseudo hit area.
+  test('coarse IconButton shows a 32px surface inside its 44px box', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await open(page);
+    const coarse = await page.evaluate(() => matchMedia('(pointer: coarse)').matches);
+    test.skip(!coarse, 'engine does not report (pointer: coarse) for a touch context');
+    const surface = await page.getByTestId('icon-1').evaluate((element) => {
+      const style = getComputedStyle(element);
+      return { border: style.borderTopWidth, clip: style.backgroundClip, width: element.getBoundingClientRect().width - 2 * Number.parseFloat(style.borderLeftWidth) };
+    });
+    expect(surface).toEqual({ border: '6px', clip: 'padding-box', width: 32 });
+  });
+
+  // Forced colors force the transparent ring to a visible color: it is painted as
+  // Canvas and the 32px surface keeps a 1px outline instead of a thick black ring.
+  test('coarse IconButton in forced colors keeps a 1px surface edge', async ({ page }) => {
+    await page.emulateMedia({ forcedColors: 'active' });
+    await page.setViewportSize({ width: 320, height: 800 });
+    await open(page);
+    const forced = await page.evaluate(() => matchMedia('(forced-colors: active) and (pointer: coarse)').matches);
+    test.skip(!forced, 'engine does not emulate forced-colors with (pointer: coarse)');
+    const edge = await page.getByTestId('icon-1').evaluate((element) => {
+      const style = getComputedStyle(element);
+      const canvas = document.createElement('div');
+      canvas.style.backgroundColor = 'Canvas';
+      document.body.append(canvas);
+      const canvasColor = getComputedStyle(canvas).backgroundColor;
+      canvas.remove();
+      return { ring: style.borderTopColor === canvasColor, outline: `${style.outlineStyle} ${style.outlineWidth} ${style.outlineOffset}` };
+    });
+    expect(edge).toEqual({ ring: true, outline: 'solid 1px -7px' });
+  });
 });
 
 test('fine pointer keeps the compact visual size', async ({ page }) => {
@@ -55,6 +89,22 @@ test('fine pointer keeps the compact visual size', async ({ page }) => {
   const fine = await page.evaluate(() => matchMedia('(pointer: fine)').matches);
   test.skip(!fine, 'engine does not report (pointer: fine)');
   expect((await box(page, 'icon-1')).height).toBeLessThan(44);
+});
+
+// Round 2: fixed heights (sm 28 / md 36), weight 500, one line with ellipsis on desktop.
+test('desktop buttons keep fixed heights and a single-line label', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await open(page);
+  const fine = await page.evaluate(() => matchMedia('(pointer: fine)').matches);
+  test.skip(!fine, 'engine does not report (pointer: fine)');
+  expect((await box(page, 'long')).height).toBeCloseTo(36, 0);
+  expect((await box(page, 'small')).height).toBeCloseTo(28, 0);
+  expect((await box(page, 'icon-1')).width).toBeCloseTo(28, 0);
+  const label = await page.getByTestId('long').locator('.nova-button__label').evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { whiteSpace: style.whiteSpace, textOverflow: style.textOverflow, weight: getComputedStyle(element.parentElement!).fontWeight };
+  });
+  expect(label).toEqual({ whiteSpace: 'nowrap', textOverflow: 'ellipsis', weight: '500' });
 });
 
 test('button scenario has no axe violations', async ({ page }) => {
