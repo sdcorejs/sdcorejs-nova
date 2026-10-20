@@ -37,7 +37,7 @@ test('ancestor --nova-* is inherited outside provider', async ({ page }) => {
   expect(hex(await styleOf(page, 'outside-card', 'background-color'))).toBe(colorTokens.light.background);
 });
 
-test('320px title and actions do not overlap; long badge wraps without overflow', async ({ page }) => {
+test('320px title and actions do not overlap; long badge truncates without overflow', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 1200 });
   await open(page);
   for (const prefix of ['outside', 'light', 'dark']) {
