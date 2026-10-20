@@ -11,6 +11,11 @@
   .nova-action-menu__label { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; }
   .nova-action-menu__trigger-icon { flex: none; inline-size: 16px; block-size: 16px; }
   .nova-action-menu__trigger:disabled > .nova-action-menu__trigger-icon { color: var(--nova-color-control-border); }
+  /* Icon trigger (DataTable rows): ghost 28 square, muted ⋯ glyph, the label is its aria-label. */
+  .nova-action-menu__trigger.nova-action-menu__trigger--icon { inline-size: var(--nova-control-sm); block-size: var(--nova-control-sm); min-inline-size: var(--nova-control-sm); min-block-size: var(--nova-control-sm); padding: 0; border: 0; background: transparent; color: var(--nova-color-text-muted); }
+  .nova-action-menu__trigger--icon:hover:not(:disabled) { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
+  .nova-action-menu__trigger--icon:active:not(:disabled), .nova-action-menu__trigger--icon[aria-expanded="true"] { background: var(--nova-color-border); color: var(--nova-color-text); }
+  .nova-action-menu__trigger--icon:disabled { background: transparent; color: var(--nova-color-control-border); }
 
   /* Items: 36 rows (44 coarse), 16px muted icon, keyboard highlight ring inset. */
   .nova-action-menu__item { display: flex; align-items: center; gap: var(--nova-space-2); box-sizing: border-box; min-block-size: var(--nova-control-md); padding: var(--nova-space-2) var(--nova-space-3); border-radius: 4px; outline: none; font: inherit; color: inherit; overflow-wrap: anywhere; cursor: pointer; }
@@ -20,6 +25,11 @@
   .nova-action-menu__icon { display: inline-flex; flex: none; align-items: center; justify-content: center; inline-size: 16px; block-size: 16px; color: var(--nova-color-text-muted); }
   .nova-action-menu__icon > svg { inline-size: 100%; block-size: 100%; }
   .nova-action-menu__item[aria-disabled="true"] > .nova-action-menu__icon { color: var(--nova-color-control-border); }
+  /* Danger tone: destructive text and icon, error surface while highlighted. */
+  .nova-action-menu__item[data-tone="danger"], .nova-action-menu__item[data-tone="danger"] > .nova-action-menu__icon { color: var(--nova-color-danger); }
+  .nova-action-menu__item[data-tone="danger"][data-highlighted] { background: var(--nova-color-error-surface); }
+  .nova-action-menu__item[data-tone="danger"][aria-disabled="true"] { color: var(--nova-color-disabled-text); }
+  .nova-action-menu__item[data-tone="danger"][aria-disabled="true"] > .nova-action-menu__icon { color: var(--nova-color-control-border); }
   .nova-action-menu__chevron { flex: none; inline-size: 16px; block-size: 16px; margin-inline-start: auto; color: var(--nova-color-text-muted); }
   .nova-action-menu__chevron:dir(rtl) { transform: scaleX(-1); }
   .nova-action-menu__item:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
@@ -27,6 +37,9 @@
 
   @media (max-width: 640px), (pointer: coarse) {
     .nova-action-menu__trigger, .nova-action-menu__item { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
+    /* 44 hit target, 32 visible surface (transparent border + padding-box background). */
+    .nova-action-menu__trigger.nova-action-menu__trigger--icon { inline-size: var(--nova-hit-target); block-size: var(--nova-hit-target); border: 6px solid transparent; border-radius: 12px; background-clip: padding-box; }
+    .nova-action-menu__trigger--icon:focus-visible { outline-offset: -4px; }
   }
   @media (max-width: 640px) {
     .nova-action-menu__trigger { white-space: normal; overflow-wrap: anywhere; }
@@ -38,5 +51,8 @@
     .nova-action-menu__item[data-highlighted] { outline: var(--nova-border-width) solid Highlight; outline-offset: calc(-1 * var(--nova-border-width)); }
     .nova-action-menu__item:focus-visible { outline: var(--nova-focus-width) solid Highlight; outline-offset: calc(-1 * var(--nova-focus-width)); }
     .nova-action-menu__trigger:focus-visible { outline-color: Highlight; }
+  }
+  @media (forced-colors: active) and (max-width: 640px), (forced-colors: active) and (pointer: coarse) {
+    .nova-action-menu__trigger.nova-action-menu__trigger--icon { border-color: Canvas; }
   }
 }
