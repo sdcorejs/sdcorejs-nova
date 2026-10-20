@@ -1,9 +1,20 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
- .nova-pdf-preview {min-inline-size:0;max-inline-size:100%;color:var(--nova-color-text);background:var(--nova-color-background);font-family:var(--nova-font-family);overflow-wrap:anywhere;}
- .nova-pdf-preview__actions {display:flex;flex-wrap:wrap;align-items:center;gap:var(--nova-space-2);margin-block:var(--nova-space-2);}
- .nova-pdf-preview__page {max-inline-size:100%;overflow:auto;position:relative;}
+ .nova-pdf-preview {min-inline-size:0;max-inline-size:100%;color:var(--nova-color-text);background:var(--nova-color-background);font-family:var(--nova-font-family);font-size:var(--nova-font-size-body);line-height:var(--nova-line-height-body);overflow-wrap:anywhere;}
+ /* Title sits in the toolbar scale (14/20 600), not a browser-default h2. */
+ .nova-pdf-preview__title {margin:0 0 var(--nova-space-2);font-size:var(--nova-font-size-body);line-height:var(--nova-line-height-body);font-weight:var(--nova-font-weight-strong);}
+ /* Compact 28px toolbar; page navigation uses chevrons beside the visible labels. */
+ .nova-pdf-preview__actions {display:flex;flex-wrap:wrap;align-items:center;gap:var(--nova-space-1);margin-block:var(--nova-space-2);}
+ .nova-pdf-preview__actions:empty {display:none;}
+ .nova-pdf-preview__actions > .nova-button > .nova-button__label {display:inline-flex;align-items:center;gap:var(--nova-space-1);}
+ .nova-pdf-preview__actions .nova-icon {flex:none;}
+ .nova-pdf-preview__actions .nova-icon:dir(rtl) {transform:scaleX(-1);}
+ .nova-pdf-preview__actions > output {min-inline-size:44px;text-align:center;font-variant-numeric:tabular-nums;}
+ .nova-pdf-preview > [role="alert"] {color:var(--nova-color-error-text);}
+ .nova-pdf-preview > [role="status"] {color:var(--nova-color-text-muted);}
+ .nova-pdf-preview__page {max-inline-size:100%;overflow:auto;position:relative;border:var(--nova-border-width) solid var(--nova-color-border);border-radius:var(--nova-radius-card);}
  .nova-pdf-preview__page canvas {display:block;max-inline-size:100%;block-size:auto;}
  .nova-pdf-preview__text-layer {user-select:text;}
- @media (forced-colors:active) {.nova-pdf-preview {color:CanvasText;background:Canvas;}}
+ @media (max-width:640px),(pointer:coarse) {.nova-pdf-preview__actions > .nova-button {min-block-size:var(--nova-hit-target);min-inline-size:var(--nova-hit-target);}}
+ @media (forced-colors:active) {.nova-pdf-preview {color:CanvasText;background:Canvas;} .nova-pdf-preview__page {border-color:CanvasText;}}
 }

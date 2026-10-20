@@ -1,29 +1,73 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
-  .nova-date-picker { display: flex; align-items: flex-start; flex-wrap: wrap; gap: var(--nova-space-1); min-inline-size: 0; }
-  .nova-date-picker > .nova-input { flex: 1 1 8rem; min-inline-size: 0; inline-size: 0; }
-  .nova-date-picker > button, .nova-date-picker__close, .nova-calendar button { box-sizing: border-box; min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); border: 0; border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; cursor: pointer; }
-  .nova-date-picker > button { border: var(--nova-border-width) solid var(--nova-color-control-border); }
-  .nova-date-picker > button:disabled { color: var(--nova-color-disabled-text); cursor: default; }
-  .nova-date-picker > .nova-field__error { flex-basis: 100%; }
-  .nova-date-picker__popup { box-sizing: border-box; inline-size: 22rem; max-inline-size: calc(100vw - 32px); padding: var(--nova-space-3); }
-  .nova-calendar { min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
-  .nova-calendar__header { display: flex; align-items: center; justify-content: space-between; gap: var(--nova-space-1); }
-  .nova-calendar__header > span { flex: 1; min-inline-size: 0; text-align: center; overflow-wrap: anywhere; }
-  .nova-calendar table { inline-size: 100%; table-layout: fixed; border-collapse: collapse; }
-  .nova-calendar th, .nova-calendar td { padding: 0; text-align: center; }
-  .nova-calendar td > button { inline-size: 100%; padding: 0; }
-  .nova-calendar button:hover:not([aria-disabled="true"]):not(:disabled) { background: var(--nova-color-surface-hover); }
-  .nova-calendar [aria-selected="true"] > button { background: var(--nova-color-action); color: var(--nova-color-on-action); }
-  .nova-calendar button[aria-current="date"] { text-decoration: underline; text-underline-offset: 3px; }
-  .nova-calendar button[aria-disabled="true"] { color: var(--nova-color-disabled-text); cursor: default; }
-  .nova-calendar button:focus-visible, .nova-date-picker > button:focus-visible, .nova-date-picker__close:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
-  .nova-date-range-picker { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--nova-space-3); }
-  .nova-date-range-picker > .nova-field__error { grid-column: 1/-1; }
+  .nova-date-picker { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; }
+  /* The calendar trigger sits inside the input frame (one 36px control). */
+  .nova-date-picker__control { position: relative; display: flex; align-items: center; min-inline-size: 0; }
+  .nova-date-picker__control > .nova-input { flex: 1 1 auto; inline-size: 100%; min-inline-size: 0; padding-inline-end: 36px; font-variant-numeric: tabular-nums; }
+  .nova-date-picker__trigger { position: absolute; inset-block: 0; inset-inline-end: 6px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: 24px; block-size: 24px; margin-block: auto; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; transition: background-color var(--nova-duration) ease, color var(--nova-duration) ease; }
+  .nova-date-picker__trigger:hover:not(:disabled, [data-disabled]) { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
+  .nova-date-picker__trigger:active:not(:disabled, [data-disabled]), .nova-date-picker__trigger[aria-expanded="true"] { background: var(--nova-color-border); color: var(--nova-color-text); }
+  .nova-date-picker__trigger:disabled, .nova-date-picker__trigger[data-disabled] { color: var(--nova-color-control-border); cursor: not-allowed; }
+  .nova-date-picker__trigger:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
+  .nova-date-picker > .nova-field__error { margin: 0; }
+
+  /* Specificity above .nova-popover: popover.css is imported after this file. */
+  .nova-popover.nova-date-picker__popup { box-sizing: border-box; inline-size: min-content; min-inline-size: 0; max-inline-size: calc(100vw - 32px); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; background: var(--nova-color-background); box-shadow: 0 8px 24px rgb(0 0 0 / 0.12); }
+  .nova-date-picker__popup > p { margin: var(--nova-space-2) 0 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
+  .nova-date-picker__footer { display: flex; justify-content: flex-end; margin-block-start: var(--nova-space-2); padding-block-start: var(--nova-space-2); border-block-start: var(--nova-border-width) solid var(--nova-color-border); }
+  .nova-date-picker__close { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-block-size: var(--nova-control-sm); margin: 0; padding: 0 10px; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text); font: inherit; font-weight: 500; white-space: nowrap; cursor: pointer; }
+  .nova-date-picker__close:hover { background: var(--nova-color-surface-hover); }
+  .nova-date-picker__close:active { background: var(--nova-color-border); }
+  .nova-date-picker__close:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+
+  .nova-calendar { display: grid; gap: var(--nova-space-2); min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-calendar__header { display: flex; align-items: center; justify-content: space-between; gap: var(--nova-space-2); }
+  .nova-calendar__title { flex: 1; min-inline-size: 0; text-align: center; font-weight: var(--nova-font-weight-strong); overflow-wrap: anywhere; }
+  .nova-calendar__nav { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; inline-size: var(--nova-control-sm); block-size: var(--nova-control-sm); margin: 0; padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; background-clip: padding-box; color: var(--nova-color-text); font: inherit; cursor: pointer; }
+  .nova-calendar__nav:hover:not(:disabled) { background-color: var(--nova-color-surface-hover); }
+  .nova-calendar__nav:active:not(:disabled) { background-color: var(--nova-color-border); }
+  .nova-calendar__nav:disabled { color: var(--nova-color-control-border); cursor: not-allowed; }
+  .nova-calendar__nav:dir(rtl) > .nova-icon { transform: scaleX(-1); }
+  .nova-calendar table { border-collapse: separate; border-spacing: 2px; margin: -2px; }
+  .nova-calendar th { block-size: 24px; padding: 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: normal; text-align: center; }
+  .nova-calendar td { padding: 0; text-align: center; }
+  .nova-calendar td > button { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: 32px; block-size: 32px; margin: 0; padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text); font: inherit; font-variant-numeric: tabular-nums; vertical-align: middle; cursor: pointer; }
+  .nova-calendar td > button:hover:not([aria-disabled="true"]) { background: var(--nova-color-surface-hover); }
+  .nova-calendar td > button[aria-current="date"] { box-shadow: inset 0 0 0 1px var(--nova-color-control-border); }
+  .nova-calendar td[data-range] > button { background: var(--nova-color-surface-hover); }
+  .nova-calendar td[data-range="middle"] > button { border-radius: 0; }
+  .nova-calendar td[aria-selected="true"] > button { background: var(--nova-color-action); color: var(--nova-color-on-action); font-weight: var(--nova-font-weight-strong); }
+  .nova-calendar td[aria-selected="true"] > button:hover:not([aria-disabled="true"]) { background: var(--nova-color-action-hover); }
+  .nova-calendar td > button[aria-disabled="true"] { color: var(--nova-color-disabled-text); text-decoration: line-through; cursor: not-allowed; }
+  .nova-calendar td > button:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: 1px; }
+  .nova-calendar__nav:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+
+  .nova-date-range-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--nova-space-1) var(--nova-space-3); }
+  .nova-date-range-picker > .nova-field__error { grid-column: 1 / -1; margin: 0; }
+
+  /* Touch and narrow screens: 44px day cells and targets. */
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-date-picker__control > .nova-input { min-block-size: var(--nova-hit-target); padding-inline-end: 44px; }
+    .nova-date-picker__trigger { inset-inline-end: 0; inline-size: var(--nova-hit-target); block-size: var(--nova-hit-target); border: 6px solid transparent; border-radius: var(--nova-radius-control); background-clip: padding-box; }
+    .nova-calendar__nav { inline-size: var(--nova-hit-target); block-size: var(--nova-hit-target); border: 6px solid transparent; }
+    .nova-calendar table { border-spacing: 0; margin: 0; }
+    .nova-calendar td > button { inline-size: var(--nova-hit-target); block-size: var(--nova-hit-target); }
+    .nova-date-picker__close { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
+    .nova-date-range-picker { grid-template-columns: minmax(0, 1fr); }
+  }
   @media (max-width: 375px) {
     .nova-popover__positioner:has(> .nova-date-picker__popup) { position: fixed !important; inset: auto 0 0 !important; transform: none !important; inline-size: 100vw !important; max-inline-size: 100vw !important; }
-    .nova-date-picker__popup { inline-size: 100vw; max-inline-size: 100vw; padding: 5px; padding-block-end: max(5px,env(safe-area-inset-bottom)); border-width: 1px; border-radius: var(--nova-radius-overlay) var(--nova-radius-overlay) 0 0; }
+    .nova-popover.nova-date-picker__popup { inline-size: 100vw; max-inline-size: 100vw; padding: 5px; padding-block-end: max(5px, env(safe-area-inset-bottom)); border-width: 1px; border-radius: var(--nova-radius-overlay) var(--nova-radius-overlay) 0 0; }
+    .nova-calendar table { inline-size: 100%; table-layout: fixed; }
+    .nova-calendar td > button { inline-size: 100%; min-inline-size: var(--nova-hit-target); }
   }
-  @media (max-width: 640px) { .nova-date-range-picker { grid-template-columns: minmax(0,1fr); } .nova-date-picker > .nova-input { font-size: 16px; } }
-  @media (forced-colors: active) { .nova-calendar [aria-selected="true"] > button { outline: 1px solid Highlight; } .nova-calendar button:focus-visible { outline-color: Highlight; } }
+  @media (forced-colors: active) {
+    .nova-date-picker__trigger, .nova-calendar__nav { color: ButtonText; }
+    .nova-date-picker__trigger:disabled, .nova-calendar__nav:disabled { color: GrayText; }
+    .nova-calendar td[aria-selected="true"] > button { outline: 1px solid Highlight; }
+    .nova-calendar td > button[aria-current="date"] { border: 1px dashed CanvasText; }
+    .nova-calendar td[data-range] > button { text-decoration: underline; }
+    .nova-calendar td > button:focus-visible, .nova-date-picker__trigger:focus-visible, .nova-calendar__nav:focus-visible, .nova-date-picker__close:focus-visible { outline-color: Highlight; }
+  }
+  @media (prefers-reduced-motion: reduce) { .nova-date-picker__trigger { transition: none; } }
 }

@@ -21,12 +21,12 @@ export function JobProgress<T>({state,label,connection='idle',onRetry,onCancel,d
  const final=state.status==='succeeded'||state.status==='failed'||state.status==='cancelled';
  return <div ref={ref} className={cx('nova-job-progress',className)} style={style} data-testid={testId} aria-labelledby={id}>
   <Progress label={label} value={state.progress}/>
-  <p id={id} role="status" aria-live="polite" aria-atomic="true">{text(statusKeys[state.status])}{connection==='reconnecting'&&!final?<> — {text('jobReconnecting')}</>:null}</p>
+  <p id={id} role="status" aria-live="polite" aria-atomic="true" className="nova-job-progress__status" data-status={state.status} data-connection={connection!=='idle'&&!final?connection:undefined}>{text(statusKeys[state.status])}{connection==='reconnecting'&&!final?<> — {text('jobReconnecting')}</>:null}</p>
   {connection==='error'&&!final?<p role="alert">{text('jobConnectionError')}</p>:null}
   {safeMessage!==undefined?<div className="nova-job-progress__message">{safeMessage}</div>:null}
   {!final&&(onCancel||(connection==='error'&&onRetry))?<div className="nova-job-progress__actions">
-   {connection==='error'&&onRetry?<Button variant="secondary" disabled={disabled} onClick={onRetry}>{text('jobRetry')}</Button>:null}
-   {onCancel?<Button variant="secondary" disabled={disabled} onClick={onCancel}>{text('jobCancel')}</Button>:null}
+   {connection==='error'&&onRetry?<Button variant="secondary" size="sm" disabled={disabled} onClick={onRetry}>{text('jobRetry')}</Button>:null}
+   {onCancel?<Button variant="ghost" size="sm" disabled={disabled} onClick={onCancel}>{text('jobCancel')}</Button>:null}
   </div>:null}
   {state.status==='succeeded'&&state.result!==undefined&&renderResult?renderResult(state.result):null}
  </div>;
