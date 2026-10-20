@@ -3,11 +3,24 @@
  .nova-splitter { display:flex; min-inline-size:0; min-block-size:0; gap:0; color:var(--nova-color-text); }
  .nova-splitter[data-orientation="vertical"] { flex-direction:column; }
  .nova-splitter__panel { box-sizing:border-box; flex-grow:0; flex-shrink:1; min-inline-size:0; min-block-size:0; overflow:auto; overflow-wrap:anywhere; }
- .nova-splitter__separator { box-sizing:border-box; flex:none; position:relative; border:0; padding:0; background:transparent; color:inherit; inline-size:var(--nova-hit-target); min-block-size:var(--nova-hit-target); cursor:col-resize; touch-action:none; }
- .nova-splitter__separator::after { content:""; position:absolute; inset-block:var(--nova-space-2); inset-inline-start:50%; border-inline-start:var(--nova-border-width) solid var(--nova-color-border); }
- .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator { inline-size:auto; block-size:var(--nova-hit-target); min-inline-size:var(--nova-hit-target); cursor:row-resize; }
- .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator::after { inset-inline:var(--nova-space-2); inset-block-start:50%; inset-block-end:auto; border-inline-start:0; border-block-start:var(--nova-border-width) solid var(--nova-color-border); }
+ /* Visible 12px handle strip: a 1px line (2px, text colour on hover/focus) and a 4×24 grip. */
+ .nova-splitter__separator { box-sizing:border-box; flex:none; position:relative; margin:0; border:0; padding:0; background:transparent; color:inherit; inline-size:12px; min-block-size:var(--nova-hit-target); cursor:col-resize; touch-action:none; }
+ .nova-splitter__separator::before { content:""; position:absolute; inset-block:0; inset-inline-start:calc(50% - 0.5px); border-inline-start:var(--nova-border-width) solid var(--nova-color-border); }
+ .nova-splitter__separator::after { content:""; position:absolute; inset-block-start:calc(50% - 12px); inset-inline-start:calc(50% - 2px); inline-size:4px; block-size:24px; border-radius:2px; background:var(--nova-color-control-border); }
+ .nova-splitter__separator:hover::before, .nova-splitter__separator:focus-visible::before { inset-inline-start:calc(50% - 1px); border-inline-start-width:2px; border-color:var(--nova-color-text); }
+ .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator { inline-size:auto; block-size:12px; min-block-size:0; min-inline-size:var(--nova-hit-target); cursor:row-resize; }
+ .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator::before { inset-inline:0; inset-block:calc(50% - 0.5px) auto; border-inline-start:0; border-block-start:var(--nova-border-width) solid var(--nova-color-border); }
+ .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator::after { inset-block-start:calc(50% - 2px); inset-inline-start:calc(50% - 12px); inline-size:24px; block-size:4px; }
+ .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator:hover::before, .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator:focus-visible::before { inset-block-start:calc(50% - 1px); border-block-start-width:2px; border-color:var(--nova-color-text); }
  .nova-splitter__separator:focus-visible { outline:var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset:calc(-1 * var(--nova-focus-width)); }
  .nova-splitter__separator[aria-disabled="true"], .nova-splitter__separator[data-readonly="true"] { cursor:default; }
- @media (forced-colors:active) { .nova-splitter__separator::after { border-color:CanvasText; } .nova-splitter__separator:focus-visible { outline-color:Highlight; } }
+ .nova-splitter__separator[aria-disabled="true"]:hover::before, .nova-splitter__separator[data-readonly="true"]:hover::before { border-color:var(--nova-color-border); }
+ /* Coarse/narrow: the element grows to a 44px target over the panels' edges (negative
+    margins) so the layout still allocates only the 12px strip; the ring hugs the strip. */
+ @media (max-width:640px),(pointer:coarse) {
+  .nova-splitter__separator { z-index:1; inline-size:var(--nova-hit-target); margin-inline:-16px; }
+  .nova-splitter__separator:focus-visible { outline-offset:-18px; }
+  .nova-splitter[data-orientation="vertical"] > .nova-splitter__separator { inline-size:auto; block-size:var(--nova-hit-target); margin-inline:0; margin-block:-16px; }
+ }
+ @media (forced-colors:active) { .nova-splitter__separator::before { border-color:CanvasText; } .nova-splitter__separator::after { forced-color-adjust:none; background:CanvasText; } .nova-splitter__separator:focus-visible { outline-color:Highlight; } }
 }

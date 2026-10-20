@@ -1,7 +1,9 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
- .nova-scroll-area { overflow: auto; min-inline-size: 0; max-inline-size: 100%; overscroll-behavior: contain; scrollbar-gutter: stable; }
+ /* Bordered box (radius 8) with a thin scrollbar; the focus ring is drawn inside so the
+    region's own overflow clipping (or an ancestor's) never cuts it off. */
+ .nova-scroll-area { box-sizing: border-box; overflow: auto; min-inline-size: 0; max-inline-size: 100%; padding: var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; overscroll-behavior: contain; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--nova-color-control-border) transparent; }
  .nova-scroll-area__content { min-inline-size: 0; }
- .nova-scroll-area:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
- @media (forced-colors: active) { .nova-scroll-area:focus-visible { outline-color: Highlight; } }
+ .nova-scroll-area:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
+ @media (forced-colors: active) { .nova-scroll-area { border-color: CanvasText; } .nova-scroll-area:focus-visible { outline-color: Highlight; } }
 }

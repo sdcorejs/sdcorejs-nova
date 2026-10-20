@@ -27,6 +27,13 @@
     min-inline-size: 0;
   }
 
+  /* The current page (always the last item) stays on the trail's line and truncates
+     there while at least 6rem is left; with less room it moves to its own line. */
+  .nova-breadcrumb__item:last-child {
+    flex: 1 1 0;
+    min-inline-size: min(6rem, 100%);
+  }
+
   /* Ellipsis is visual only: the full label stays in the accessible name. The
      containment applies inside the Nova-owned content box, to default Links and
      to custom renderLink anchors alike (R22). */
@@ -46,16 +53,37 @@
     vertical-align: middle;
   }
 
-  .nova-breadcrumb__current {
+  /* Default ancestor links read as muted trail items; hover shows the underline. */
+  .nova-breadcrumb__content > .nova-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .nova-breadcrumb__content > .nova-link:hover {
     color: var(--nova-color-text);
-    font-weight: var(--nova-font-weight-strong);
-    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  /* The current page truncates like the other items instead of wrapping. */
+  .nova-breadcrumb__current {
+    display: inline-block;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: hidden;
+    color: var(--nova-color-text);
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
   }
 
   .nova-breadcrumb__separator {
     display: inline-flex;
-    inline-size: 1em;
-    block-size: 1em;
+    flex: none;
+    inline-size: 16px;
+    block-size: 16px;
   }
 
   .nova-breadcrumb__separator > svg {
@@ -71,20 +99,39 @@
     display: none;
   }
 
+  /* Ghost 24×24 icon button (no border); 44×44 with a 28 visible surface on coarse. */
   .nova-breadcrumb__toggle {
     display: inline-flex;
+    flex: none;
     align-items: center;
     justify-content: center;
-    min-inline-size: var(--nova-control-sm);
-    min-block-size: var(--nova-control-sm);
+    box-sizing: border-box;
+    inline-size: 24px;
+    block-size: 24px;
     margin: 0;
-    padding: 0 var(--nova-space-1);
-    border: var(--nova-border-width) solid var(--nova-color-control-border);
-    border-radius: var(--nova-radius-control);
-    background: var(--nova-color-background);
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    background-clip: padding-box;
     color: var(--nova-color-text);
     font: inherit;
     cursor: pointer;
+  }
+
+  .nova-breadcrumb__toggle > svg {
+    flex: none;
+    inline-size: 16px;
+    block-size: 16px;
+  }
+
+  .nova-breadcrumb__toggle:hover {
+    background-color: var(--nova-color-surface-hover);
+  }
+
+  .nova-breadcrumb__toggle:active,
+  .nova-breadcrumb__toggle[aria-expanded="true"] {
+    background-color: var(--nova-color-border);
   }
 
   .nova-breadcrumb__toggle:focus-visible {
@@ -103,24 +150,39 @@
     }
   }
 
-  @media (pointer: coarse) {
-    /* the anchor itself is the ≥ 44×44 target (R23) */
-    .nova-breadcrumb__content > a {
-      min-block-size: var(--nova-hit-target);
-      min-inline-size: var(--nova-hit-target);
-      line-height: var(--nova-hit-target);
-      text-align: center;
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-breadcrumb__toggle {
+      inline-size: var(--nova-hit-target);
+      block-size: var(--nova-hit-target);
+      border: 8px solid transparent;
+      border-radius: 12px;
     }
 
-    .nova-breadcrumb__toggle {
-      min-inline-size: var(--nova-hit-target);
+    .nova-breadcrumb__toggle:focus-visible {
+      outline-offset: -6px;
+    }
+
+    /* The anchor itself is the ≥ 44×44 target (R23); the text keeps its 14/20 line
+       and the extra height is padding, not a taller line box. */
+    .nova-breadcrumb__content > a {
+      box-sizing: border-box;
       min-block-size: var(--nova-hit-target);
+      min-inline-size: var(--nova-hit-target);
+      padding-block: calc((var(--nova-hit-target) - var(--nova-line-height-body)) / 2);
+      line-height: var(--nova-line-height-body);
+      text-align: center;
     }
   }
 
   @media (forced-colors: active) {
+    /* the transparent hit-area border would be forced to a visible colour */
     .nova-breadcrumb__toggle {
-      border-color: ButtonText;
+      border-color: Canvas;
+      color: ButtonText;
+    }
+
+    .nova-breadcrumb__toggle:focus-visible {
+      outline-color: Highlight;
     }
   }
 }

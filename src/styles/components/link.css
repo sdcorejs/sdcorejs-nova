@@ -5,11 +5,14 @@
     color: var(--nova-color-action);
     font-family: var(--nova-font-family);
     text-decoration: underline;
+    text-decoration-color: var(--nova-color-control-border);
+    text-decoration-thickness: 1px;
     text-underline-offset: 2px;
     overflow-wrap: anywhere;
   }
 
   .nova-link:hover {
+    text-decoration-color: currentColor;
     text-decoration-thickness: 2px;
   }
 

@@ -14,7 +14,8 @@ export function Spinner({ label, size = 'md', className, style, 'data-testid': t
   return (
     <span ref={ref} role="status" className={cx('nova-spinner', `nova-spinner--${size}`, className)} style={style} data-testid={testId}>
       <svg className="nova-spinner__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-        <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="28" strokeDashoffset="10" />
+        <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeWidth="2" strokeOpacity="0.25" />
+        <path d="M14 8a6 6 0 0 0-6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
       <span className="nova-spinner__label">{label ?? strings.feedback.loading}</span>
     </span>

@@ -18,6 +18,9 @@ describe('consumer-owned step progress',()=>{
   it('error and complete status have localized visible text and do not rely on color',()=>{
     render(<NovaProvider locale="en"><Stepper defaultValue="review" steps={steps}/></NovaProvider>);expect(screen.getByText('Error')).toBeTruthy();expect(screen.getByText('Complete')).toBeTruthy();expect(screen.getAllByRole('listitem').find(item=>item.textContent?.includes('Review'))?.textContent).toContain('Error');
   });
+  it('a complete step shows a decorative check instead of its number; other steps keep the number',()=>{
+    render(<Stepper steps={steps}/>);const markers=[...document.querySelectorAll('.nova-stepper__number')];expect(markers.every(marker=>marker.getAttribute('aria-hidden')==='true')).toBe(true);expect(markers[0]?.querySelector('svg')).not.toBeNull();expect(markers[0]?.textContent).toBe('');expect(markers[1]?.textContent).toBe('2');expect(markers[2]?.textContent).toBe('3');
+  });
   it('zero steps is an empty named list, and only boundaries between real steps contain connectors',()=>{
     const view=render(<Stepper steps={[]} label="Application progress"/>);expect(screen.getByRole('list',{name:'Application progress'}).children).toHaveLength(0);expect(document.querySelectorAll('.nova-stepper__connector')).toHaveLength(0);view.rerender(<Stepper steps={steps} label="Application progress"/>);expect(document.querySelectorAll('.nova-stepper__connector')).toHaveLength(2);expect(screen.getAllByRole('listitem').at(-1)?.querySelector('.nova-stepper__connector')).toBeNull();
   });

@@ -28,11 +28,21 @@ export type AvatarGroupProps = SurfaceProps & {
   ref?: Ref<HTMLDivElement>;
 };
 
+// Stroked 16×16 person, matching the internal decorative icon set (1.5 stroke, currentColor).
 function PersonIcon() {
   return (
-    <svg className="nova-avatar__icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <circle cx="12" cy="9" r="4" fill="currentColor" />
-      <path d="M4 21a8 8 0 0 1 16 0" fill="currentColor" />
+    <svg
+      className="nova-avatar__icon"
+      viewBox="0 0 16 16"
+      focusable="false"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 2.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5zM2.75 13.75c.6-2.6 2.6-4 5.25-4s4.65 1.4 5.25 4" />
     </svg>
   );
 }
@@ -91,13 +101,18 @@ export function AvatarGroup({ children, label, max, className, style, 'data-test
   const limit = max === undefined || invalidMax ? items.length : Math.floor(max);
   const visible = items.slice(0, limit);
   const hidden = items.length - visible.length;
+  // The "+N" avatar takes the size of the group's own avatars (read from props, never the DOM).
+  const size = visible.reduce<NonNullable<AvatarProps['size']> | undefined>(
+    (found, item) => found ?? (isValidElement<AvatarProps>(item) && item.type === Avatar ? item.props.size ?? 'md' : undefined),
+    undefined,
+  ) ?? 'md';
 
   return (
     <div ref={ref} role="group" aria-label={label} className={cx('nova-avatar-group', className)} style={style} data-testid={testId}>
       {visible}
       {hidden > 0 ? (
         <span
-          className="nova-avatar nova-avatar--md nova-avatar--overflow"
+          className={cx('nova-avatar', `nova-avatar--${size}`, 'nova-avatar--overflow')}
           role="img"
           aria-label={formatMessage(strings.navigation.avatarOverflow, locale, { count: hidden })}
         >

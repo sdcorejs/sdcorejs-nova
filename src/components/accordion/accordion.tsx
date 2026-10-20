@@ -4,6 +4,7 @@ import { Collapsible as PrimitiveCollapsible } from '@base-ui/react/collapsible'
 import { Component, createContext, useContext, useId, useRef, type ReactNode, type RefObject } from 'react';
 
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { useControllableValue } from '../../lib/use-controllable-value.js';
 import { useDiagnostics } from '../../providers/nova/context.js';
 import type { SurfaceProps, ValueProps } from '../../types/index.js';
@@ -71,7 +72,7 @@ export function CollapsibleSection(props: CollapsibleSectionProps) {
     <div className="nova-collapsible__header">
       <Heading className="nova-collapsible__heading">
         <PrimitiveCollapsible.Trigger ref={trigger} id={`${id}-trigger`} aria-controls={`${id}-panel`}
-          className="nova-collapsible__trigger">{title}<span aria-hidden="true">{open ? '−' : '+'}</span></PrimitiveCollapsible.Trigger>
+          className="nova-collapsible__trigger"><Icon name="chevron-right" className="nova-collapsible__icon"/><span className="nova-collapsible__title">{title}</span></PrimitiveCollapsible.Trigger>
       </Heading>
       {actions && <div className="nova-collapsible__actions">{actions}</div>}
     </div>
@@ -112,7 +113,7 @@ export function AccordionItem(props: AccordionItemProps) {
     <div className="nova-collapsible__header">
       <PrimitiveAccordion.Header render={<Heading className="nova-collapsible__heading"/>}>
         <PrimitiveAccordion.Trigger ref={trigger} id={`${id}-trigger`} aria-controls={`${id}-panel`}
-          className="nova-collapsible__trigger">{title}<span aria-hidden="true">{open ? '−' : '+'}</span></PrimitiveAccordion.Trigger>
+          className="nova-collapsible__trigger"><Icon name="chevron-right" className="nova-collapsible__icon"/><span className="nova-collapsible__title">{title}</span></PrimitiveAccordion.Trigger>
       </PrimitiveAccordion.Header>
       {actions && <div className="nova-collapsible__actions">{actions}</div>}
     </div>

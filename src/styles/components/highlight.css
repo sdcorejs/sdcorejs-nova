@@ -1,7 +1,8 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
   .nova-highlight { overflow-wrap: anywhere; }
-  .nova-highlight mark { background: var(--nova-color-surface-hover); color: var(--nova-color-text); font-weight: 600; }
+  /* No weight change (the text never reflows); warning surface plus a 1px warning underline. */
+  .nova-highlight mark { border-radius: 2px; background: var(--nova-color-warning-surface); box-shadow: inset 0 -1px 0 var(--nova-color-warning-text); color: var(--nova-color-text); font-weight: inherit; }
   @media (forced-colors: active) {
     .nova-highlight mark { background: Canvas; color: CanvasText; text-decoration: underline; }
   }

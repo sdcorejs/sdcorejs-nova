@@ -7,6 +7,7 @@ import { useId, useState, type ReactNode, type Ref } from 'react';
 
 import { useNovaScope } from '../../providers/nova/context.js';
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { sanitizeHref } from '../../lib/safe-href.js';
 import type { SurfaceProps } from '../../types/index.js';
 import { Link } from '../link/link.js';
@@ -23,7 +24,7 @@ export type BreadcrumbProps = SurfaceProps & {
 function Separator() {
   return (
     <span className="nova-breadcrumb__separator" aria-hidden="true">
-      <svg viewBox="0 0 16 16" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>
+      <Icon name="chevron-right" />
     </span>
   );
 }
@@ -76,7 +77,7 @@ export function Breadcrumb({ items, renderLink, label, className, style, 'data-t
                   aria-label={strings.navigation.showHidden}
                   onClick={() => setExpanded((previous) => !previous)}
                 >
-                  <span aria-hidden="true">…</span>
+                  <Icon name="more" />
                 </button>
                 <Separator />
               </li>

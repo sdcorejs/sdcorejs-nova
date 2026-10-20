@@ -5,6 +5,7 @@ import { useClipboard } from '../../hooks/clipboard/clipboard.js';
 import { useNovaScope } from '../../providers/nova/context.js';
 import { en } from '../../i18n/en.js';
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { Button } from '../button/button.js';
 export type CopyButtonProps=SurfaceProps&{text:string;label?:string};
 export function CopyButton({text,label,className,style,'data-testid':testId}:CopyButtonProps){
@@ -26,7 +27,7 @@ export function CopyButton({text,label,className,style,'data-testid':testId}:Cop
         setResult({text:copiedText,kind:success?'copied':'failed'});
         if(success)timer.current=setTimeout(()=>{timer.current=null;if(mounted.current&&generation.current.value===capturedGeneration)setResult({text,kind:null});},3000);
       });
-    }}>{name}</Button>
+    }}><Icon name={status==='copied'?'check':'copy'} className={cx('nova-copy-button__icon',status==='copied'&&'nova-copy-button__icon--copied')}/>{name}</Button>
     <span className={failed?'nova-copy-button__error':'nova-copy-button__status'} role="status" aria-live="polite">{message}</span>
     {failed&&<code className="nova-copy-button__fallback">{text}</code>}
   </span>;
