@@ -3,6 +3,7 @@ import { Menu as Primitive } from '@base-ui/react/menu';
 import { useLayoutEffect, useEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { useAsyncAction } from '../../hooks/async-action/async-action.js';
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { useDiagnostics } from '../../providers/nova/context.js';
 import { PortalScope } from '../../providers/nova/portal-scope.js';
 import type { Action, MenuAction, SurfaceProps } from '../../types/index.js';
@@ -24,7 +25,7 @@ function ActionGroup<T>({group,pendingId,active,leaf}:{group:{id:string;label:st
   return <Primitive.SubmenuRoot closeParentOnEsc={pendingId!==null} onOpenChange={(next,details)=>{
     if(!next && ownsPending() && details.reason!=='escape-key'){details.cancel();return;}
   }}>
-    <Primitive.SubmenuTrigger className="nova-action-menu__item" disabled={pendingId!==null && !group.children.some(child=>child.id===pendingId)}>{group.label}<span aria-hidden="true" className="nova-action-menu__chevron">›</span></Primitive.SubmenuTrigger>
+    <Primitive.SubmenuTrigger className="nova-action-menu__item" disabled={pendingId!==null && !group.children.some(child=>child.id===pendingId)}><span className="nova-action-menu__item-label">{group.label}</span><Icon name="chevron-right" className="nova-action-menu__chevron"/></Primitive.SubmenuTrigger>
     <PortalScope>{(host,ref)=><Primitive.Portal ref={ref} container={host}>
       <Primitive.Positioner side="inline-end" sideOffset={4} collisionPadding={16} collisionAvoidance={{side:'flip',align:'shift'}} className="nova-action-menu__positioner"><Primitive.Popup aria-label={group.label} className="nova-action-menu">{group.children.map(leaf)}</Primitive.Popup></Primitive.Positioner>
     </Primitive.Portal>}</PortalScope>
@@ -59,13 +60,13 @@ export function ActionMenu<T>({data,actions,label,disabled=false,onActionError,c
       try{onActionError?.(error,action.id);}catch{/* The consumer reporter owns its error boundary. */}
     });
   };
-  const leaf=(action:Action<T>)=><Primitive.Item key={action.id} disabled={!!action.disabled || (pendingId!==null && pendingId!==action.id)} aria-disabled={action.disabled || pendingId===action.id || undefined} aria-busy={pendingId===action.id || undefined} closeOnClick={false} onClick={()=>execute(action)} label={action.label} className="nova-action-menu__item">{action.icon && <span aria-hidden="true" className="nova-action-menu__icon">{action.icon}</span>}<span>{action.label}</span></Primitive.Item>;
+  const leaf=(action:Action<T>)=><Primitive.Item key={action.id} disabled={!!action.disabled || (pendingId!==null && pendingId!==action.id)} aria-disabled={action.disabled || pendingId===action.id || undefined} aria-busy={pendingId===action.id || undefined} closeOnClick={false} onClick={()=>execute(action)} label={action.label} className="nova-action-menu__item">{action.icon && <span aria-hidden="true" className="nova-action-menu__icon">{action.icon}</span>}<span className="nova-action-menu__item-label">{action.label}</span></Primitive.Item>;
   if(!selection.length)return null;
   return <Primitive.Root modal={false} open={open && !disabled} onOpenChange={(next,details)=>{
     if(!next && active.current!==null && details.reason!=='escape-key'){details.cancel();return;}
     generation.current++;setOpen(next);
   }}>
-    <Primitive.Trigger disabled={disabled} className={cx('nova-action-menu__trigger',className)} style={style} data-testid={testId}>{label}</Primitive.Trigger>
+    <Primitive.Trigger disabled={disabled} className={cx('nova-action-menu__trigger',className)} style={style} data-testid={testId}><span className="nova-action-menu__label">{label}</span><Icon name="chevron-down" className="nova-action-menu__trigger-icon"/></Primitive.Trigger>
     <PortalScope>{(container,portalRef)=><Primitive.Portal ref={portalRef} container={container}>
       <Primitive.Positioner side="bottom" align="end" sideOffset={8} collisionPadding={16} collisionAvoidance={{side:'flip',align:'shift'}} className="nova-action-menu__positioner">
         <Primitive.Popup aria-label={label} aria-busy={pendingId!==null || undefined} className="nova-action-menu">
