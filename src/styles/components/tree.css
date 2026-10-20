@@ -2,19 +2,53 @@
 @layer nova.components {
   .nova-tree { min-inline-size: 0; color: var(--nova-color-text); background: var(--nova-color-background); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
   .nova-tree__root, .nova-tree__group { list-style: none; margin: 0; padding: 0; }
-  .nova-tree__group { margin-inline-start: var(--nova-space-4); border-inline-start: var(--nova-border-width) solid var(--nova-color-border); padding-inline-start: var(--nova-space-2); }
-  .nova-tree__item { border-radius: var(--nova-radius-control); outline: none; }
-  .nova-tree__item:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
-  .nova-tree__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-2); min-block-size: var(--nova-hit-target); padding: var(--nova-space-2); border-radius: var(--nova-radius-control); }
-  .nova-tree__item[aria-selected="true"] > .nova-tree__row { background: var(--nova-color-surface-hover); font-weight: var(--nova-font-weight-strong); }
-  .nova-tree__item[aria-disabled="true"] { color: var(--nova-color-text-muted); }
-  .nova-tree__content { flex: 1 1 auto; min-inline-size: 0; overflow-wrap: anywhere; }
-  .nova-tree__controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-2); }
-  .nova-tree__controls .nova-button, .nova-tree__controls .nova-action-menu__trigger { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
-  .nova-tree__status { padding: var(--nova-space-2); overflow-wrap: anywhere; }
-  @media (forced-colors: active) {
-    .nova-tree__item:focus-visible { outline-color: Highlight; }
-    .nova-tree__item[aria-selected="true"] > .nova-tree__row { outline: var(--nova-border-width) solid Highlight; }
-    .nova-tree__group { border-color: CanvasText; }
+  /* 20px per level; no guide line. */
+  .nova-tree__group { padding-inline-start: 20px; }
+  .nova-tree__item { outline: none; }
+  /* 32px row (border-box): chevron toggle first, label, row controls on the same line. */
+  .nova-tree__row { box-sizing: border-box; display: flex; flex-wrap: nowrap; align-items: center; gap: var(--nova-space-1); min-block-size: 32px; padding-inline: var(--nova-space-1); border-radius: var(--nova-radius-control); }
+  .nova-tree__row:hover { background: var(--nova-color-surface); }
+  .nova-tree__item[aria-selected="true"] > .nova-tree__row { background: var(--nova-color-surface-hover); font-weight: 500; }
+  /* The focus ring wraps the focused row, not its whole subtree. */
+  .nova-tree__item:focus-visible > .nova-tree__row { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
+  .nova-tree__item[aria-disabled="true"] { color: var(--nova-color-disabled-text); }
+  .nova-tree__content { flex: 1 1 auto; min-inline-size: 0; padding-block: 6px; overflow-wrap: anywhere; }
+  /* Row controls join the row's flex line; the toggle is drawn before the label. */
+  .nova-tree__controls { display: contents; }
+  .nova-tree__row .nova-button.nova-tree__toggle { order: -1; flex: none; box-sizing: border-box; inline-size: 24px; min-inline-size: 24px; block-size: 24px; min-block-size: 24px; padding: 0; border: 0; border-radius: 4px; background: transparent; background-clip: padding-box; color: var(--nova-color-text-muted); }
+  .nova-tree__row .nova-button.nova-tree__toggle:hover:not(:disabled) { background-color: var(--nova-color-surface-hover); color: var(--nova-color-text); }
+  .nova-tree__row .nova-button.nova-tree__toggle:active:not(:disabled) { background-color: var(--nova-color-border); }
+  .nova-tree__row .nova-button.nova-tree__toggle:disabled { background: transparent; color: var(--nova-color-control-border); }
+  .nova-tree__row .nova-button.nova-tree__toggle:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
+  .nova-tree__toggle > .nova-button__label { display: inline-flex; }
+  .nova-tree__toggle .nova-icon { display: block; transition: transform var(--nova-duration) ease; }
+  .nova-tree__toggle:dir(rtl) .nova-icon { transform: scaleX(-1); }
+  .nova-tree__item[aria-expanded="true"] > .nova-tree__row .nova-tree__toggle .nova-icon { transform: rotate(90deg); }
+  /* Leaves keep the label column aligned with sibling branches. */
+  .nova-tree__root:has(.nova-tree__item[aria-expanded]) .nova-tree__item:not([aria-expanded]) > .nova-tree__row { padding-inline-start: 32px; }
+  /* Compact row actions (24-28px), muted until hovered. */
+  .nova-tree__row .nova-action-menu__trigger { flex: 0 1 auto; box-sizing: border-box; min-inline-size: 0; min-block-size: var(--nova-control-sm); padding: 0 var(--nova-space-2); border-color: transparent; background: transparent; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: 500; overflow-wrap: anywhere; }
+  .nova-tree__row .nova-action-menu__trigger:hover:not(:disabled) { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
+  .nova-tree__row .nova-action-menu__trigger[aria-expanded="true"] { background: var(--nova-color-border); color: var(--nova-color-text); }
+  .nova-tree__row .nova-button:not(.nova-tree__toggle) { flex: none; }
+  .nova-tree__status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-1) var(--nova-space-2); padding-block: var(--nova-space-1); padding-inline: 32px var(--nova-space-2); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
+  .nova-tree__status > [role="alert"] { margin: 0; color: var(--nova-color-error-text); }
+  .nova-tree > [role="alert"], .nova-tree > [role="status"] { margin: 0; padding: var(--nova-space-2); color: var(--nova-color-text-muted); }
+  .nova-tree > [role="alert"] { color: var(--nova-color-error-text); }
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-tree__row { min-block-size: var(--nova-hit-target); }
+    .nova-tree__content { padding-block: 12px; }
+    /* 44px target, 32px visible surface. */
+    .nova-tree__row .nova-button.nova-tree__toggle { inline-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); block-size: var(--nova-hit-target); min-block-size: var(--nova-hit-target); border: 6px solid transparent; border-radius: var(--nova-radius-control); }
+    .nova-tree__root:has(.nova-tree__item[aria-expanded]) .nova-tree__item:not([aria-expanded]) > .nova-tree__row { padding-inline-start: 52px; }
+    .nova-tree__status { padding-inline-start: 52px; }
+    .nova-tree__row .nova-action-menu__trigger, .nova-tree__row .nova-button:not(.nova-tree__toggle), .nova-tree__status .nova-button { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
   }
+  @media (forced-colors: active) {
+    .nova-tree__item[aria-selected="true"] > .nova-tree__row { outline: var(--nova-border-width) solid Highlight; }
+    .nova-tree__item:focus-visible > .nova-tree__row, .nova-tree__item[aria-selected="true"]:focus-visible > .nova-tree__row { outline: var(--nova-focus-width) solid Highlight; outline-offset: calc(-1 * var(--nova-focus-width)); }
+    .nova-tree__row .nova-button.nova-tree__toggle { color: ButtonText; }
+    .nova-tree__row .nova-button.nova-tree__toggle:disabled { color: GrayText; }
+  }
+  @media (prefers-reduced-motion: reduce) { .nova-tree__toggle .nova-icon { transition: none; } }
 }

@@ -3,9 +3,11 @@ import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 import { en } from '../../i18n/en.js';
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { abortable } from '../../lib/p1-async-lifecycle.js';
 import { useNovaScope } from '../../providers/nova/context.js';
 import type { LoadContext, SurfaceProps } from '../../types/index.js';
+import { Button } from '../button/button.js';
 
 export type Revision = string | number;
 export type InlineEditCommit<T> = {value: T; revision: Revision};
@@ -110,7 +112,7 @@ export function InlineEdit<T>(props: InlineEditProps<T>) {
     if (session && !event.defaultPrevented && event.key === 'Escape' && !event.nativeEvent.isComposing && event.keyCode !== 229) {event.preventDefault(); cancel();}
   }}>
     {!session ? <button ref={face} type="button" className="nova-inline-edit__face" aria-label={(strings.forms.editValue ?? en.forms.editValue).replace('{label}', label)} disabled={disabled}
-      onClick={() => {focus.current = 'editor'; setSession({generation: ++generation.current, draft: value, value, revision, scopeKey, phase: 'editing', disabled});}}>{display}</button>
+      onClick={() => {focus.current = 'editor'; setSession({generation: ++generation.current, draft: value, value, revision, scopeKey, phase: 'editing', disabled});}}><span className="nova-inline-edit__value">{display}</span><span className="nova-inline-edit__icon"><Icon name="edit"/></span></button>
       : <div role="group" aria-label={label}>
         <div ref={editor}>{renderEditor({draft: session.draft, setDraft: draft => {
           setSession(currentSession => currentSession?.generation === session.generation && currentSession.phase === 'editing' && !currentSession.disabled
@@ -127,12 +129,12 @@ export function InlineEdit<T>(props: InlineEditProps<T>) {
               phase: 'editing', error: undefined, conflicted: false, expected: undefined, observed: undefined};
           });
         }})}</div>
-        {conflict && <p role="status">{strings.forms.editConflict ?? en.forms.editConflict}</p>}
+        {conflict && <p role="status" className="nova-inline-edit__conflict">{strings.forms.editConflict ?? en.forms.editConflict}</p>}
         {session.error && <p role="alert">{session.error}</p>}
-        {session.phase === 'awaiting' && <p role="status">{strings.forms.syncingEdit ?? en.forms.syncingEdit}</p>}
+        {session.phase === 'awaiting' && <p role="status" className="nova-inline-edit__syncing">{strings.forms.syncingEdit ?? en.forms.syncingEdit}</p>}
         <div className="nova-inline-edit__actions">
-          <button type="button" disabled={disabled || conflict} aria-disabled={session.phase !== 'editing' || undefined} onClick={event => {event.currentTarget.focus(); void save();}}>{strings.forms.saveEdit ?? en.forms.saveEdit}</button>
-          <button type="button" disabled={session.phase === 'awaiting'} onClick={cancel}>{strings.feedback.cancel ?? en.feedback.cancel}</button>
+          <Button size="sm" disabled={disabled || conflict} aria-disabled={session.phase !== 'editing' || undefined} onClick={event => {event.currentTarget.focus(); void save();}}>{strings.forms.saveEdit ?? en.forms.saveEdit}</Button>
+          <Button variant="ghost" size="sm" disabled={session.phase === 'awaiting'} onClick={cancel}>{strings.feedback.cancel ?? en.feedback.cancel}</Button>
         </div>
       </div>}
   </div>;

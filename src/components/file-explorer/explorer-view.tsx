@@ -5,11 +5,12 @@ import {Checkbox} from '../checkbox/checkbox.js';
 import {ActionMenu} from '../action-menu/action-menu.js';
 import {DataTable,type Column} from '../data-table/data-table.js';
 import type {Key,MenuAction} from '../../types/index.js';
+import {Icon} from '../../lib/icons.js';
 import type {ExplorerItem} from './file-explorer.js';
 import {itemKey,type ExplorerStrings} from './explorer-toolbar.js';
 export function ExplorerView<T>({items,view,columns,actions,renderGridItem,preview,selectedKeys,onSelectedKeysChange,strings}:{items:readonly ExplorerItem<T>[];view:'list'|'grid';columns?:readonly Column<T>[];actions?:readonly MenuAction<T>[];renderGridItem?:(data:T)=>ReactNode;preview:boolean;selectedKeys?:readonly Key[];onSelectedKeysChange?:(keys:readonly Key[])=>void;strings:ExplorerStrings}){
   const selection=selectedKeys!==undefined&&onSelectedKeysChange!==undefined;
-  const open=(item:ExplorerItem<T>)=><Button variant="ghost" data-explorer-action="open" data-explorer-key={itemKey(item.key)} aria-label={strings.open.replaceAll('{name}',item.name)}>{item.name}</Button>;
+  const open=(item:ExplorerItem<T>)=><Button variant="ghost" className="nova-file-explorer__open" data-explorer-action="open" data-explorer-key={itemKey(item.key)} aria-label={strings.open.replaceAll('{name}',item.name)}><Icon name={item.kind==='file'?'file':'folder'}/>{item.name}</Button>;
   const controls=(item:ExplorerItem<T>)=><>{actions?.length?<span data-explorer-focus="menu" data-explorer-key={itemKey(item.key)}><ActionMenu actions={actions} data={item.data} label={strings.actions.replaceAll('{name}',item.name)}/></span>:null}{preview&&item.kind==='file'?<Button variant="ghost" data-explorer-action="preview" data-explorer-key={itemKey(item.key)} aria-label={strings.preview.replaceAll('{name}',item.name)}>{strings.preview.replaceAll('{name}',item.name)}</Button>:null}</>;
   // Private structural IDs never use consumer IDs, including name/kind.
   const projected:Column<ExplorerItem<T>>[]=[{id:'0',header:strings.nameColumn,cell:open},...(columns?.map((column,index)=>({id:String(index+1),header:column.header,cell:(item:ExplorerItem<T>)=>column.cell(item.data),...(column.minWidth===undefined?{}:{minWidth:column.minWidth})}))??[{id:'1',header:strings.kindColumn,cell:(item:ExplorerItem<T>)=>item.kind==='file'?strings.file:strings.folder}]),{id:'controls',header:strings.actions.replaceAll('{name}','').trim(),cell:controls}];
