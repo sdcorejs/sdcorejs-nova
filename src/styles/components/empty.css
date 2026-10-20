@@ -29,14 +29,14 @@
     inline-size: 40px;
     block-size: 40px;
     margin-block-end: var(--nova-space-2);
-    border-radius: 8px;
+    border-radius: var(--nova-radius-popup);
     background: var(--nova-color-surface-hover);
     color: var(--nova-color-text-muted);
   }
 
   .nova-empty__icon > svg {
-    inline-size: 20px;
-    block-size: 20px;
+    inline-size: var(--nova-icon-lg);
+    block-size: var(--nova-icon-lg);
   }
 
   .nova-empty__title {

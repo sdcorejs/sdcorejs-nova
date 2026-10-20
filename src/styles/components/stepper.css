@@ -12,7 +12,7 @@
   .nova-stepper__number { display:grid; place-items:center; flex:none; box-sizing:border-box; inline-size:24px; block-size:24px; border:var(--nova-border-width) solid var(--nova-color-control-border); border-radius:50%; color:var(--nova-color-text-muted); font-size:var(--nova-font-size-label); line-height:var(--nova-line-height-label); font-weight:var(--nova-font-weight-strong); font-variant-numeric:tabular-nums; }
   .nova-stepper__check { display:block; inline-size:14px; block-size:14px; stroke-width:2; }
   .nova-stepper__text { display:flex; flex-direction:column; min-inline-size:0; overflow-wrap:anywhere; }
-  .nova-stepper__label { font-weight:500; }
+  .nova-stepper__label { font-weight:var(--nova-font-weight-medium); }
   .nova-stepper__status { color:var(--nova-color-text-muted); font-size:var(--nova-font-size-label); line-height:var(--nova-line-height-label); }
   .nova-stepper__control:disabled .nova-stepper__number { border-color:var(--nova-color-border); color:var(--nova-color-disabled-text); }
   .nova-stepper__step[aria-current="step"] .nova-stepper__number,.nova-stepper__control[aria-current="step"] .nova-stepper__number { border-width:2px; border-color:var(--nova-color-text); color:var(--nova-color-text); }

@@ -44,8 +44,8 @@
 
   .nova-inline-text__clear > svg {
     display: block;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-inline-text__clear:hover {

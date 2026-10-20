@@ -18,7 +18,7 @@
   .nova-inline-edit__syncing { display: flex; align-items: center; gap: var(--nova-space-2); color: var(--nova-color-text-muted); }
   .nova-inline-edit__syncing::before { content: ""; flex: none; box-sizing: border-box; inline-size: 14px; block-size: 14px; border: 2px solid currentColor; border-inline-end-color: transparent; border-radius: 50%; animation: nova-inline-edit-spin 0.8s linear infinite; }
   /* Remote change while editing: warning callout above Save/Cancel. */
-  .nova-inline-edit__conflict { padding: var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) solid color-mix(in srgb, var(--nova-color-warning-text) 30%, transparent); border-radius: 8px; background: var(--nova-color-warning-surface); color: var(--nova-color-text); }
+  .nova-inline-edit__conflict { padding: var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) solid color-mix(in srgb, var(--nova-color-warning-text) 30%, transparent); border-radius: var(--nova-radius-popup); background: var(--nova-color-warning-surface); color: var(--nova-color-text); }
   .nova-inline-edit__actions { display: flex; flex-wrap: wrap; gap: var(--nova-space-2); margin: 0; }
   @media (max-width: 640px), (pointer: coarse) {
     .nova-inline-edit__face { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }

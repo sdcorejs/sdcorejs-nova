@@ -20,7 +20,7 @@
   /* Draft rules: dashed frame until applied. */
   .nova-query-bar__draft { display: grid; gap: var(--nova-space-2); }
   .nova-query-bar__draft:empty { display: none; }
-  .nova-query-bar__rule { display: flex; align-items: flex-start; gap: var(--nova-space-2); min-inline-size: 0; padding: var(--nova-space-2) var(--nova-space-2) var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) dashed var(--nova-color-control-border); border-radius: 8px; }
+  .nova-query-bar__rule { display: flex; align-items: flex-start; gap: var(--nova-space-2); min-inline-size: 0; padding: var(--nova-space-2) var(--nova-space-2) var(--nova-space-2) var(--nova-space-3); border: var(--nova-border-width) dashed var(--nova-color-control-border); border-radius: var(--nova-radius-popup); }
   .nova-query-bar__editor { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; flex: 1; gap: var(--nova-space-2); min-inline-size: 0; }
   .nova-query-bar__editor > .nova-button { justify-self: start; }
   /* Remove-draft icon button lines up with the first row of controls under the labels. */
@@ -29,7 +29,7 @@
   .nova-query-bar__date { display: grid; gap: var(--nova-space-1); min-inline-size: 0; font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
   .nova-query-bar__date > .nova-input { font-weight: normal; font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
   .nova-query-bar__date > span { color: var(--nova-color-error-text); font-weight: normal; }
-  .nova-query-bar__choices { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-2); min-inline-size: 0; margin: 0; padding: var(--nova-space-2) var(--nova-space-3) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; }
+  .nova-query-bar__choices { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-2); min-inline-size: 0; margin: 0; padding: var(--nova-space-2) var(--nova-space-3) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-popup); }
   .nova-query-bar__choices > legend { padding-inline: var(--nova-space-1); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
   .nova-query-bar__choices > p { flex-basis: 100%; margin: 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: normal; }
   .nova-query-bar__choices > .nova-field { flex-basis: 100%; }

@@ -54,8 +54,8 @@
   /* Stroked person icon: 16 in md, 14 in sm, 20 in lg. */
   .nova-avatar__icon {
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
     color: var(--nova-color-text-muted);
   }
 
@@ -65,8 +65,8 @@
   }
 
   .nova-avatar--lg .nova-avatar__icon {
-    inline-size: 20px;
-    block-size: 20px;
+    inline-size: var(--nova-icon-lg);
+    block-size: var(--nova-icon-lg);
   }
 
   /* "+N" uses the size class of the group's avatars; digits keep a stable width. */

@@ -19,8 +19,8 @@
   /* Links 36 (44 coarse), 16px icon, current = surface-hover + 500. */
   .nova-navigation a, .nova-navigation__disabled, .nova-navigation__group { display: flex; align-items: center; gap: 10px; min-block-size: var(--nova-control-md); box-sizing: border-box; padding: 8px 10px; border-radius: var(--nova-radius-control); color: inherit; text-decoration: none; overflow-wrap: anywhere; }
   .nova-navigation a:hover, .nova-navigation a[aria-current="page"] { background: var(--nova-color-surface-hover); }
-  .nova-navigation a[aria-current="page"] { font-weight: 500; }
-  .nova-navigation__icon { display: inline-flex; flex: none; align-items: center; justify-content: center; inline-size: 16px; block-size: 16px; color: var(--nova-color-text-muted); }
+  .nova-navigation a[aria-current="page"] { font-weight: var(--nova-font-weight-medium); }
+  .nova-navigation__icon { display: inline-flex; flex: none; align-items: center; justify-content: center; inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); color: var(--nova-color-text-muted); }
   .nova-navigation__icon > svg { inline-size: 100%; block-size: 100%; }
   .nova-navigation a[aria-current="page"] > .nova-navigation__icon { color: var(--nova-color-text); }
   .nova-navigation__disabled, .nova-navigation__group { color: var(--nova-color-text-muted); }

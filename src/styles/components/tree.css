@@ -8,7 +8,7 @@
   /* 32px row (border-box): chevron toggle first, label, row controls on the same line. */
   .nova-tree__row { box-sizing: border-box; display: flex; flex-wrap: nowrap; align-items: center; gap: var(--nova-space-1); min-block-size: 32px; padding-inline: var(--nova-space-1); border-radius: var(--nova-radius-control); }
   .nova-tree__row:hover { background: var(--nova-color-surface); }
-  .nova-tree__item[aria-selected="true"] > .nova-tree__row { background: var(--nova-color-surface-hover); font-weight: 500; }
+  .nova-tree__item[aria-selected="true"] > .nova-tree__row { background: var(--nova-color-surface-hover); font-weight: var(--nova-font-weight-medium); }
   /* The focus ring wraps the focused row, not its whole subtree. */
   .nova-tree__item:focus-visible > .nova-tree__row { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
   .nova-tree__item[aria-disabled="true"] { color: var(--nova-color-disabled-text); }
@@ -27,7 +27,7 @@
   /* Leaves keep the label column aligned with sibling branches. */
   .nova-tree__root:has(.nova-tree__item[aria-expanded]) .nova-tree__item:not([aria-expanded]) > .nova-tree__row { padding-inline-start: 32px; }
   /* Compact row actions (24-28px), muted until hovered. */
-  .nova-tree__row .nova-action-menu__trigger { flex: 0 1 auto; box-sizing: border-box; min-inline-size: 0; min-block-size: var(--nova-control-sm); padding: 0 var(--nova-space-2); border-color: transparent; background: transparent; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: 500; overflow-wrap: anywhere; }
+  .nova-tree__row .nova-action-menu__trigger { flex: 0 1 auto; box-sizing: border-box; min-inline-size: 0; min-block-size: var(--nova-control-sm); padding: 0 var(--nova-space-2); border-color: transparent; background: transparent; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-medium); overflow-wrap: anywhere; }
   .nova-tree__row .nova-action-menu__trigger:hover:not(:disabled) { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
   .nova-tree__row .nova-action-menu__trigger[aria-expanded="true"] { background: var(--nova-color-border); color: var(--nova-color-text); }
   .nova-tree__row .nova-button:not(.nova-tree__toggle) { flex: none; }

@@ -66,7 +66,7 @@
     background-color: transparent;
     color: var(--nova-color-text-muted);
     font: inherit;
-    font-weight: 500;
+    font-weight: var(--nova-font-weight-medium);
     text-align: center;
     white-space: nowrap;
     cursor: pointer;
@@ -81,8 +81,8 @@
   .nova-segmented__icon {
     display: inline-flex;
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-segmented__icon > svg {
@@ -147,7 +147,7 @@
     background-color: transparent;
     color: var(--nova-color-text);
     font: inherit;
-    font-weight: 500;
+    font-weight: var(--nova-font-weight-medium);
     cursor: pointer;
   }
 

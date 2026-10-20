@@ -13,14 +13,14 @@
   /* Crumbs read as Breadcrumb links, not bold 36px buttons. */
   .nova-file-explorer__navigation .nova-button.nova-file-explorer__crumb { display: inline-block; min-block-size: 0; max-inline-size: 100%; margin: 0; padding: 2px var(--nova-space-1); border: 0; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font-weight: normal; text-align: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .nova-file-explorer__navigation .nova-button.nova-file-explorer__crumb:hover { background: transparent; color: var(--nova-color-text); text-decoration: underline; text-underline-offset: 2px; }
-  .nova-file-explorer__navigation .nova-breadcrumb__current { font-weight: 500; }
+  .nova-file-explorer__navigation .nova-breadcrumb__current { font-weight: var(--nova-font-weight-medium); }
   .nova-file-explorer__search { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; max-inline-size: 100%; font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
   .nova-file-explorer__search input { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: var(--nova-control-md); margin: 0; padding: 0 var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); color: var(--nova-color-text); background: var(--nova-color-background); font: inherit; font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); font-weight: normal; }
   .nova-file-explorer__search input:hover { border-color: var(--nova-color-text-muted); }
   .nova-file-explorer__search input:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
   /* List / Grid stay two pressed-state buttons, drawn as a segmented pair. */
   .nova-file-explorer__views { display: inline-flex; flex-wrap: nowrap; gap: 2px; box-sizing: border-box; min-block-size: var(--nova-control-md); padding: 2px; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); }
-  .nova-file-explorer__views > .nova-button { min-block-size: 30px; padding: 0 10px; border: var(--nova-border-width) solid transparent; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font-weight: 500; white-space: nowrap; }
+  .nova-file-explorer__views > .nova-button { min-block-size: 30px; padding: 0 10px; border: var(--nova-border-width) solid transparent; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font-weight: var(--nova-font-weight-medium); white-space: nowrap; }
   .nova-file-explorer__views > .nova-button:hover:not(:disabled) { background: transparent; color: var(--nova-color-text); }
   .nova-file-explorer__views > .nova-button[aria-pressed="true"] { border-color: var(--nova-color-control-border); background: var(--nova-color-background); color: var(--nova-color-text); }
   .nova-file-explorer__views > .nova-button:focus-visible { outline-offset: 0; }
@@ -42,7 +42,7 @@
   .nova-file-explorer__table tbody tr:last-child > td { border-block-end: 0; }
   .nova-file-explorer__table tbody tr:hover > td { background: var(--nova-color-surface); }
   /* Name cell: decorative file/folder icon + name as a compact link-like button. */
-  .nova-file-explorer .nova-button.nova-file-explorer__open { justify-content: flex-start; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 0 6px; font-weight: 500; text-align: start; }
+  .nova-file-explorer .nova-button.nova-file-explorer__open { justify-content: flex-start; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 0 6px; font-weight: var(--nova-font-weight-medium); text-align: start; }
   .nova-file-explorer__open .nova-icon { flex: none; color: var(--nova-color-text-muted); }
   .nova-file-explorer__preview { margin-block-start: var(--nova-space-4); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); }
   @media (max-width: 640px), (pointer: coarse) {

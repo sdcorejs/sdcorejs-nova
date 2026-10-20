@@ -20,7 +20,7 @@
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
-    font-weight: 500;
+    font-weight: var(--nova-font-weight-medium);
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
@@ -54,16 +54,16 @@
   .nova-button__icon {
     display: inline-block;
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
     vertical-align: -3px;
   }
 
   .nova-button--lg > svg,
   .nova-button--lg > .nova-button__label > svg,
   .nova-button--lg .nova-button__icon {
-    inline-size: 20px;
-    block-size: 20px;
+    inline-size: var(--nova-icon-lg);
+    block-size: var(--nova-icon-lg);
     vertical-align: -5px;
   }
 
@@ -186,13 +186,13 @@
   .nova-icon-button__icon {
     display: inline-flex;
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-icon-button.nova-button--lg .nova-icon-button__icon {
-    inline-size: 20px;
-    block-size: 20px;
+    inline-size: var(--nova-icon-lg);
+    block-size: var(--nova-icon-lg);
   }
 
   .nova-icon-button__icon > svg {

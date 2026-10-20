@@ -5,9 +5,9 @@
     margin) so card shadows are not clipped; cards keep their position and an empty
     viewport keeps a zero-size box. */
  .nova-toast-viewport:has(> .nova-toast:not([data-ending], [data-limited])) { margin: calc(-1 * var(--nova-space-4)); padding: var(--nova-space-4); }
- .nova-toast { position: relative; box-sizing: border-box; display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; column-gap: var(--nova-space-3); align-items: start; padding: var(--nova-space-3) var(--nova-space-2) var(--nova-space-3) var(--nova-space-4); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; background: var(--nova-color-background); color: var(--nova-color-text); box-shadow: 0 8px 24px rgb(0 0 0 / 0.12); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); overflow-wrap: anywhere; }
+ .nova-toast { position: relative; box-sizing: border-box; display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; column-gap: var(--nova-space-3); align-items: start; padding: var(--nova-space-3) var(--nova-space-2) var(--nova-space-3) var(--nova-space-4); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-popup); background: var(--nova-color-background); color: var(--nova-color-text); box-shadow: var(--nova-shadow-overlay); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); overflow-wrap: anywhere; }
  .nova-toast[data-ending], .nova-toast[data-limited] { display: none; }
- .nova-toast__icon { inline-size: 16px; block-size: 16px; margin-block-start: 2px; color: var(--nova-color-info-text); }
+ .nova-toast__icon { inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); margin-block-start: 2px; color: var(--nova-color-info-text); }
  .nova-toast[data-tone="success"] > .nova-toast__icon { color: var(--nova-color-success-text); }
  .nova-toast[data-tone="warning"] > .nova-toast__icon { color: var(--nova-color-warning-text); }
  .nova-toast[data-tone="error"] > .nova-toast__icon { color: var(--nova-color-error-text); }
@@ -17,13 +17,13 @@
  .nova-toast__error { color: var(--nova-color-error-text); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
  .nova-toast__controls { display: flex; flex-wrap: wrap; gap: var(--nova-space-2); margin-block-start: 6px; }
  /* Action: Button sm secondary look. */
- .nova-toast__action { box-sizing: border-box; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 3px 10px; border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; font-weight: 500; cursor: pointer; transition: background-color var(--nova-duration) ease; }
+ .nova-toast__action { box-sizing: border-box; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 3px 10px; border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; font-weight: var(--nova-font-weight-medium); cursor: pointer; transition: background-color var(--nova-duration) ease; }
  .nova-toast__action:hover:not([aria-disabled="true"]) { background: var(--nova-color-surface-hover); }
  .nova-toast__action:active:not([aria-disabled="true"]) { background: var(--nova-color-border); }
  .nova-toast__action[aria-disabled="true"] { cursor: wait; }
  /* Close: 28 ghost icon button at the top end. */
  .nova-toast__close { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: var(--nova-control-sm); block-size: var(--nova-control-sm); margin-block: -4px; padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text-muted); cursor: pointer; transition: background-color var(--nova-duration) ease; }
- .nova-toast__close > .nova-icon { inline-size: 16px; block-size: 16px; }
+ .nova-toast__close > .nova-icon { inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); }
  .nova-toast__close:hover { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
  .nova-toast__close:active { background: var(--nova-color-border); }
  .nova-toast__action:focus-visible, .nova-toast__close:focus-visible, .nova-toast-viewport:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }

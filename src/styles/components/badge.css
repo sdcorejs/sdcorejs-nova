@@ -17,7 +17,7 @@
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-label);
     line-height: var(--nova-line-height-label);
-    font-weight: 500;
+    font-weight: var(--nova-font-weight-medium);
     white-space: nowrap;
     vertical-align: middle;
   }
@@ -25,8 +25,8 @@
   .nova-badge__icon {
     display: inline-flex;
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-badge__icon > svg {

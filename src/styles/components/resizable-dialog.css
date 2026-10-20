@@ -5,7 +5,7 @@
  /* Transparent 28 grip in the bottom-end corner (44 on coarse pointers). */
  .nova-resizable-dialog__handle { box-sizing:border-box; position:absolute; inset-inline-end:2px; inset-block-end:2px; display:inline-flex; align-items:center; justify-content:center; inline-size:var(--nova-control-sm); block-size:var(--nova-control-sm); padding:0; border:0; border-radius:var(--nova-radius-control); background:transparent; color:var(--nova-color-text-muted); font:inherit; cursor:nwse-resize; touch-action:none; }
  .nova-resizable-dialog__handle:hover:not(:disabled) { background:var(--nova-color-surface-hover); color:var(--nova-color-text); }
- .nova-resizable-dialog__icon { display:inline-flex; inline-size:16px; block-size:16px; }
+ .nova-resizable-dialog__icon { display:inline-flex; inline-size:var(--nova-icon-sm); block-size:var(--nova-icon-sm); }
  .nova-resizable-dialog__icon > .nova-icon { inline-size:100%; block-size:100%; }
  .nova-resizable-dialog__handle:dir(rtl) { cursor:nesw-resize; }
  .nova-resizable-dialog__handle:dir(rtl) > .nova-resizable-dialog__icon { transform:scaleX(-1); }
