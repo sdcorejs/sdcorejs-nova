@@ -114,3 +114,18 @@ test('case-p2-d01-design-r2-browser compact desktop table controls and 44px narr
   await table.evaluate(node => { const scroll = node.closest('.nova-data-table__scroll')!, cell = node.querySelector('thead tr')!.lastElementChild!, probe = node.ownerDocument.createElement('span'); probe.className = 'nova-visually-hidden'; probe.textContent = 'probe'; node.style.minInlineSize = (scroll.clientWidth + 600) + 'px'; cell.append(probe); });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
+
+test('case-p2-d01-q7-q8-browser disclosure follows selection, details span the table and row actions are a 28px icon', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 }); await page.goto('/?scenario=p2-d01'); await page.getByRole('button', { name: 'Toggle mobile renderer' }).click();
+  const table = page.getByRole('table', { name: 'Files', exact: true }), expand = table.getByRole('button', { name: 'Expand row 1', exact: true });
+  const select = (await table.getByRole('checkbox', { name: 'Select row 1', exact: true }).boundingBox())!, toggle = (await expand.boundingBox())!, title = (await table.getByRole('cell', { name: 'Number zero', exact: true }).boundingBox())!;
+  expect(select.x).toBeLessThan(toggle.x); expect(toggle.x + toggle.width).toBeLessThanOrEqual(title.x);
+  await expand.click(); const detail = table.getByRole('cell').filter({ hasText: 'Detail Number zero' });
+  const tableBox = (await table.boundingBox())!, detailBox = (await detail.boundingBox())!;
+  expect(Math.round(detailBox.width)).toBe(Math.round(tableBox.width)); expect(detailBox.y).toBeGreaterThan(title.y);
+  await expect(table.getByRole('button', { name: 'Collapse row 1', exact: true })).toHaveAttribute('aria-controls', /.+/);
+  const actions = table.getByRole('button', { name: 'Row actions 1', exact: true }), box = (await actions.boundingBox())!;
+  expect(await actions.textContent()).toBe(''); expect(Math.round(box.width)).toBe(28); expect(Math.round(box.height)).toBe(28);
+  await page.setViewportSize({ width: 320, height: 740 }); const narrow = (await actions.boundingBox())!;
+  expect(narrow.width).toBeGreaterThanOrEqual(44); expect(narrow.height).toBeGreaterThanOrEqual(44);
+});

@@ -69,7 +69,7 @@ export function resolveStrings(options: {
  * Intl would silently use the host default for an unsupported tag, and that
  * default differs between server and browser.
  */
-function intlLocale(locale: string): string {
+export function intlLocale(locale: string): string {
   const tag = normalizeLocale(locale);
   if (!tag) return 'en';
   const supported = Intl.NumberFormat.supportedLocalesOf(tag).length > 0 && Intl.PluralRules.supportedLocalesOf(tag).length > 0;
