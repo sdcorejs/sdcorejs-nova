@@ -5,6 +5,7 @@ import {useNativeFormReset} from '../../lib/p1-async-lifecycle.js';
 import {en} from '../../i18n/en.js';
 import {normalizeLocale} from '../../i18n/resolve-strings.js';
 import {cx} from '../../lib/cx.js';
+import {Icon} from '../../lib/icons.js';
 import {useControllableValue} from '../../lib/use-controllable-value.js';
 import {useDiagnostics,useNovaScope} from '../../providers/nova/context.js';
 import type {ValueProps,ControlProps,P1InputProps} from '../../types/index.js';
@@ -74,6 +75,6 @@ export function NumberInput(props:NumberInputProps){
  onCompositionStart={event=>{composing.current=true;native.onCompositionStart?.(event);}}
  onCompositionEnd={event=>{composing.current=false;native.onCompositionEnd?.(event);if(!event.defaultPrevented&&!disabled&&!readOnly){const next=parseDraft(event.currentTarget.value,locale);if(next.kind==='valid'&&inRange(next.value))setValue(next.value);}}}
  onKeyDown={event=>{native.onKeyDown?.(event);if(event.defaultPrevented||disabled||readOnly||composing.current||event.nativeEvent.isComposing||event.keyCode===229)return;if(event.key==='ArrowUp'||event.key==='ArrowDown'||(event.key==='Home'&&min!==undefined)||(event.key==='End'&&max!==undefined))primitive.onKeyDown?.(event);}} onPaste={native.onPaste}/>}/>
- <Primitive.Decrement className="nova-number-input__step" aria-label={scope.strings.forms.decreaseNumber??en.forms.decreaseNumber}>−</Primitive.Decrement><Primitive.Increment className="nova-number-input__step" aria-label={scope.strings.forms.increaseNumber??en.forms.increaseNumber}>+</Primitive.Increment>
+ <Primitive.Decrement className="nova-number-input__step" aria-label={scope.strings.forms.decreaseNumber??en.forms.decreaseNumber}><Icon name="minus"/></Primitive.Decrement><Primitive.Increment className="nova-number-input__step" aria-label={scope.strings.forms.increaseNumber??en.forms.increaseNumber}><Icon name="plus"/></Primitive.Increment>
  </Primitive.Root>{showDraftError&&<p className="nova-field__error" id={errorId}>{errorMessage}</p>}</>);
 }

@@ -6,7 +6,8 @@
     flex: none;
   }
 
-  /* The interactive element's own box is the hit area (§8.4). */
+  /* The interactive element's own box is the hit area (§8.4): 20 desktop,
+     44 coarse, around a visible 16px box (radius 4). */
   .nova-checkbox {
     display: inline-flex;
     align-items: center;
@@ -29,7 +30,12 @@
     border-radius: 4px;
     background: var(--nova-color-background);
     color: var(--nova-color-on-action);
-    transition: background-color var(--nova-duration) ease;
+    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
+  }
+
+  .nova-checkbox:hover:not([data-disabled], [data-readonly]) .nova-checkbox__box,
+  .nova-field--inline:has(> .nova-label:hover) > .nova-checkbox-root > .nova-checkbox:not([data-disabled], [data-readonly]) .nova-checkbox__box {
+    border-color: var(--nova-color-text);
   }
 
   .nova-checkbox[data-checked] .nova-checkbox__box,
@@ -54,13 +60,18 @@
     display: none;
   }
 
+  /* The ring sits 2px outside the visible 16px box. */
   .nova-checkbox:focus-visible {
     outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
-    outline-offset: var(--nova-focus-offset);
+    outline-offset: 0;
   }
 
   .nova-checkbox[data-readonly] {
     cursor: default;
+  }
+
+  .nova-checkbox[data-readonly] .nova-checkbox__box {
+    border-style: dashed;
   }
 
   .nova-checkbox[data-disabled] {
@@ -77,10 +88,14 @@
     border-color: var(--nova-color-error-text);
   }
 
-  @media (pointer: coarse) {
+  @media (max-width: 640px), (pointer: coarse) {
     .nova-checkbox {
       inline-size: var(--nova-hit-target);
       block-size: var(--nova-hit-target);
+    }
+
+    .nova-checkbox:focus-visible {
+      outline-offset: -12px;
     }
   }
 
