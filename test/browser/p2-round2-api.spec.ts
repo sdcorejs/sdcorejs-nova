@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
-const open = (page: import('@playwright/test').Page) => page.goto('/?scenario=p2-round2-api');
+const open = (page: Page) => page.goto('/?scenario=p2-round2-api');
 
 test('case-r2-q4-browser dialog named and custom widths, capped by the viewport', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 }); await open(page);
