@@ -14,6 +14,19 @@ describe('dialog requests and portal semantics',()=>{
     render(<NovaProvider locale="en"><main ref={back} tabIndex={-1}><button>Child action</button></main><Dialog title="Rename" defaultValue returnFocusRef={back}><input aria-label="Name"/></Dialog></NovaProvider>);
     await user.click(await screen.findByRole('button',{name:'Close'}));await waitFor(()=>expect(document.activeElement).toBe(back.current));
   });
+  it.each(['explicit','opener','fallback'])('focus moved outside during the exit transition is not pulled back to the %s target',async source=>{
+    const user=userEvent.setup(),launch=document.createElement('button'),next=document.createElement('button');launch.textContent='Filters';next.textContent='Next chip';document.body.append(launch,next);hosts.push(launch,next);
+    if(source!=='fallback')launch.focus();
+    let finish!:()=>void;const finished=new Promise<void>(resolve=>{finish=resolve;});
+    render(<NovaProvider locale="en"><Sheet title="Filters" defaultValue returnFocusRef={source==='explicit'?{current:launch}:undefined}><input aria-label="Draft"/></Sheet></NovaProvider>);
+    const popup=await screen.findByRole('dialog');await waitFor(()=>expect(popup.contains(document.activeElement)).toBe(true));
+    // Hold the exit transition so the closed popup stays mounted, as a sliding sheet does.
+    Object.defineProperty(popup,'getAnimations',{configurable:true,value:()=>[{finished}]});
+    await user.keyboard('{Escape}');await waitFor(()=>expect(popup.hasAttribute('data-closed')).toBe(true));expect(popup.isConnected).toBe(true);
+    next.focus();expect(document.activeElement).toBe(next);
+    finish();await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());await new Promise(resolve=>setTimeout(resolve));
+    expect(document.activeElement).toBe(next);
+  });
   it('keeps a programmatic outside focus attempt inside the active modal',async()=>{
     render(<NovaProvider locale="en"><input aria-label="Outside"/><Dialog title="Rename" defaultValue><input aria-label="Inside"/></Dialog></NovaProvider>);
     const popup=await screen.findByRole('dialog');await waitFor(()=>expect(popup.contains(document.activeElement)).toBe(true));

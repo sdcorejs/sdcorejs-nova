@@ -12,3 +12,20 @@ test('dialog above popover wins actual overlapping pixels and returns focus with
   // WebKit follows native mouse focus policy; verify keyboard activation/focus explicitly.
   await action.focus();await action.press('Enter');await expect(child.getByRole('status',{name:'Child actions'})).toHaveText('2');await expect(action).toBeFocused();await child.getByRole('button',{name:'Close',exact:true}).click();await expect(child).toHaveCount(0);await expect(parent).toBeVisible();await expect(page.getByRole('button',{name:'Open dialog'})).toBeFocused();
 });
+
+for (const [trigger,source] of [['Filters','an explicit return ref'],['Sort','the opener']]) {
+  test(`focus moved outside while a sheet exits is not pulled back to ${source}`,async({page})=>{
+    await page.goto('/?scenario=p1-dialog-focus-return');await expect(page.locator('body[data-harness="ready"]')).toHaveCount(1);
+    const open=page.getByRole('button',{name:trigger,exact:true}),next=page.getByRole('button',{name:'Next chip'}),sheet=page.getByRole('dialog');
+    // Control: an untouched keyboard close still returns focus.
+    await open.focus();await open.press('Enter');await expect(sheet.getByRole('textbox',{name:'Draft'})).toBeFocused();await page.keyboard.press('Escape');await expect(sheet).toHaveCount(0);await expect(open).toBeFocused();
+    await open.press('Enter');await expect(sheet.getByRole('textbox',{name:'Draft'})).toBeFocused();await page.keyboard.press('Escape');
+    // The app moves focus while the closed sheet is still mounted.
+    const moved=await page.evaluate(()=>{
+      const popup=document.querySelector('[role="dialog"]'),chip=[...document.querySelectorAll('button')].find(button=>button.textContent==='Next chip')!;chip.focus();
+      return {mounted:popup?.isConnected===true,closed:popup?.hasAttribute('data-closed')===true,focused:document.activeElement===chip};
+    });
+    expect(moved).toEqual({mounted:true,closed:true,focused:true});
+    await expect(sheet).toHaveCount(0);await expect(next).toBeFocused();
+  });
+}

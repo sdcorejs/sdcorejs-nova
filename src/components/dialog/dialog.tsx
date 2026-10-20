@@ -123,8 +123,16 @@ function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | '
   }, [initialFocusRef, modal]);
   const finalFocus = useCallback(() => {
     if (!modal && closeReason.current !== 'action') return false;
+    // Base UI skips its own "focus moved elsewhere" check for a function
+    // finalFocus. Restore only while focus is lost to the body or still in the
+    // closing overlay; focus the user or app moved outside during exit stays.
+    // Decide now, while the overlay is attached: unmount may later move a
+    // focused descendant out of it (e.g. a Sidebar parking its content).
+    const owner=documentOwner.current,active=owner?.activeElement,overlay=popup.current?.parentElement;
+    const mayReturn=(target:HTMLElement)=>!active||active===owner?.body||active===target||!!overlay?.contains(active);
     const explicit=returnFocusRef?.current;
     if (reachable(explicit)) {
+      if (!mayReturn(explicit)) return false;
       // React restores the pre-mutation focused node after moving a portal
       // host. Match the primitive's microtask timing, but focus the exact ref
       // rather than its first tabbable child (e.g. a tabindex -1 main).
@@ -135,10 +143,10 @@ function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | '
       });
       return false;
     }
-    if (reachable(opener.current)) return opener.current;
-    const fallback = [...(documentOwner.current?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? [])]
+    if (reachable(opener.current)) return mayReturn(opener.current) ? opener.current : false;
+    const fallback = [...(owner?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? [])]
       .find(element => reachable(element) && element.tabIndex >= 0 && !popup.current?.contains(element));
-    return fallback ?? false;
+    return fallback && mayReturn(fallback) ? fallback : false;
   }, [returnFocusRef, modal]);
   const request = (next: boolean, details: Primitive.Root.ChangeEventDetails) => {
     if (next) {setOpen(true);return;}
