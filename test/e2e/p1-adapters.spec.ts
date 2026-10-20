@@ -41,7 +41,7 @@ for(const fixture of ['vite-csr','next-ssr'])test.describe(fixture+' packed P1',
  });
  test('Temporal rejects DST gap and InlineEdit closes only after consumer acknowledgement',async({page})=>{
   const errors=await open(page,fixture);const group=page.getByRole('group',{name:'P1 instant'}),time=group.getByRole('textbox',{name:'Giờ',exact:true});
-  await expect(time).toHaveValue('01:30:00');await time.fill('02:30:00');await time.press('Tab');await expect(group.getByRole('alert')).toBeVisible();
+  await expect(time).toHaveValue('01:30');await time.fill('02:30');await time.press('Tab');await expect(group.getByRole('alert')).toBeVisible();
   await page.getByRole('button',{name:'Chỉnh sửa P1 title'}).click();await page.getByRole('textbox',{name:'P1 draft'}).fill('Đặng updated');await page.getByRole('button',{name:'Lưu',exact:true}).click();
   await expect(page.getByRole('textbox',{name:'P1 draft'})).toHaveCount(0);await expect(page.getByRole('button',{name:'Chỉnh sửa P1 title'})).toContainText('Đặng updated');expect(errors).toEqual([]);
  });
