@@ -1,13 +1,13 @@
 'use client';
 import {useInsertionEffect,useLayoutEffect,useRef,useState,type MutableRefObject} from 'react';
-import {Dialog,type DialogProps} from '../dialog/dialog.js';
+import {Dialog,type DialogBaseProps} from '../dialog/dialog.js';
 import {cx} from '../../lib/cx.js';
 import {Icon} from '../../lib/icons.js';
 import {useControllableValue} from '../../lib/use-controllable-value.js';
 import {useDiagnostics,useNovaScope} from '../../providers/nova/context.js';
 
 export type DialogSize={width:number;height:number};
-export type ResizableDialogProps=DialogProps&{
+export type ResizableDialogProps=DialogBaseProps&{
  /** Controlled when supplied. Resize callbacks are proposals, just like Dialog's boolean value. */
  size?:DialogSize;onSizeChange?:(size:DialogSize)=>void;
  /** Disables resizing only; Dialog still owns close, focus and open state. */
