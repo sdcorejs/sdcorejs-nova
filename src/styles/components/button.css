@@ -1,68 +1,126 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
+  /* Round 2: fixed heights 28 / 36 / 44, one line + ellipsis on desktop,
+     weight 500; wrapping comes back at ≤ 640px (C01: long labels wrap on mobile). */
   .nova-button {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--nova-space-2);
+    gap: 6px;
     box-sizing: border-box;
-    min-block-size: var(--nova-control-md);
+    block-size: var(--nova-control-md);
+    min-inline-size: 0;
     max-inline-size: 100%;
     margin: 0;
-    padding: var(--nova-space-1) var(--nova-space-3);
+    padding: 0 var(--nova-space-3);
     border: var(--nova-border-width) solid transparent;
     border-radius: var(--nova-radius-control);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
-    font-weight: var(--nova-font-weight-strong);
+    font-weight: 500;
     text-align: center;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    text-decoration: none;
+    white-space: nowrap;
     cursor: pointer;
-    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
+    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease, color var(--nova-duration) ease;
   }
 
   .nova-button--sm {
-    min-block-size: var(--nova-control-sm);
-    padding: 0 var(--nova-space-2);
+    block-size: var(--nova-control-sm);
+    gap: var(--nova-space-1);
+    padding: 0 10px;
   }
 
   .nova-button--lg {
-    min-block-size: var(--nova-control-lg);
-    padding: var(--nova-space-2) var(--nova-space-4);
+    block-size: var(--nova-control-lg);
+    gap: var(--nova-space-2);
+    padding: 0 var(--nova-space-4);
+  }
+
+  .nova-button__label {
+    display: block;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Icons: 16px (20px on lg) in a fixed box, never stretched by the line box. */
+  .nova-button > svg,
+  .nova-button__label > svg,
+  .nova-button__icon {
+    display: inline-block;
+    flex: none;
+    inline-size: 16px;
+    block-size: 16px;
+    vertical-align: -3px;
+  }
+
+  .nova-button--lg > svg,
+  .nova-button--lg > .nova-button__label > svg,
+  .nova-button--lg .nova-button__icon {
+    inline-size: 20px;
+    block-size: 20px;
+    vertical-align: -5px;
+  }
+
+  .nova-button__label > svg + *,
+  .nova-button__label > * + svg {
+    margin-inline-start: 6px;
   }
 
   .nova-button--primary {
-    background: var(--nova-color-action);
+    background-color: var(--nova-color-action);
     color: var(--nova-color-on-action);
   }
 
   .nova-button--primary:hover:not(:disabled, [aria-disabled="true"]) {
-    background: var(--nova-color-action-hover);
+    background-color: var(--nova-color-action-hover);
+  }
+
+  .nova-button--primary:active:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--nova-color-text-muted);
   }
 
   .nova-button--secondary {
-    background: var(--nova-color-background);
+    background-color: var(--nova-color-background);
     color: var(--nova-color-text);
     border-color: var(--nova-color-control-border);
   }
 
   .nova-button--ghost {
-    background: transparent;
+    background-color: transparent;
     color: var(--nova-color-text);
   }
 
   .nova-button--secondary:hover:not(:disabled, [aria-disabled="true"]),
   .nova-button--ghost:hover:not(:disabled, [aria-disabled="true"]) {
-    background: var(--nova-color-surface-hover);
+    background-color: var(--nova-color-surface-hover);
+  }
+
+  .nova-button--secondary:active:not(:disabled, [aria-disabled="true"]),
+  .nova-button--ghost:active:not(:disabled, [aria-disabled="true"]),
+  .nova-button--secondary[aria-pressed="true"]:not(:disabled),
+  .nova-button--ghost[aria-pressed="true"]:not(:disabled),
+  .nova-button--secondary[aria-expanded="true"]:not(:disabled),
+  .nova-button--ghost[aria-expanded="true"]:not(:disabled) {
+    background-color: var(--nova-color-border);
   }
 
   .nova-button--danger {
-    background: var(--nova-color-danger);
+    background-color: var(--nova-color-danger);
     color: var(--nova-color-on-danger);
+  }
+
+  .nova-button--danger:hover:not(:disabled, [aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--nova-color-danger) 86%, var(--nova-color-text));
+  }
+
+  .nova-button--danger:active:not(:disabled, [aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--nova-color-danger) 72%, var(--nova-color-text));
   }
 
   .nova-button:focus-visible {
@@ -70,19 +128,22 @@
     outline-offset: var(--nova-focus-offset);
   }
 
-  .nova-button:disabled {
-    background: var(--nova-color-disabled-surface);
+  /* Native disabled, or a consumer's focusable aria-disabled (loading keeps its look). */
+  .nova-button:disabled,
+  .nova-button[aria-disabled="true"]:not(.nova-button--loading) {
+    background-color: var(--nova-color-disabled-surface);
     color: var(--nova-color-disabled-text);
-    border-color: var(--nova-color-control-border);
+    border-color: transparent;
     cursor: not-allowed;
+  }
+
+  .nova-button--ghost:disabled,
+  .nova-button--ghost[aria-disabled="true"]:not(.nova-button--loading) {
+    background-color: transparent;
   }
 
   .nova-button--loading {
     cursor: progress;
-  }
-
-  .nova-button__label {
-    min-inline-size: 0;
   }
 
   /* Loading indicator: absolutely positioned inside the button, so the width
@@ -98,29 +159,59 @@
     animation: nova-button-busy 0.8s ease-in-out infinite alternate;
   }
 
+  /* IconButton: square 28 / 36 / 44. */
   .nova-icon-button {
-    padding: 0;
-    aspect-ratio: 1;
+    flex: none;
+    inline-size: var(--nova-control-md);
     min-inline-size: var(--nova-control-md);
+    padding: 0;
   }
 
   .nova-icon-button.nova-button--sm {
+    inline-size: var(--nova-control-sm);
     min-inline-size: var(--nova-control-sm);
   }
 
   .nova-icon-button.nova-button--lg {
+    inline-size: var(--nova-control-lg);
     min-inline-size: var(--nova-control-lg);
+  }
+
+  .nova-icon-button > .nova-button__label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .nova-icon-button__icon {
     display: inline-flex;
-    inline-size: 1.25em;
-    block-size: 1.25em;
+    flex: none;
+    inline-size: 16px;
+    block-size: 16px;
+  }
+
+  .nova-icon-button.nova-button--lg .nova-icon-button__icon {
+    inline-size: 20px;
+    block-size: 20px;
   }
 
   .nova-icon-button__icon > svg {
+    display: block;
     inline-size: 100%;
     block-size: 100%;
+  }
+
+  /* Disabled icons use the control boundary color (≥ 3:1), never opacity. */
+  .nova-icon-button:disabled,
+  .nova-icon-button[aria-disabled="true"]:not(.nova-button--loading) {
+    background-color: transparent;
+    color: var(--nova-color-control-border);
+  }
+
+  .nova-icon-button.nova-button--secondary:disabled,
+  .nova-icon-button.nova-button--secondary[aria-disabled="true"]:not(.nova-button--loading) {
+    background-color: var(--nova-color-disabled-surface);
+    border-color: var(--nova-color-border);
   }
 
   .nova-button-group {
@@ -135,13 +226,75 @@
     align-items: stretch;
   }
 
-  /* Touch: the element's own box reaches 44×44 (no transparent pseudo hit area). */
-  @media (pointer: coarse) {
+  /* Coarse: the element's own box reaches 44×44 (no transparent pseudo hit area). */
+  @media (max-width: 640px), (pointer: coarse) {
     .nova-button,
     .nova-button--sm,
-    .nova-icon-button.nova-button--sm {
-      min-block-size: var(--nova-hit-target);
+    .nova-button--lg {
+      block-size: var(--nova-hit-target);
       min-inline-size: var(--nova-hit-target);
+    }
+
+    /* IconButton sm/md: 44×44 element, 32×32 visible surface (transparent 6px border);
+       the outer radius adds the border so the visible surface keeps the control radius. */
+    .nova-button.nova-icon-button {
+      inline-size: var(--nova-hit-target);
+      block-size: var(--nova-hit-target);
+      min-inline-size: var(--nova-hit-target);
+      border: 6px solid transparent;
+      border-radius: calc(var(--nova-radius-control) + 6px);
+      background-clip: padding-box;
+    }
+
+    .nova-button.nova-icon-button.nova-button--secondary {
+      border-color: transparent;
+      box-shadow: inset 0 0 0 var(--nova-border-width) var(--nova-color-control-border);
+    }
+
+    .nova-button.nova-icon-button.nova-button--secondary:disabled,
+    .nova-button.nova-icon-button.nova-button--secondary[aria-disabled="true"]:not(.nova-button--loading) {
+      border-color: transparent;
+      box-shadow: inset 0 0 0 var(--nova-border-width) var(--nova-color-border);
+    }
+
+    .nova-button.nova-icon-button:focus-visible {
+      outline-offset: -4px;
+    }
+
+    .nova-button.nova-icon-button.nova-button--lg {
+      border-width: var(--nova-border-width);
+      border-radius: var(--nova-radius-control);
+    }
+
+    .nova-button.nova-icon-button.nova-button--lg.nova-button--secondary {
+      border-color: var(--nova-color-control-border);
+      box-shadow: none;
+    }
+
+    .nova-button.nova-icon-button.nova-button--lg.nova-button--secondary:disabled,
+    .nova-button.nova-icon-button.nova-button--lg.nova-button--secondary[aria-disabled="true"]:not(.nova-button--loading) {
+      border-color: var(--nova-color-border);
+    }
+
+    .nova-button.nova-icon-button.nova-button--lg:focus-visible {
+      outline-offset: var(--nova-focus-offset);
+    }
+  }
+
+  /* Small screens: long text labels wrap again instead of truncating (C01). */
+  @media (max-width: 640px) {
+    .nova-button:not(.nova-icon-button) {
+      block-size: auto;
+      min-block-size: var(--nova-hit-target);
+      padding-block: var(--nova-space-1);
+      white-space: normal;
+    }
+
+    .nova-button:not(.nova-icon-button) > .nova-button__label {
+      overflow: visible;
+      overflow-wrap: anywhere;
+      text-overflow: clip;
+      white-space: normal;
     }
   }
 
@@ -157,6 +310,27 @@
     .nova-button:disabled {
       color: GrayText;
       border-color: GrayText;
+    }
+  }
+
+  /* Forced colors force a transparent border to a visible color: paint the coarse
+     6px ring as Canvas and draw the 32px surface edge with a 1px outline instead
+     (box-shadow is dropped in this mode). The repeated class outranks every
+     variant/state border rule above. */
+  @media (forced-colors: active) and (max-width: 640px), (forced-colors: active) and (pointer: coarse) {
+    .nova-button.nova-icon-button.nova-icon-button.nova-icon-button:not(.nova-button--lg) {
+      border-color: Canvas;
+      outline: var(--nova-border-width) solid ButtonText;
+      outline-offset: -7px;
+    }
+
+    .nova-button.nova-icon-button.nova-icon-button.nova-icon-button:not(.nova-button--lg):disabled {
+      outline-color: GrayText;
+    }
+
+    .nova-button.nova-icon-button.nova-icon-button.nova-icon-button:not(.nova-button--lg):focus-visible {
+      outline: var(--nova-focus-width) solid Highlight;
+      outline-offset: -4px;
     }
   }
 

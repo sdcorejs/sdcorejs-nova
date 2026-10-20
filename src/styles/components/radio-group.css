@@ -11,7 +11,7 @@
   .nova-radio-group--horizontal {
     flex-direction: row;
     flex-wrap: wrap;
-    column-gap: var(--nova-space-4);
+    column-gap: var(--nova-space-5);
   }
 
   .nova-radio-option {
@@ -50,10 +50,17 @@
     border-radius: 50%;
     background: var(--nova-color-background);
     grid-area: 1 / 1;
+    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
   }
 
+  .nova-radio-option:hover > .nova-radio:not([data-disabled], [data-readonly])::before {
+    border-color: var(--nova-color-text);
+  }
+
+  /* Checked matches Checkbox: filled action circle, 8px on-action dot. */
   .nova-radio[data-checked]::before {
     border-color: var(--nova-color-action);
+    background: var(--nova-color-action);
   }
 
   .nova-radio__dot {
@@ -61,12 +68,21 @@
     inline-size: 8px;
     block-size: 8px;
     border-radius: 50%;
-    background: var(--nova-color-action);
+    background: var(--nova-color-on-action);
   }
 
+  /* The ring sits 2px outside the visible 16px circle. */
   .nova-radio:focus-visible {
     outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
-    outline-offset: var(--nova-focus-offset);
+    outline-offset: 0;
+  }
+
+  .nova-radio[data-readonly] {
+    cursor: default;
+  }
+
+  .nova-radio[data-readonly]::before {
+    border-style: dashed;
   }
 
   .nova-radio[data-disabled] {
@@ -74,7 +90,16 @@
   }
 
   .nova-radio[data-disabled]::before {
+    border-color: var(--nova-color-control-border);
     background: var(--nova-color-disabled-surface);
+  }
+
+  .nova-radio[data-disabled] .nova-radio__dot {
+    background: var(--nova-color-disabled-text);
+  }
+
+  .nova-radio-option:has(> .nova-radio[data-disabled]) {
+    cursor: not-allowed;
   }
 
   .nova-radio[data-disabled] + .nova-radio-option__label {
@@ -93,16 +118,30 @@
     line-height: var(--nova-line-height-body);
   }
 
-  @media (pointer: coarse) {
+  @media (max-width: 640px), (pointer: coarse) {
     .nova-radio {
       inline-size: var(--nova-hit-target);
       block-size: var(--nova-hit-target);
+    }
+
+    .nova-radio:focus-visible {
+      outline-offset: -12px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-radio::before {
+      transition: none;
     }
   }
 
   @media (forced-colors: active) {
     .nova-radio::before {
       border-color: ButtonText;
+    }
+
+    .nova-radio[data-checked]::before {
+      border-color: Highlight;
     }
 
     .nova-radio__dot {

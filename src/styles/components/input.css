@@ -1,6 +1,7 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
+  /* Single-line control: 36px desktop, 44px coarse (round 2). */
   .nova-input {
     box-sizing: border-box;
     inline-size: 100%;
@@ -10,16 +11,23 @@
     padding: var(--nova-space-1) var(--nova-space-3);
     border: var(--nova-border-width) solid var(--nova-color-control-border);
     border-radius: var(--nova-radius-control);
-    background: var(--nova-color-background);
+    background-color: var(--nova-color-background);
     color: var(--nova-color-text);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
+    text-overflow: ellipsis;
+    transition: border-color var(--nova-duration) ease;
   }
 
   .nova-input::placeholder {
     color: var(--nova-color-text-muted);
     opacity: 1;
+  }
+
+  /* Low specificity: invalid, read-only and disabled borders win over hover. */
+  .nova-input:where(:hover) {
+    border-color: var(--nova-color-text-muted);
   }
 
   .nova-input:focus-visible {
@@ -31,19 +39,29 @@
     border-color: var(--nova-color-error-text);
   }
 
+  /* Editable elements only: a <button> styled as a control also matches :read-only. */
+  .nova-input:where(input, textarea):read-only:where(:not(:disabled)) {
+    background-color: var(--nova-color-surface);
+    border-color: var(--nova-color-border);
+  }
+
   .nova-input:disabled {
-    background: var(--nova-color-disabled-surface);
+    background-color: var(--nova-color-disabled-surface);
+    border-color: var(--nova-color-border);
     color: var(--nova-color-disabled-text);
     cursor: not-allowed;
   }
 
-  .nova-input:read-only:not(:disabled) {
-    background: var(--nova-color-surface);
+  .nova-input:disabled::placeholder {
+    color: var(--nova-color-disabled-text);
   }
 
+  /* Textarea: at least 3 lines (78px), padding 8/12, vertical resize. */
   .nova-textarea {
     display: block;
-    padding-block: var(--nova-space-2);
+    min-block-size: 78px;
+    padding: var(--nova-space-2) var(--nova-space-3);
+    text-overflow: clip;
   }
 
   .nova-textarea--resize-vertical {
@@ -54,15 +72,61 @@
     resize: none;
   }
 
+  /* InputGroup: start/end affixes live inside the same control frame. */
   .nova-input-group {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--nova-space-2);
+    box-sizing: border-box;
     min-inline-size: 0;
+    min-block-size: var(--nova-control-md);
+    padding-inline: var(--nova-space-3);
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: var(--nova-radius-control);
+    background-color: var(--nova-color-background);
+    color: var(--nova-color-text);
+    transition: border-color var(--nova-duration) ease;
   }
 
-  .nova-input-group > .nova-input {
+  .nova-input-group:hover {
+    border-color: var(--nova-color-text-muted);
+  }
+
+  .nova-input-group:has(> .nova-input:focus-visible) {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  .nova-input-group:has(> .nova-input[aria-invalid="true"]) {
+    border-color: var(--nova-color-error-text);
+  }
+
+  .nova-input-group:has(> .nova-input:read-only:not(:disabled)) {
+    background-color: var(--nova-color-surface);
+    border-color: var(--nova-color-border);
+  }
+
+  .nova-input-group:has(> .nova-input:disabled) {
+    background-color: var(--nova-color-disabled-surface);
+    border-color: var(--nova-color-border);
+    color: var(--nova-color-disabled-text);
+  }
+
+  /* The inner input is borderless; −1px block margins let it keep the full
+     control height (36 / 44) inside the 1px frame. */
+  .nova-input-group > .nova-input.nova-input {
     flex: 1 1 auto;
+    align-self: stretch;
+    min-block-size: var(--nova-control-md);
+    margin-block: -1px;
+    padding-inline: 0;
+    border: 0;
+    background-color: transparent;
+  }
+
+  .nova-input-group > .nova-input.nova-input:focus-visible {
+    outline: none;
   }
 
   .nova-input-group__start,
@@ -70,34 +134,85 @@
     display: inline-flex;
     flex: none;
     align-items: center;
+    gap: var(--nova-space-2);
     color: var(--nova-color-text-muted);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
+    line-height: var(--nova-line-height-body);
   }
 
-  /* 16/24 on small or touch screens so mobile browsers never zoom on focus. */
+  /* An action (e.g. a password toggle) in an affix keeps the frame height. */
+  .nova-input-group__start > .nova-button,
+  .nova-input-group__end > .nova-button {
+    margin-block: -1px;
+  }
+
+  /* 1×20 divider between the start affix and the value. */
+  .nova-input-group__start::after {
+    content: "";
+    flex: none;
+    inline-size: var(--nova-border-width);
+    block-size: 20px;
+    background-color: var(--nova-color-border);
+  }
+
+  .nova-input-group:has(> .nova-input:disabled) > .nova-input-group__start,
+  .nova-input-group:has(> .nova-input:disabled) > .nova-input-group__end {
+    color: var(--nova-color-disabled-text);
+  }
+
+  /* Coarse: 44px controls and 16/24 text so mobile browsers never zoom on focus. */
   @media (max-width: 640px), (pointer: coarse) {
     .nova-input {
+      min-block-size: var(--nova-hit-target);
+      min-inline-size: var(--nova-hit-target);
+      font-size: var(--nova-font-size-input-mobile);
+      line-height: var(--nova-line-height-input-mobile);
+    }
+
+    .nova-textarea {
+      min-block-size: 90px;
+    }
+
+    .nova-input-group {
+      min-block-size: var(--nova-hit-target);
+    }
+
+    .nova-input-group > .nova-input.nova-input {
+      min-block-size: var(--nova-hit-target);
+    }
+
+    .nova-input-group__start,
+    .nova-input-group__end {
       font-size: var(--nova-font-size-input-mobile);
       line-height: var(--nova-line-height-input-mobile);
     }
   }
 
-  /* Touch: the field itself is the ≥ 44×44 target (INV-013). */
-  @media (pointer: coarse) {
-    .nova-input {
-      min-block-size: var(--nova-hit-target);
-      min-inline-size: var(--nova-hit-target);
-    }
-  }
-
   @media (forced-colors: active) {
-    .nova-input {
+    .nova-input,
+    .nova-input-group {
       border-color: FieldText;
     }
 
-    .nova-input:focus-visible {
+    .nova-input-group > .nova-input.nova-input {
+      border: 0;
+    }
+
+    .nova-input:focus-visible,
+    .nova-input-group:has(> .nova-input:focus-visible) {
       outline-color: Highlight;
+    }
+
+    .nova-input-group__start::after {
+      background: FieldText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-input,
+    .nova-input-group {
+      transition: none;
     }
   }
 }
