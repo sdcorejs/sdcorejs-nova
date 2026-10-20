@@ -45,7 +45,7 @@
     .nova-query-bar__chip-remove { inline-size: var(--nova-hit-target); }
     .nova-query-bar__rule > .nova-query-bar__remove-draft { margin-block-start: 22px; }
   }
-  @media (max-width: 47.99rem) {
+  @media (max-width: 640px) {
     .nova-query-bar__desktop { display: none; }
     .nova-query-bar__editor { grid-template-columns: minmax(0, 1fr); }
     .nova-query-bar__editor .nova-input { font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }

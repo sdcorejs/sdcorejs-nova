@@ -26,7 +26,7 @@
     .nova-query-builder input, .nova-query-builder select, .nova-query-builder .nova-button { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
     .nova-query-builder select { font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }
   }
-  @media (max-width: 47.99rem) {
+  @media (max-width: 640px) {
     .nova-query-builder__group, .nova-query-builder__rule { padding: var(--nova-space-2); }
     .nova-query-builder__children > .nova-query-builder__group { margin-inline-start: var(--nova-space-2); }
     .nova-query-builder .nova-query-bar__editor, .nova-query-builder__compare, .nova-query-builder__readonly { grid-template-columns: minmax(0, 1fr); }

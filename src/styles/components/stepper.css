@@ -22,7 +22,7 @@
   .nova-stepper__connector { flex:1 1 var(--nova-space-4); min-inline-size:var(--nova-space-4); border-block-start:var(--nova-border-width) solid var(--nova-color-border); }
   @media(max-width:640px),(pointer:coarse) { .nova-stepper__control { min-block-size:var(--nova-hit-target); } }
   /* Vertical: the connector runs down from the 24px marker, centred on it. */
-  @media(max-width:40rem) {
+  @media(max-width:640px) {
     .nova-stepper { flex-direction:column; gap:0; }
     .nova-stepper__step { position:relative; align-items:flex-start; }
     .nova-stepper__step:not(:last-child) { padding-block-end:var(--nova-space-4); }

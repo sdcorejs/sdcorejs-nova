@@ -32,7 +32,9 @@
     .nova-app-shell__header { padding-inline: var(--nova-space-4); }
     .nova-app-shell__main { padding: var(--nova-space-4) var(--nova-space-4) 40px; }
   }
-  @media (max-width: 47.999rem) {
+  /* Below 1024 the sidebar opens as a start-side drawer, 300 wide (viewport − 32 at most), also at phone width. */
+  .nova-dialog.nova-sheet.nova-sidebar__sheet { inset-block: 0; inset-inline-start: 0; inset-inline-end: auto; inline-size: min(300px, calc(100vw - 32px)); max-inline-size: calc(100vw - 32px); max-block-size: 100dvh; border-radius: 0; }
+  @media (max-width: 63.999rem) {
     .nova-app-shell__body { flex-direction: column; }
     .nova-app-shell__main { box-sizing: border-box; inline-size: 100%; }
     .nova-sidebar { flex: none; inline-size: 100%; }
