@@ -8,3 +8,16 @@ test('IME leaves filtering unchanged until final query and free text submits ind
 for(const theme of ['light','dark'])test(`mobile ${theme} popup fits viewport with independent 44px option targets`,async({page})=>{
  await page.setViewportSize({width:320,height:740});await page.goto('/?scenario=p1-select');if(theme==='dark')await page.getByRole('button',{name:'Toggle theme'}).click();await page.getByRole('combobox',{name:/Required choice/}).click();const list=page.getByRole('listbox');await expect(list).toBeVisible();const sizes=await list.evaluate(element=>{const popup=element.closest('.nova-select__popup')!,rect=popup.getBoundingClientRect();return {left:rect.left,right:rect.right,width:document.documentElement.scrollWidth,targets:[...element.querySelectorAll('[role="option"]')].map(item=>item.getBoundingClientRect().height),theme:element.closest('[data-nova-theme]')?.getAttribute('data-nova-theme')};});expect(sizes.theme).toBe(theme);expect(sizes.left).toBeGreaterThanOrEqual(0);expect(sizes.right).toBeLessThanOrEqual(320);expect(sizes.width).toBeLessThanOrEqual(320);expect(sizes.targets.every(height=>height>=44)).toBe(true);
 });
+// Round 2: the clear action is inside the control frame (24 desktop, 44 coarse), before the chevron, never over the value.
+for(const [width,clear,height] of [[1280,24,36],[320,44,44]] as const)test(`clear sits inside the ${height}px control frame at ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:740});await page.goto('/?scenario=p1-select');const trigger=page.getByRole('combobox',{name:/Required choice/});await trigger.click();await page.getByRole('option',{name:'Zero',exact:true}).click();await expect(page.getByRole('listbox')).toHaveCount(0);
+ for(const control of [page.locator('.nova-select__control').filter({has:trigger}),page.locator('.nova-select__control').filter({has:page.getByRole('combobox',{name:'Search choice',exact:true})})]){
+  const button=control.getByRole('button',{name:'Clear selection',exact:true}),frame=(await control.locator('.nova-input').boundingBox())!,box=(await button.boundingBox())!,chevron=(await control.locator('.nova-select__chevron').boundingBox())!;
+  expect(frame.height).toBeCloseTo(height,0);expect(box.width).toBeCloseTo(clear,0);expect(box.height).toBeCloseTo(clear,0);
+  expect(box.x).toBeGreaterThanOrEqual(frame.x);expect(box.x+box.width).toBeLessThanOrEqual(chevron.x+0.5);expect(chevron.x+chevron.width).toBeLessThanOrEqual(frame.x+frame.width);
+  expect(box.y).toBeGreaterThanOrEqual(frame.y-0.5);expect(box.y+box.height).toBeLessThanOrEqual(frame.y+frame.height+0.5);
+  await expect(button).toHaveText('');await expect(button.locator('svg[aria-hidden="true"]')).toHaveCount(1);
+ }
+ const value=(await page.locator('.nova-select__value').first().boundingBox())!,first=(await page.getByRole('button',{name:'Clear selection',exact:true}).first().boundingBox())!;expect(value.x+value.width).toBeLessThanOrEqual(first.x+0.5);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+});
