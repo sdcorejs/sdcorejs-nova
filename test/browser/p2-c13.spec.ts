@@ -31,10 +31,11 @@ for(const orientation of ['horizontal','vertical'] as const)test('C13-A-R2 real 
  await page.goto('/?scenario=p2-c13&padded=1');await expect(page.locator('#root')).toHaveAttribute('data-hydration','complete');await expect(page.locator('#root')).toHaveAttribute('data-recoverable-errors','0');
  const region=page.getByRole('region',{name:'Padded '+orientation}),root=region.locator('.nova-splitter'),panels=region.locator('.nova-splitter__panel'),separator=region.getByRole('separator').nth(1);
  await separator.evaluate(node=>node.scrollIntoView({block:'center',inline:'center'}));await separator.focus();const rootBounds=(await root.boundingBox())!,panelArea=await panels.evaluateAll((nodes,axis)=>nodes.reduce((sum,node)=>{const rect=node.getBoundingClientRect();return sum+(axis==='horizontal'?rect.width:rect.height);},0),orientation);
- // Browser rectangle transport/layout may differ by a subpixel. The percent
- // tolerance is 0.00005 percentage points, far below the 1.2 point regression.
+ // Browser rectangle transport/layout may differ by a subpixel: summed flex
+ // rectangles of fractional percentages of 384 round by 1/64px in WebKit. Percentages below
+ // use the exact measured area at 0.00005 points, far below the 1.2 point regression.
  expect(orientation==='horizontal'?rootBounds.width:rootBounds.height).toBeCloseTo(468,4);// 468 - 2×20 padding - 2×2 border - 4×4 gap - 2×12 handle strip = 384.
- expect(panelArea).toBeCloseTo(384,4);
+ expect(panelArea).toBeCloseTo(384,1);
  const box=(await separator.boundingBox())!,start={x:Math.round(box.x+box.width/2),y:Math.round(box.y+box.height/2)},end={x:start.x+(orientation==='horizontal'?32:0),y:start.y+(orientation==='vertical'?32:0)};
  await page.mouse.move(start.x,start.y);await root.evaluate(node=>{const events:Array<{type:string;x:number;y:number;trusted:boolean}>=[],doc=node.ownerDocument;const record=(event:Event)=>{const pointer=event as PointerEvent;events.push({type:event.type,x:pointer.clientX,y:pointer.clientY,trusted:event.isTrusted});node.setAttribute('data-c13-pointer-events',JSON.stringify(events));if(event.type==='pointerup')for(const type of ['pointerdown','pointermove','pointerup'])doc.removeEventListener(type,record);};for(const type of ['pointerdown','pointermove','pointerup'])doc.addEventListener(type,record);});
  await page.mouse.down();await page.mouse.move(end.x,end.y);await page.mouse.up();const events=JSON.parse((await root.getAttribute('data-c13-pointer-events'))!) as Array<{type:string;x:number;y:number;trusted:boolean}>;expect(events.map(event=>event.type)).toEqual(['pointerdown','pointermove','pointerup']);expect(events.every(event=>event.trusted)).toBe(true);expect(events[0]).toMatchObject(start);expect(events[1]).toMatchObject(end);expect(events[2]).toMatchObject(end);
