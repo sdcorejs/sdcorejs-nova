@@ -51,7 +51,7 @@ const serverSnapshot = () => false;
 export function Sidebar({label, children, value, defaultValue, onValueChange,
   mobileValue, defaultMobileValue, onMobileValueChange, triggerLabel,
   returnFocusRef, className, style, 'data-testid': testId}: SidebarProps) {
-  const desktop = useMediaQuery('(min-width: 48rem)');
+  const desktop = useMediaQuery('(min-width: 64rem)');
   const report = useDiagnostics('Sidebar');
   const mounted = useSyncExternalStore(subscribeClient, clientSnapshot, serverSnapshot);
   const [contentHost] = useState(() => typeof document === 'undefined' ? null : document.createElement('div'));
@@ -93,7 +93,7 @@ export function Sidebar({label, children, value, defaultValue, onValueChange,
       }}>{triggerLabel ?? label}</button>
     <div ref={attachParking}>{!mounted && body}</div>
     {mounted && contentHost && createPortal(body, contentHost)}
-    <Drawer value={open} onValueChange={setMobileOpen} title={label} side="start" returnFocusRef={returnFocusRef ?? trigger}>
+    <Drawer value={open} onValueChange={setMobileOpen} title={label} side="start" className="nova-sidebar__sheet" returnFocusRef={returnFocusRef ?? trigger}>
       <div ref={attachDrawer} className="nova-sidebar__drawer"/>
     </Drawer>
   </div>;

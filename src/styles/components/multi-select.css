@@ -151,8 +151,8 @@
     inset-block-start: 9px;
     inset-inline-end: 9px;
     display: block;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
     color: var(--nova-color-text-muted);
     pointer-events: none;
     transition: transform var(--nova-duration) ease;
@@ -187,9 +187,9 @@
     overflow: auto;
     padding: var(--nova-space-1);
     border: var(--nova-border-width) solid var(--nova-color-border);
-    border-radius: 8px;
+    border-radius: var(--nova-radius-popup);
     background-color: var(--nova-color-background);
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+    box-shadow: var(--nova-shadow-overlay);
     color: var(--nova-color-text);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
@@ -216,7 +216,7 @@
 
   .nova-multi-select__option[data-selected],
   .nova-multi-select__option[aria-selected="true"] {
-    font-weight: 500;
+    font-weight: var(--nova-font-weight-medium);
   }
 
   .nova-multi-select__option[data-highlighted] {
@@ -233,8 +233,8 @@
   .nova-multi-select__check {
     display: inline-flex;
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
     margin-inline-start: auto;
   }
 

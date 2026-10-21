@@ -1,6 +1,6 @@
 // case-p2-d01-ac01-types: packed public contracts, including negative business types.
-import { DataTable, TablePagination, type Column, type TableState } from '@sdcorejs/nova/data-table';
-import { DataTable as RootTable } from '@sdcorejs/nova';
+import { DataTable, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS, TablePagination, type Column, type TableState } from '@sdcorejs/nova/data-table';
+import { DataTable as RootTable, DEFAULT_PAGE_SIZE as ROOT_PAGE_SIZE } from '@sdcorejs/nova';
 import type { MenuAction } from '@sdcorejs/nova/types';
 type Row = { id: number | string; title: string; count: number };
 const rows: readonly Row[] = [{ id: 0, title: 'File', count: 0 }];
@@ -31,4 +31,16 @@ const badColumn: Column<Row> = { id: 'bad', header: 'Bad', cell: (row: number) =
 <TablePagination defaultPage={state.page} onPageChange={() => {}} />;
 // @ts-expect-error pagination needs a proposal handler
 <TablePagination page={state.page} />;
-void [table, root, pagination, badState, badSort, badColumn];
+// Round-2 owner decisions Q1–Q3, Q5, Q6: page-size choices, first/last, empty slot, danger tone.
+const initialPage: TableState<Row['id']>['page'] = { pageIndex: 0, pageSize: DEFAULT_PAGE_SIZE };
+const sizes: readonly number[] = DEFAULT_PAGE_SIZE_OPTIONS;
+const sized = <TablePagination page={initialPage} total={120} pageSizeOptions={[10, 25, 50]} showFirstLast onPageChange={page => { const size: number = page.pageSize; void size; }} />;
+const fixed = <DataTable {...props} pageSizeOptions={[]} showFirstLast slots={{ empty: <p>No files match</p> }} rowActions={[{ id: 'delete', label: 'Delete', tone: 'danger', onAction: () => {} }]} />;
+// @ts-expect-error page-size choices are numbers
+<TablePagination page={state.page} onPageChange={() => {}} pageSizeOptions={['20']} />;
+// @ts-expect-error owner decision Q2: no pagination variant
+<TablePagination page={state.page} onPageChange={() => {}} variant="numbered" />;
+// @ts-expect-error danger is the only action tone
+const badTone: MenuAction<Row> = { id: 'warn', label: 'Warn', tone: 'warning', onAction: () => {} };
+const rootSize: number = ROOT_PAGE_SIZE;
+void [table, root, pagination, badState, badSort, badColumn, sizes, sized, fixed, badTone, rootSize];

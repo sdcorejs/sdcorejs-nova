@@ -129,8 +129,8 @@
 
   .nova-color-input__clear > svg {
     display: block;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-color-input__clear:hover:not(:disabled) {

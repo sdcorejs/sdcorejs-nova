@@ -214,9 +214,18 @@ export type NovaStrings = {
     tablePrevious?: string;
     tableNext?: string;
     tablePage?: string;
+    /** @deprecated Not rendered since the range text (`tableRange`) replaced the page label. */
     tablePageOf?: string;
+    /** @deprecated Not rendered since the page-size Select uses `tablePageSizeLabel`. */
     tablePageSize?: string;
     tablePagination?: string;
+    /** Rows shown with a known total: `{start}`, `{end}`, `{total}`. */
+    tableRange?: string;
+    /** Rows shown when the total is unknown: `{start}`, `{end}`. */
+    tableRangeUnknown?: string;
+    tablePageSizeLabel?: string;
+    tableFirst?: string;
+    tableLast?: string;
     treeName?: string;
     treeEmpty?: string;
     treeLoading?: string;

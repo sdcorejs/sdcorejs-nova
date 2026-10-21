@@ -29,7 +29,8 @@ export type DiagnosticCode =
   | 'NOVA_AVATAR_INVALID_MAX'
   | 'NOVA_PROGRESS_INVALID_VALUE'
   | 'NOVA_PROGRESS_INVALID_MAX'
-  | 'NOVA_ALERT_UNNAMED';
+  | 'NOVA_ALERT_UNNAMED'
+  | 'NOVA_DIALOG_INVALID_SIZE';
 
 const MESSAGES: Readonly<Record<DiagnosticCode, string>> = {
   NOVA_DATE_INVALID_CONFIGURATION: 'civil values, reference date, bounds, initial month and week start must form a valid date configuration',
@@ -60,6 +61,7 @@ const MESSAGES: Readonly<Record<DiagnosticCode, string>> = {
   NOVA_PROGRESS_INVALID_VALUE: 'value is not finite; rendering indeterminate',
   NOVA_PROGRESS_INVALID_MAX: 'max must be a finite number > 0; using 100',
   NOVA_ALERT_UNNAMED: 'action-only alert needs aria-label, title or body text',
+  NOVA_DIALOG_INVALID_SIZE: 'size must be sm, md, lg, a positive finite number or a positive "<number>px" string; using the default width',
 };
 
 export type DiagnosticOwner = { readonly seen: Set<string> };

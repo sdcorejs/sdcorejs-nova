@@ -12,10 +12,10 @@
   .nova-date-picker > .nova-field__error { margin: 0; }
 
   /* Specificity above .nova-popover: popover.css is imported after this file. */
-  .nova-popover.nova-date-picker__popup { box-sizing: border-box; inline-size: min-content; min-inline-size: 0; max-inline-size: calc(100vw - 32px); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; background: var(--nova-color-background); box-shadow: 0 8px 24px rgb(0 0 0 / 0.12); }
+  .nova-popover.nova-date-picker__popup { box-sizing: border-box; inline-size: min-content; min-inline-size: 0; max-inline-size: calc(100vw - 32px); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-popup); background: var(--nova-color-background); box-shadow: var(--nova-shadow-overlay); }
   .nova-date-picker__popup > p { margin: var(--nova-space-2) 0 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
   .nova-date-picker__footer { display: flex; justify-content: flex-end; margin-block-start: var(--nova-space-2); padding-block-start: var(--nova-space-2); border-block-start: var(--nova-border-width) solid var(--nova-color-border); }
-  .nova-date-picker__close { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-block-size: var(--nova-control-sm); margin: 0; padding: 0 10px; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text); font: inherit; font-weight: 500; white-space: nowrap; cursor: pointer; }
+  .nova-date-picker__close { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-block-size: var(--nova-control-sm); margin: 0; padding: 0 10px; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text); font: inherit; font-weight: var(--nova-font-weight-medium); white-space: nowrap; cursor: pointer; }
   .nova-date-picker__close:hover { background: var(--nova-color-surface-hover); }
   .nova-date-picker__close:active { background: var(--nova-color-border); }
   .nova-date-picker__close:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }

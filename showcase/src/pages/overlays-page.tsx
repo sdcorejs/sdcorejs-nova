@@ -1,4 +1,4 @@
-import {useRef,useState,type RefObject} from 'react';
+import {useId,useRef,useState,type RefObject} from 'react';
 import {Dialog,Sheet,Drawer} from '@sdcorejs/nova/dialog';
 import {Popover,Tooltip} from '@sdcorejs/nova/popover';
 import {Button,IconButton} from '@sdcorejs/nova/button';
@@ -62,26 +62,24 @@ export function OverlaysPage({locale}:{locale:Locale}){
    <TechDetails t={t} topic={t('trạng thái','state')}><code>{JSON.stringify({selected:current.code,types,sizes,dialogSize:size})}</code></TechDetails>
   </DemoCard>
   <CreateContract key={session} open={open==='create'} t={t} onClose={()=>setOpen(null)} returnFocusRef={createOpener} nextCode={'HĐLĐ-2026-0'+(413+contracts.length-INITIAL.length)} onCreate={contract=>{setContracts(list=>[contract,...list]);setTypes(list=>list.includes(contract.type)?list:[...list,contract.type]);setSelected(contract.code);setOpen(null);toast.show({tone:'success',title:t('Đã tạo hợp đồng nháp','Draft contract created'),description:contract.code+' · '+contract.employee});}}/>
-  <Sheet side="end" title={t('Bộ lọc hợp đồng','Contract filters')} description={t('Chọn loại hợp đồng cần hiển thị.','Choose which contract types to show.')} value={open==='filter'} onValueChange={close} returnFocusRef={filterOpener}>
+  <Sheet side="end" title={t('Bộ lọc hợp đồng','Contract filters')} description={t('Chọn loại hợp đồng cần hiển thị.','Choose which contract types to show.')} value={open==='filter'} onValueChange={close} returnFocusRef={filterOpener}
+   footer={<><Button variant="ghost" onClick={()=>setDraftTypes(['indefinite','fixed-12','probation'])}>{t('Đặt lại','Reset')}</Button><Button onClick={()=>{setTypes(draftTypes);setOpen(null);}}>{t('Áp dụng','Apply')}</Button></>}>
    <div className="showcase-stack">
     {(['indefinite','fixed-12','probation'] as const).map(type=><Checkbox key={type} label={typeLabel(t,type)} value={draftTypes.includes(type)} onValueChange={value=>setDraftTypes(list=>value===true?[...list.filter(item=>item!==type),type]:list.filter(item=>item!==type))}/>)}
    </div>
-   <div className="showcase-dialog-actions"><Button variant="ghost" onClick={()=>setDraftTypes(['indefinite','fixed-12','probation'])}>{t('Đặt lại','Reset')}</Button><Button onClick={()=>{setTypes(draftTypes);setOpen(null);}}>{t('Áp dụng','Apply')}</Button></div>
   </Sheet>
-  <Drawer side="start" title={t('Lịch sử thay đổi','Change history')} description={current.code} value={open==='history'} onValueChange={close} returnFocusRef={historyOpener}>
+  <Drawer side="start" title={t('Lịch sử thay đổi','Change history')} description={current.code} value={open==='history'} onValueChange={close} returnFocusRef={historyOpener} footer={<Button variant="secondary" onClick={()=>setOpen(null)}>{t('Đóng','Close')}</Button>}>
    <ol className="showcase-timeline">
     <li><span className="showcase-meta">20/10/2026 · 09:42</span><span>{t('Phạm Thị Thu Hà cập nhật mức lương.','Phạm Thị Thu Hà updated the salary.')}</span></li>
     <li><span className="showcase-meta">18/10/2026 · 15:10</span><span>{t('Nguyễn An gửi hợp đồng cho nhân viên ký.','Nguyễn An sent the contract for signature.')}</span></li>
     <li><span className="showcase-meta">17/10/2026 · 11:03</span><span>{t('Nguyễn An tạo bản nháp.','Nguyễn An created the draft.')}</span></li>
    </ol>
-   <div className="showcase-dialog-actions"><Button variant="secondary" onClick={()=>setOpen(null)}>{t('Đóng','Close')}</Button></div>
   </Drawer>
-  <ResizableDialog title={t('Toàn văn ','Full text ')+current.code} description={t('Kéo tay cầm hoặc dùng phím mũi tên để đổi kích thước.','Drag the handle or use the arrow keys to resize.')} value={full} onValueChange={setFull} size={size} onSizeChange={setSize} returnFocusRef={fullOpener}>
+  <ResizableDialog title={t('Toàn văn ','Full text ')+current.code} description={t('Kéo tay cầm hoặc dùng phím mũi tên để đổi kích thước.','Drag the handle or use the arrow keys to resize.')} value={full} onValueChange={setFull} size={size} onSizeChange={setSize} returnFocusRef={fullOpener} footer={<Button variant="secondary" onClick={()=>setFull(false)}>{t('Đóng','Close')}</Button>}>
    <h3>{t('Điều 1. Thời hạn và công việc','Article 1. Term and duties')}</h3>
    <p>{t('Người lao động '+current.employee+' làm việc theo '+typeLabel(t,current.type).toLowerCase()+', bắt đầu từ '+format.date(current.start)+'.',current.employee+' is employed on a '+typeLabel(t,current.type).toLowerCase()+' basis from '+format.date(current.start)+'.')}</p>
    <h3>{t('Điều 2. Tiền lương','Article 2. Salary')}</h3>
    <p>{t('Lương cơ bản ','Base salary ')+money(current.salary)+t(' mỗi tháng, trả vào ngày 5.',' per month, paid on the 5th.')}</p>
-   <div className="showcase-dialog-actions"><Button variant="secondary" onClick={()=>setFull(false)}>{t('Đóng','Close')}</Button></div>
   </ResizableDialog>
  </>;
 }
@@ -89,13 +87,14 @@ export function OverlaysPage({locale}:{locale:Locale}){
 function CreateContract({open,t,onClose,onCreate,returnFocusRef,nextCode}:{open:boolean;t:Translate;onClose:()=>void;onCreate:(contract:Contract)=>void;returnFocusRef:RefObject<HTMLButtonElement|null>;nextCode:string}){
  const [employee,setEmployee]=useState<string|null>(null),[type,setType]=useState<ContractType|null>('fixed-12'),[start,setStart]=useState<string|null>('2026-11-03'),[salary,setSalary]=useState<number|null>(25_000_000),[tried,setTried]=useState(false);
  const valid=employee!==null&&type!==null&&start!==null&&salary!==null&&salary>0;
- return <Dialog title={t('Tạo hợp đồng lao động','New employment contract')} description={t('Hợp đồng ở trạng thái nháp cho tới khi hai bên ký.','The contract stays a draft until both sides sign.')} value={open} onValueChange={value=>{if(!value)onClose();}} returnFocusRef={returnFocusRef}>
-  <form className="showcase-stack" noValidate onSubmit={event=>{event.preventDefault();setTried(true);if(valid)onCreate({code:nextCode,employee,type,start,salary,status:'draft'});}}>
+ const formId=useId();
+ return <Dialog size="md" title={t('Tạo hợp đồng lao động','New employment contract')} description={t('Hợp đồng ở trạng thái nháp cho tới khi hai bên ký.','The contract stays a draft until both sides sign.')} value={open} onValueChange={value=>{if(!value)onClose();}} returnFocusRef={returnFocusRef}
+  footer={<><Button variant="secondary" onClick={onClose}>{t('Hủy','Cancel')}</Button><Button type="submit" form={formId}>{t('Lưu','Save')}</Button></>}>
+  <form id={formId} className="showcase-stack" noValidate onSubmit={event=>{event.preventDefault();setTried(true);if(valid)onCreate({code:nextCode,employee,type,start,salary,status:'draft'});}}>
    <Select<string,string> label={t('Nhân viên','Employee')} required options={PEOPLE.map(name=>({key:name,label:name,data:name}))} value={employee} onValueChange={setEmployee} error={tried&&employee===null?t('Chọn nhân viên.','Choose an employee.'):undefined}/>
    <Select<ContractType,ContractType> label={t('Loại hợp đồng','Contract type')} options={(['indefinite','fixed-12','probation'] as const).map(key=>({key,label:typeLabel(t,key),data:key}))} value={type} onValueChange={setType}/>
    <DatePicker label={t('Ngày hiệu lực','Effective date')} referenceDate="2026-10-20" value={start} onValueChange={setStart}/>
    <NumberInput label={t('Lương cơ bản (VND)','Base salary (VND)')} min={0} step={500_000} value={salary} onValueChange={setSalary}/>
-   <div className="showcase-dialog-actions"><Button variant="secondary" onClick={onClose}>{t('Hủy','Cancel')}</Button><Button type="submit">{t('Lưu','Save')}</Button></div>
   </form>
  </Dialog>;
 }

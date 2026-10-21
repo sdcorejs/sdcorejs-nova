@@ -73,7 +73,7 @@
     max-inline-size: 100%;
     overflow: hidden;
     color: var(--nova-color-text);
-    font-weight: 500;
+    font-weight: var(--nova-font-weight-medium);
     text-overflow: ellipsis;
     white-space: nowrap;
     vertical-align: middle;
@@ -82,8 +82,8 @@
   .nova-breadcrumb__separator {
     display: inline-flex;
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-breadcrumb__separator > svg {
@@ -121,8 +121,8 @@
 
   .nova-breadcrumb__toggle > svg {
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-breadcrumb__toggle:hover {

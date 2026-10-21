@@ -62,6 +62,8 @@ export type Action<T> = {
   icon?: ReactNode;
   disabled?: boolean;
   hidden?: boolean;
+  /** Destructive styling only; the consumer still confirms before acting. */
+  tone?: 'danger';
   onAction: (data: T) => void | Promise<void>;
 };
 

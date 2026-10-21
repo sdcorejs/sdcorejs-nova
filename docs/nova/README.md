@@ -92,6 +92,24 @@ Với P0, typecheck ngữ nghĩa (TypeScript 6.0.3 và 5.7.3), test unit, SSR, t
 
 Showcase consumer Vite/Pages đã có menu gọn với selected/hover/focus riêng; CI và deployment/public revision cần xác nhận bằng run thực tế. Xem [hướng dẫn showcase](showcase-pages.vi.md). npm release tiếp tục hoãn đến sau P1/P2 và review, owner tự đánh version tag.
 
+## Thay đổi API vòng 2 (owner chốt 20/10/2026)
+
+Thiết kế vòng 2 (CSS, markup nội bộ, showcase) đã vào `main`. Các mục API/hành vi owner duyệt ở bảng 2l được triển khai sau đó; chi tiết nằm trong spec tương ứng và [CHANGELOG](../../CHANGELOG.md).
+
+| Mục | Thay đổi | Spec |
+|---|---|---|
+| Q1–Q3 | TablePagination: Select số hàng (`pageSizeOptions`, mặc định `DEFAULT_PAGE_SIZE_OPTIONS` 20/50/100, `DEFAULT_PAGE_SIZE` 20; đổi cỡ đề xuất `pageIndex: 0`), `showFirstLast`, khoảng hàng "{start}–{end} trên {total}" và các khóa i18n optional mới. DataTable chuyển hai prop này xuống. | [D01](specs/D01.vi.md) |
+| Q4 | Dialog `size` (`sm`/`md`/`lg` = 400/560/800 px hoặc px tùy chỉnh) và `footer` cố định ở đáy; Sheet/Drawer có `footer`. | [C11](specs/C11.vi.md) |
+| Q5 | DataTable `slots.empty`. | [D01](specs/D01.vi.md) |
+| Q6 | `Action.tone: 'danger'` trong menu. | [C02](specs/C02.vi.md) |
+| Q7, Q8, Q19 | DataTable: trigger thao tác hàng là nút ⋯; cột mở rộng ngay sau cột chọn, chi tiết là hàng toàn chiều rộng; độ ưu tiên sort qua `aria-describedby`. | [D01](specs/D01.vi.md) |
+| Q9 | Sidebar desktop từ 64rem (1024 px), drawer bên dưới; thư viện dùng hai breakpoint 640/1024. | [C14](specs/C14.vi.md) |
+| Q10 | DateTimePicker `precision`, mặc định `'minute'`. | [F10](specs/F10.vi.md) |
+| Q11 | Token mới `font-weight-medium`, `icon-sm`, `icon-lg`, `radius-popup`, `shadow-overlay`, `color-backdrop` thay literal lặp lại trong CSS. | — |
+| Q20 | ReadOnlyValue trống hiển thị `--`, trình đọc màn hình đọc `feedback.unavailable`. | [C15](specs/C15.vi.md) |
+
+Breaking: thứ tự cột khi có mở rộng (Q8), breakpoint sidebar 1024 (Q9) và precision mặc định của DateTimePicker (Q10). Q17 giữ nguyên: IconButton không tự gắn Tooltip.
+
 ## Portal của overlay P1
 
 Dialog, Sheet và Drawer dùng một primitive portal của Base UI bên trong scope Nova riêng. Popover và Tooltip cũng dùng primitive portal; nhánh portal riêng của P0 giữ cách hoạt động hiện tại. Scope áp dụng theme, class, `dir` và `lang` lên wrapper mới, không ghi các thuộc tính theme vào host của consumer.

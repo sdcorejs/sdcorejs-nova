@@ -11,6 +11,8 @@ const ICONS = {
   'chevron-up': { d: 'M4 10l4-4 4 4' },
   'chevron-left': { d: 'M10 4L6 8l4 4' },
   'chevron-right': { d: 'M6 4l4 4-4 4' },
+  'page-first': { d: 'M11 4L7 8l4 4M4.5 4v8' },
+  'page-last': { d: 'M5 4l4 4-4 4M11.5 4v8' },
   close: { d: 'M4.5 4.5l7 7M11.5 4.5l-7 7' },
   check: { d: 'M3.5 8.5l3 3 6-7' },
   plus: { d: 'M8 3.5v9M3.5 8h9' },

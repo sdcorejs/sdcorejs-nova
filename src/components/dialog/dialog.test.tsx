@@ -129,3 +129,35 @@ describe('dialog requests and portal semantics',()=>{
   });
 
 });
+
+describe('round-2 owner decision Q4: size and footer',()=>{
+  it('maps named sizes to data-size, custom px to an inline width, and keeps the 512 default without a size',async()=>{
+    const {rerender}=render(<NovaProvider locale="en"><Dialog title="Contract" defaultValue>Body</Dialog></NovaProvider>);
+    let popup=await screen.findByRole('dialog');expect(popup.hasAttribute('data-size')).toBe(false);expect(popup.style.inlineSize).toBe('');
+    for(const size of ['sm','md','lg'] as const){rerender(<NovaProvider locale="en"><Dialog title="Contract" defaultValue size={size}>Body</Dialog></NovaProvider>);popup=screen.getByRole('dialog');expect(popup.getAttribute('data-size')).toBe(size);expect(popup.style.inlineSize).toBe('');}
+    for(const [size,width] of [[480,'480px'],['480px','480px'],['512.5px','512.5px']] as const){rerender(<NovaProvider locale="en"><Dialog title="Contract" defaultValue size={size} style={{color:'red'}}>Body</Dialog></NovaProvider>);popup=screen.getByRole('dialog');expect(popup.hasAttribute('data-size')).toBe(false);expect(popup.style.inlineSize).toBe(width);expect(popup.style.color).toBe('red');}
+    rerender(<NovaProvider locale="en"><Dialog title="Contract" defaultValue size={480} style={{inlineSize:'300px'}}>Body</Dialog></NovaProvider>);expect(screen.getByRole('dialog').style.inlineSize).toBe('300px');
+  });
+  it('rejects other strings and non-positive numbers with one diagnostic and the default width',async()=>{
+    const warn=vi.spyOn(console,'warn').mockImplementation(()=>{});
+    for(const size of ['wide','480','480 px','-5px','0px',0,-1,Number.NaN,Number.POSITIVE_INFINITY]){
+      const view=render(<NovaProvider locale="en"><Dialog title="Contract" defaultValue size={size as never}>Body</Dialog></NovaProvider>);
+      const popup=await screen.findByRole('dialog');expect(popup.hasAttribute('data-size')).toBe(false);expect(popup.style.inlineSize).toBe('');view.unmount();
+    }
+    expect(warn.mock.calls.filter(call=>String(call[0]).includes('NOVA_DIALOG_INVALID_SIZE'))).toHaveLength(9);
+  });
+  it('renders the footer after the scrolling body inside the dialog, for Dialog and Sheet',async()=>{
+    const {rerender}=render(<NovaProvider locale="en"><Dialog title="Contract" defaultValue footer={<button>Save contract</button>}>Body</Dialog></NovaProvider>);
+    let popup=await screen.findByRole('dialog'),footer=popup.querySelector('.nova-dialog__footer')!;
+    expect(within(footer as HTMLElement).getByRole('button',{name:'Save contract'})).toBeTruthy();expect(footer.previousElementSibling?.className).toBe('nova-dialog__body');expect(popup.lastElementChild).toBe(footer);
+    rerender(<NovaProvider locale="en"><Sheet title="Filters" defaultValue size="lg" footer={<button>Apply filters</button>}>Body</Sheet></NovaProvider>);
+    popup=await screen.findByRole('dialog',{name:'Filters'});footer=popup.querySelector('.nova-dialog__footer')!;
+    expect(popup.getAttribute('data-size')).toBe('lg');expect(within(footer as HTMLElement).getByRole('button',{name:'Apply filters'})).toBeTruthy();
+    rerender(<NovaProvider locale="en"><Dialog title="Contract" defaultValue>Body</Dialog></NovaProvider>);
+    expect((await screen.findByRole('dialog',{name:'Contract'})).querySelector('.nova-dialog__footer')).toBeNull();
+  });
+  it('moves initial focus into the body before the footer actions',async()=>{
+    render(<NovaProvider locale="en"><Dialog title="Contract" defaultValue footer={<button>Save contract</button>}><input aria-label="Contract number"/></Dialog></NovaProvider>);
+    await waitFor(()=>expect(document.activeElement).toBe(screen.getByRole('textbox',{name:'Contract number'})));
+  });
+});

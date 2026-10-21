@@ -12,3 +12,7 @@ import {createTemporalAdapter} from '@sdcorejs/nova/adapters/temporal';
 <DateTimePicker label="At" referenceDate="2026-10-14"/>;
 // @ts-expect-error Field owns error metadata
 <TimeInput nameFromField error="Wrong"/>;
+// Round-2 owner decision Q10: minute precision by default, seconds opt-in.
+<DateTimePicker label="At" timeZone="UTC" referenceDate="2026-10-14" adapter={createTemporalAdapter()} precision="second"/>;
+// @ts-expect-error precision is minute or second
+<DateTimePicker label="At" timeZone="UTC" referenceDate="2026-10-14" adapter={createTemporalAdapter()} precision="hour"/>;

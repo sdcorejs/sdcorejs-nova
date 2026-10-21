@@ -18,3 +18,12 @@ void [controlled,sheet,drawer];
 <Sheet title="Options" side="left">Options</Sheet>;
 // @ts-expect-error a close veto is synchronous, not an async action
 <Dialog title="Rename" onCloseRequest={async()=>false}>Form</Dialog>;
+// Round-2 owner decision Q4: named or custom px width and a sticky footer.
+const sized=[<Dialog key="sm" title="Contract" size="sm" footer={<button>Save</button>}>Form</Dialog>,<Dialog key="lg" title="Contract" size="lg">Form</Dialog>,<Dialog key="n" title="Contract" size={480}>Form</Dialog>,<Dialog key="px" title="Contract" size="480px">Form</Dialog>,<Sheet key="sheet" title="Options" size="md" footer="Apply">Options</Sheet>];
+void sized;
+// @ts-expect-error custom sizes are px strings or numbers
+<Dialog title="Contract" size="30rem">Form</Dialog>;
+// @ts-expect-error unknown named size
+<Dialog title="Contract" size="xl">Form</Dialog>;
+// @ts-expect-error sheets keep named sizes only
+<Sheet title="Options" size={480}>Options</Sheet>;
