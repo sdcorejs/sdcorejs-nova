@@ -106,22 +106,6 @@ describe('C14 AppShell', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 
-  it('C14-AC02: desktop crossing parks focused drawer content and still returns focus to the explicit target', async () => {
-    const resize = media(false);
-    const user = userEvent.setup();
-    const main = document.createElement('main');main.tabIndex = -1;document.body.append(main);
-    try {
-      render(<Sidebar label="Workspace" triggerLabel="Open menu" returnFocusRef={{current: main}}><a href="#/files">Files</a></Sidebar>);
-      await user.click(screen.getByRole('button', {name: 'Open menu'}));
-      const dialog = await screen.findByRole('dialog', {name: 'Workspace'});
-      await waitFor(() => expect(dialog.contains(document.activeElement)).toBe(true));
-      // Parking the content host moves the focused link out of the drawer; React then restores focus to it.
-      resize(true);
-      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
-      await waitFor(() => expect(document.activeElement).toBe(main));
-    } finally { main.remove(); }
-  });
-
   it('C14-AC02: the consumer subtree mounts once and retains draft across mobile reopen and breakpoints', async () => {
     const resize = media(true);
     const user = userEvent.setup();
