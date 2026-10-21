@@ -47,6 +47,11 @@ export function DataState({
   if (state === 'error') {
     return (
       <div {...common} className={cx('nova-data-state', 'nova-data-state--error', className)}>
+        <span className="nova-data-state__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" focusable="false" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M8 1.75a6.25 6.25 0 1 1 0 12.5 6.25 6.25 0 0 1 0-12.5zM8 4.75v3.75M8 11h.01" />
+          </svg>
+        </span>
         <p className="nova-data-state__message">{message ?? strings.feedback.errorDefault}</p>
         {onRetry ? (
           <Button variant="secondary" loading={retryPending} onClick={() => onRetry()}>{strings.feedback.retry}</Button>

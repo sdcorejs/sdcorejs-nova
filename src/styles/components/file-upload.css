@@ -1,10 +1,20 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
- .nova-file-upload {display:flex;flex-direction:column;align-items:stretch;gap:var(--nova-space-2);min-inline-size:0;max-inline-size:100%;padding:var(--nova-space-3);border:var(--nova-border-width) dashed var(--nova-color-control-border);border-radius:var(--nova-radius-control);background:var(--nova-color-background);color:var(--nova-color-text);font-family:var(--nova-font-family);font-size:var(--nova-font-size-body);line-height:var(--nova-line-height-body);overflow-wrap:anywhere;}
- /* A roomy drop alternate uses the existing 48px step, above the 44px hit minimum. */
- .nova-file-upload > .nova-button {min-block-size:var(--nova-space-7);}
- .nova-file-upload__input[hidden] {display:none;}
- .nova-file-upload__errors {margin:0;padding-inline-start:var(--nova-space-4);color:var(--nova-color-danger);}
- .nova-file-upload[data-disabled] {background:var(--nova-color-disabled-surface);color:var(--nova-color-disabled-text);}
- @media (forced-colors:active) {.nova-file-upload {border-color:ButtonText;} .nova-file-upload[data-disabled] {color:GrayText;}}
+  /* Drop zone: dashed control border, 8px radius, upload icon above a 36px chooser button. */
+  .nova-file-upload { display: flex; flex-direction: column; align-items: center; gap: var(--nova-space-2); box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; padding: 20px var(--nova-space-4); border: var(--nova-border-width) dashed var(--nova-color-control-border); border-radius: 8px; background: var(--nova-color-background); color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); text-align: center; overflow-wrap: anywhere; transition: border-color var(--nova-duration) ease, background-color var(--nova-duration) ease; }
+  .nova-file-upload:not([data-disabled]):hover { border-color: var(--nova-color-text-muted); }
+  .nova-file-upload__icon { display: inline-flex; align-items: center; justify-content: center; flex: none; inline-size: 40px; block-size: 40px; border-radius: 8px; background: var(--nova-color-surface-hover); color: var(--nova-color-text-muted); }
+  .nova-file-upload__icon > .nova-icon { inline-size: 20px; block-size: 20px; }
+  .nova-file-upload > .nova-button { max-inline-size: 100%; }
+  .nova-file-upload__input[hidden] { display: none; }
+  .nova-file-upload > [role="alert"] { align-self: stretch; text-align: start; }
+  .nova-file-upload__errors { margin: 0; padding-inline-start: var(--nova-space-4); color: var(--nova-color-error-text); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
+  .nova-file-upload > span[role="alert"] { color: var(--nova-color-error-text); }
+  .nova-file-upload[data-disabled] { border-color: var(--nova-color-border); background: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); }
+  .nova-file-upload[data-disabled] .nova-file-upload__icon { background: transparent; color: var(--nova-color-control-border); }
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-file-upload > .nova-button { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
+  }
+  @media (forced-colors: active) { .nova-file-upload { border-color: ButtonText; } .nova-file-upload[data-disabled] { color: GrayText; } }
+  @media (prefers-reduced-motion: reduce) { .nova-file-upload { transition: none; } }
 }

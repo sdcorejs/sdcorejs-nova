@@ -1,3 +1,10 @@
+@layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
-  .nova-busy-boundary { display: grid; gap: var(--nova-space-2); }
+  /* The status never takes layout space, so content does not jump when busy toggles. */
+  .nova-busy-boundary { position: relative; display: grid; min-inline-size: 0; border-radius: inherit; }
+  /* indicator: a small status chip over the top-end corner; it never intercepts pointer input. */
+  .nova-busy-boundary[data-mode="indicator"] > .nova-spinner { position: absolute; inset-block-start: var(--nova-space-1); inset-inline-end: var(--nova-space-1); z-index: 1; max-inline-size: calc(100% - var(--nova-space-2)); box-sizing: border-box; padding: 2px var(--nova-space-2); border-radius: var(--nova-radius-control); background: var(--nova-color-background); box-shadow: 0 0 0 var(--nova-border-width) var(--nova-color-border); pointer-events: none; }
+  /* block: a visible veil over the whole region with the status centred on it. */
+  .nova-busy-boundary[data-mode="block"] > .nova-spinner { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; padding: var(--nova-space-4); border-radius: inherit; background: color-mix(in srgb, var(--nova-color-background) 72%, transparent); color: var(--nova-color-text); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); font-weight: 500; text-align: center; }
+  @media (forced-colors: active) { .nova-busy-boundary[data-mode="indicator"] > .nova-spinner { border: var(--nova-border-width) solid CanvasText; } }
 }

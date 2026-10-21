@@ -96,3 +96,21 @@ test('case-p2-d01-r1-browser external collapse preserves the overflow region aft
   await expect(table.getByRole('button', { name: 'Expand row 1', exact: true })).toHaveAttribute('aria-expanded', 'false');
   await expect(scroll).toBeFocused();
 });
+
+test('case-p2-d01-design-r2-browser compact desktop table controls and 44px narrow targets', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 }); await page.goto('/?scenario=p2-d01');
+  const table = page.getByRole('table', { name: 'Files', exact: true }), navigation = page.getByRole('navigation', { name: 'Table pagination' }).first();
+  expect(Math.round((await table.getByRole('columnheader', { name: 'Title' }).boundingBox())!.height)).toBe(40);
+  const sort = table.getByRole('button', { name: 'Title', exact: true }); expect(await sort.textContent()).toBe('Title'); expect(Math.round((await sort.boundingBox())!.height)).toBe(28);
+  const expand = table.getByRole('button', { name: 'Expand row 1', exact: true }); expect(await expand.textContent()).toBe(''); expect(Math.round((await expand.boundingBox())!.width)).toBe(28);
+  for (const name of ['Previous page', 'Next page']) { const button = navigation.getByRole('button', { name }), box = (await button.boundingBox())!; expect(await button.textContent()).toBe(''); expect(Math.round(box.width)).toBe(28); expect(Math.round(box.height)).toBe(28); }
+  await page.setViewportSize({ width: 320, height: 740 }); await page.getByRole('button', { name: 'Toggle mobile renderer' }).click(); await expect(table).toBeVisible();
+  const [previous, next] = await Promise.all(['Previous page', 'Next page'].map(name => navigation.getByRole('button', { name }).boundingBox()));
+  for (const box of [previous!, next!]) { expect(box.width).toBeGreaterThanOrEqual(44); expect(box.height).toBeGreaterThanOrEqual(44); }
+  expect(previous!.x + previous!.width).toBeLessThanOrEqual(next!.x);
+  const narrow = (await expand.boundingBox())!; expect(narrow.width).toBeGreaterThanOrEqual(44); expect(narrow.height).toBeGreaterThanOrEqual(44);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  // A visually hidden (absolutely positioned) node at the far end of a scrolling table stays inside the scroll region.
+  await table.evaluate(node => { const scroll = node.closest('.nova-data-table__scroll')!, cell = node.querySelector('thead tr')!.lastElementChild!, probe = node.ownerDocument.createElement('span'); probe.className = 'nova-visually-hidden'; probe.textContent = 'probe'; node.style.minInlineSize = (scroll.clientWidth + 600) + 'px'; cell.append(probe); });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+});

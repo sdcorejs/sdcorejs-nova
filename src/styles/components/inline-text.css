@@ -1,11 +1,125 @@
 @layer nova.tokens, nova.base, nova.components;
+
 @layer nova.components {
-  .nova-inline-text { display: inline-flex; align-items: center; gap: var(--nova-space-1); min-inline-size: 0; max-inline-size: 100%; }
-  .nova-inline-text__input { flex: 1 1 auto; inline-size: auto; min-inline-size: 0; max-inline-size: 100%; }
-  .nova-inline-text--seamless .nova-inline-text__input:not(:focus-visible):not(:disabled) { border-color: transparent; background: transparent; }
-  .nova-inline-text__clear { flex: none; display: inline-grid; place-items: center; min-block-size: var(--nova-control-md); min-inline-size: var(--nova-control-md); padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; }
-  .nova-inline-text__clear:hover { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-inline-text__clear:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
-  @media (max-width: 640px), (pointer: coarse) { .nova-inline-text__input { min-inline-size: var(--nova-hit-target); min-block-size: var(--nova-hit-target); } .nova-inline-text__clear { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); } }
-  @media (forced-colors: active) { .nova-inline-text__clear { color: ButtonText; } .nova-inline-text__clear:focus-visible { outline-color: Highlight; } }
+  .nova-inline-text {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .nova-inline-text__input {
+    flex: 1 1 auto;
+    inline-size: auto;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  /* The clear action sits inside the input's end padding (24px, coarse 44px). */
+  .nova-inline-text--clearable > .nova-inline-text__input {
+    padding-inline-end: 34px;
+  }
+
+  .nova-inline-text__clear {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: 24px;
+    block-size: 24px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--nova-color-text-muted);
+    font: inherit;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  .nova-inline-text__clear > svg {
+    display: block;
+    inline-size: 16px;
+    block-size: 16px;
+  }
+
+  .nova-inline-text__clear:hover {
+    background-color: var(--nova-color-surface-hover);
+    color: var(--nova-color-text);
+  }
+
+  .nova-inline-text__clear:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: calc(-1 * var(--nova-focus-width));
+  }
+
+  /* Seamless: a 28px surface-hover field inside running text, no visible border. */
+  .nova-inline-text--seamless > .nova-inline-text__input:not(:disabled) {
+    min-block-size: 28px;
+    padding-block: 0;
+    padding-inline: 6px;
+    border-radius: 4px;
+    background-color: var(--nova-color-surface-hover);
+  }
+
+  .nova-inline-text--seamless > .nova-inline-text__input:not(:disabled, [aria-invalid="true"]) {
+    border-color: transparent;
+  }
+
+  .nova-inline-text--seamless > .nova-inline-text__input:not(:disabled):focus-visible {
+    outline-offset: 0;
+    background-color: var(--nova-color-background);
+  }
+
+  .nova-inline-text--seamless.nova-inline-text--clearable > .nova-inline-text__input:not(:disabled) {
+    padding-inline-end: 28px;
+  }
+
+  .nova-inline-text--seamless > .nova-inline-text__clear {
+    inset-inline-end: 2px;
+  }
+
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-inline-text__input {
+      min-inline-size: var(--nova-hit-target);
+      min-block-size: var(--nova-hit-target);
+    }
+
+    .nova-inline-text--seamless > .nova-inline-text__input:not(:disabled) {
+      min-block-size: var(--nova-hit-target);
+    }
+
+    .nova-inline-text--clearable > .nova-inline-text__input,
+    .nova-inline-text--seamless.nova-inline-text--clearable > .nova-inline-text__input:not(:disabled) {
+      padding-inline-end: 48px;
+    }
+
+    .nova-inline-text__clear,
+    .nova-inline-text--seamless > .nova-inline-text__clear {
+      inset-inline-end: 0;
+      inline-size: var(--nova-hit-target);
+      block-size: var(--nova-hit-target);
+      padding: var(--nova-border-width);
+      background-clip: content-box;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-inline-text__clear {
+      color: ButtonText;
+    }
+
+    .nova-inline-text__clear:focus-visible {
+      outline-color: Highlight;
+    }
+
+    .nova-inline-text--seamless > .nova-inline-text__input:not(:disabled, [aria-invalid="true"]) {
+      border-color: FieldText;
+    }
+  }
 }

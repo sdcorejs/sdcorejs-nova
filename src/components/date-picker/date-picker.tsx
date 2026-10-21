@@ -5,11 +5,12 @@ import { en } from '../../i18n/en.js';
 import { parseISODate } from '../../lib/civil-date.js';
 import {useNativeFormReset} from '../../lib/p1-async-lifecycle.js';
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { useControllableValue } from '../../lib/use-controllable-value.js';
 import { useDiagnostics, useNovaScope } from '../../providers/nova/context.js';
 import { FieldControlError, useFieldControl } from '../field/field.js';
 import { Popover } from '../popover/popover.js';
-import {CalendarSurface,isSelectableDate} from './calendar-surface.js';
+import {CalendarRangeContext,CalendarSurface,isSelectableDate} from './calendar-surface.js';
 export {isSelectableDate} from './calendar-surface.js';
 
 export type CalendarBase = {referenceDate: ISODate; min?: ISODate; max?: ISODate; isDateDisabled?: (date: ISODate) => boolean; weekStartsOn?: 0|1|2|3|4|5|6; initialMonth?: string};
@@ -68,7 +69,7 @@ export function DatePicker(props: DatePickerProps) {
   }
   if(!control.ok)return <FieldControlError code={control.code} component="DatePicker"/>;
   return control.wrap(<div className={cx('nova-date-picker',className)} style={style} data-testid={testId}>
-    <input {...native} ref={connect} id={control.id} type="text" className="nova-input" value={draft.text} disabled={disabled} readOnly={readOnly} required={control.required} inputMode={native.inputMode??'numeric'}
+    <div className="nova-date-picker__control"><input {...native} ref={connect} id={control.id} type="text" className="nova-input" value={draft.text} disabled={disabled} readOnly={readOnly} required={control.required} inputMode={native.inputMode??'numeric'}
       aria-label={control.ariaLabel} aria-labelledby={control.ariaLabelledby} aria-invalid={control.invalid||showError||endpoint?.invalid||undefined}
       aria-describedby={[control.ariaDescribedby,endpoint?.describedBy,showError?errorId:undefined].filter(Boolean).join(' ')||undefined}
       onInput={event=>{native.onInput?.(event);blocked.current=event.defaultPrevented;const duplicate=compositionCommit.current===event.currentTarget.value;compositionCommit.current=null;if(!event.defaultPrevented&&!duplicate)edit(event.currentTarget.value);}}
@@ -77,12 +78,12 @@ export function DatePicker(props: DatePickerProps) {
       onCompositionStart={event=>{compositionCommit.current=null;composing.current=true;native.onCompositionStart?.(event);}}
       onCompositionEnd={event=>{composing.current=false;native.onCompositionEnd?.(event);if(!event.defaultPrevented){edit(event.currentTarget.value);compositionCommit.current=event.currentTarget.value;}}}
       onKeyDown={event=>{native.onKeyDown?.(event);if(!event.defaultPrevented&&event.key==='Escape'&&!event.nativeEvent.isComposing){setOpen(false);inputRef.current?.focus();}}}/>
-    {name!==undefined&&current!==null&&parseISODate(current)&&<input type="hidden" name={name} value={current} form={props.form} disabled={disabled}/>}
     <Popover value={open&&!disabled&&!readOnly} onValueChange={setOpen} label={scope.strings.forms.calendar??en.forms.calendar} returnFocusRef={inputRef} disabled={disabled||readOnly}
-      className="nova-date-picker__popup" trigger={<button type="button" aria-label={scope.strings.forms.openCalendar??en.forms.openCalendar}>▦</button>}>
+      className="nova-date-picker__popup" trigger={<button type="button" className="nova-date-picker__trigger" aria-label={scope.strings.forms.openCalendar??en.forms.openCalendar}><Icon name="calendar"/></button>}>
       <Calendar label={scope.strings.forms.calendar??en.forms.calendar} value={current} onValueChange={next=>{setCurrent(next);setDraft({model:controlled?current:next,locale:scope.locale,text:formatDate(controlled?current:next,scope.locale),blurred:false});setOpen(false);inputRef.current?.focus();}} referenceDate={referenceDate} min={min} max={max} isDateDisabled={isDateDisabled} weekStartsOn={weekStartsOn} initialMonth={initialMonth}/>
-      <button type="button" className="nova-date-picker__close" onClick={()=>{setOpen(false);inputRef.current?.focus();}}>{scope.strings.common.close}</button>
-    </Popover>
+      <div className="nova-date-picker__footer"><button type="button" className="nova-date-picker__close" onClick={()=>{setOpen(false);inputRef.current?.focus();}}>{scope.strings.common.close}</button></div>
+    </Popover></div>
+    {name!==undefined&&current!==null&&parseISODate(current)&&<input type="hidden" name={name} value={current} form={props.form} disabled={disabled}/>}
     {showError&&<p id={errorId} role="alert" className="nova-field__error">{message}</p>}
   </div>);
 }
@@ -103,8 +104,8 @@ export function DateRangePicker(props: DateRangePickerProps) {
   const calendar={referenceDate,min,max,isDateDisabled,weekStartsOn,initialMonth};
   return control.wrap(<div id={control.id} role="group" aria-label={control.ariaLabel} aria-labelledby={control.ariaLabelledby} aria-describedby={[control.ariaDescribedby,invalid?errorId:undefined].filter(Boolean).join(' ')||undefined}
     data-invalid={invalid||control.invalid||undefined} className={cx('nova-date-range-picker',className)} style={style} data-testid={testId}>
-    <EndpointContext value={{invalid:control.invalid,describedBy:control.ariaDescribedby}}><DatePicker {...calendar} label={scope.strings.forms.startDate??en.forms.startDate} value={current.start} onValueChange={next=>change('start',next)} ref={connect} name={names?.start} form={form} disabled={disabled} readOnly={readOnly} required={control.required}/></EndpointContext>
-    <EndpointContext value={{invalid:control.invalid||invalid,describedBy:[control.ariaDescribedby,invalid?errorId:undefined].filter(Boolean).join(' ')||undefined,validationMessage:invalid?message:undefined}}><DatePicker {...calendar} label={scope.strings.forms.endDate??en.forms.endDate} value={current.end} onValueChange={next=>change('end',next)} name={names?.end} form={form} disabled={disabled} readOnly={readOnly} required={control.required}/></EndpointContext>
+    <CalendarRangeContext value={current}><EndpointContext value={{invalid:control.invalid,describedBy:control.ariaDescribedby}}><DatePicker {...calendar} label={scope.strings.forms.startDate??en.forms.startDate} value={current.start} onValueChange={next=>change('start',next)} ref={connect} name={names?.start} form={form} disabled={disabled} readOnly={readOnly} required={control.required}/></EndpointContext>
+    <EndpointContext value={{invalid:control.invalid||invalid,describedBy:[control.ariaDescribedby,invalid?errorId:undefined].filter(Boolean).join(' ')||undefined,validationMessage:invalid?message:undefined}}><DatePicker {...calendar} label={scope.strings.forms.endDate??en.forms.endDate} value={current.end} onValueChange={next=>change('end',next)} name={names?.end} form={form} disabled={disabled} readOnly={readOnly} required={control.required}/></EndpointContext></CalendarRangeContext>
     {invalid&&<p id={errorId} role="alert" className="nova-field__error">{message}</p>}
   </div>);
 }

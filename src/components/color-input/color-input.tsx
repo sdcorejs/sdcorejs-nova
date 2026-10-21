@@ -2,6 +2,7 @@
 import {useCallback,useId,useLayoutEffect,useRef,useState,type Ref} from 'react';
 import type {ValueProps,ControlProps} from '../../types/index.js';
 import {cx} from '../../lib/cx.js';
+import {Icon} from '../../lib/icons.js';
 import {useControllableValue,useFormReset} from '../../lib/use-controllable-value.js';
 import {useDiagnostics,useNovaScope} from '../../providers/nova/context.js';
 import {FieldControlError,useFieldControl} from '../field/field.js';
@@ -77,7 +78,7 @@ export function ColorInput(props:ColorInputProps){
    onChange={event=>{const next=parse(event.currentTarget.value,false);if(typeof next==='string')propose(next+(alpha&&typeof canonical==='string'&&canonical.length===9?canonical.slice(7):''));}}/>
    <span className="nova-color-input__swatch" aria-hidden="true"/>
   </span>
-  <button type="button" className="nova-color-input__clear" disabled={disabled||readOnly} onClick={()=>{propose(null);input?.focus();}}>{message('colorClear')}</button>
+  <button type="button" className="nova-color-input__clear" disabled={disabled||readOnly} aria-label={message('colorClear')} onClick={()=>{propose(null);input?.focus();}}><Icon name="close"/></button>
   {name?<input type="hidden" name={name} value={current??''} disabled={disabled}/>:null}
  </div>{invalid?<p className="nova-field__error" id={errorId}>{invalidMessage}</p>:null}</>);
 }

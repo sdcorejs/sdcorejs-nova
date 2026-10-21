@@ -1,10 +1,11 @@
 'use client';
 import { Fragment, useEffect, useId, useLayoutEffect, useRef, type ReactNode, type Ref, type RefObject } from 'react';
 import { cx } from '../../lib/cx.js';
+import { Icon } from '../../lib/icons.js';
 import { useNovaScope } from '../../providers/nova/context.js';
 import type { Key, MenuAction, SurfaceProps } from '../../types/index.js';
 import { ActionMenu } from '../action-menu/action-menu.js';
-import { Button } from '../button/button.js';
+import { Button, IconButton } from '../button/button.js';
 import { Checkbox } from '../checkbox/checkbox.js';
 import { DataState } from '../data-state/data-state.js';
 import { Spinner } from '../data-state/spinner.js';
@@ -56,8 +57,15 @@ function Disclosure({ open, label, onToggle, children }: { open: boolean; label:
       if (trigger.current?.isConnected) trigger.current.focus();
     }
   }, [open]);
-  return <><Button ref={trigger} variant="ghost" aria-label={label} aria-expanded={open} aria-controls={open ? id : undefined} onClick={onToggle}><span aria-hidden="true">{open ? '−' : '+'}</span></Button>{open ? <Details restoreFocus={restoreFocus} id={id}>{children}</Details> : null}</>;
+  return <><IconButton ref={trigger} variant="ghost" size="sm" className="nova-data-table__disclosure" label={label} icon={<Icon name="chevron-right" />} aria-expanded={open} aria-controls={open ? id : undefined} onClick={onToggle} />{open ? <Details restoreFocus={restoreFocus} id={id}>{children}</Details> : null}</>;
 }
+/** Decorative sort state; the header keeps its aria-sort and aria-description. */
+function SortIcon({ direction }: { direction?: 'asc' | 'desc' }) {
+  return <span aria-hidden="true" className={cx('nova-data-table__sort-icon', !direction && 'nova-data-table__sort-icon--none')}>
+    {direction ? <Icon name={direction === 'asc' ? 'sort-asc' : 'sort-desc'} /> : <svg className="nova-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 6l3-3 3 3M5 10l3 3 3-3" /></svg>}
+  </span>;
+}
+const errorIcon = <svg className="nova-data-table__error-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d="M8 1.75a6.25 6.25 0 1 1 0 12.5 6.25 6.25 0 0 1 0-12.5zM8 4.75v3.75M8 11h.01" /></svg>;
 /** Native table over already loaded rows; every business state change is a proposal. */
 export function DataTable<T, K extends Key>({ rows, getRowKey, columns, state, onStateChange, total, hasNextPage, isRowSelectable, expandedKeys, onExpandedKeysChange, slots, loading = false, errorMessage, onRetry, rowActions, renderMobileRow, renderExpanded, caption, className, style, 'data-testid': testId, ref }: DataTableProps<T, K>) {
   const scope = useNovaScope(), strings = tableStrings(scope), map = rowKeys(rows, getRowKey);
@@ -98,18 +106,18 @@ export function DataTable<T, K extends Key>({ rows, getRowKey, columns, state, o
     <div className="nova-data-table__title">{slots?.title}</div>
     {(slots?.filter !== undefined || slots?.quickSearchRight !== undefined) ? <div className="nova-data-table__toolbar">{slots.filter}{slots.quickSearchRight}</div> : null}
     <div className="nova-data-table__commands">{slots?.commandHeader}</div>{slots?.group?.(rows)}
-    {errorMessage !== undefined ? <div role="alert"><DataState state="error" message={errorMessage} onRetry={onRetry} /></div> : null}
-    {loading ? <Spinner label={rows.length ? scope.strings.feedback.refreshing : scope.strings.feedback.loading} /> : null}
+    {errorMessage !== undefined ? <div role="alert" className="nova-data-table__error">{errorIcon}<DataState state="error" message={errorMessage} onRetry={onRetry} /></div> : null}
+    {loading ? <Spinner className="nova-data-table__status" label={rows.length ? scope.strings.feedback.refreshing : scope.strings.feedback.loading} /> : null}
     {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- The named overflow region needs keyboard scroll access. */}
     <div role="region" aria-label={caption} tabIndex={0} className={cx('nova-data-table__scroll', renderMobileRow && 'nova-data-table__scroll--mobile-renderer')}>
       <table aria-busy={loading || undefined} className="nova-data-table__table">
         <caption>{caption}</caption>
-        <colgroup><col />{columns.map(column => <col key={column.id} width={column.minWidth} />)}{rowActions ? <col /> : null}{expansion ? <col /> : null}</colgroup>
-        <thead><tr><th scope="col">{pageSelection()}</th>
-          {columns.map(column => { const current = state.sort.find(item => item.columnId === column.id); return <th scope="col" key={column.id} aria-description={sortDescription(column.id)} aria-sort={column.sortKey !== undefined ? primarySort?.columnId === column.id ? primarySort.direction === 'asc' ? 'ascending' : 'descending' : 'none' : undefined}>{column.sortKey !== undefined ? <Button variant="ghost" onClick={() => sort(column.id)}>{column.header}<span aria-hidden="true">{current?.direction === 'asc' ? ' ↑' : current?.direction === 'desc' ? ' ↓' : ''}</span></Button> : column.header}</th>; })}
-          {rowActions ? <th scope="col">{strings.actions.replaceAll('{row}', '').trim()}</th> : null}{expansion ? <th scope="col">{strings.expandRow.replaceAll('{row}', '').trim()}</th> : null}
+        <colgroup><col className="nova-data-table__col-select" />{columns.map(column => <col key={column.id} width={column.minWidth} />)}{rowActions ? <col /> : null}{expansion ? <col className="nova-data-table__col-expand" /> : null}</colgroup>
+        <thead><tr><th scope="col" className="nova-data-table__select">{pageSelection()}</th>
+          {columns.map(column => { const current = state.sort.find(item => item.columnId === column.id); return <th scope="col" key={column.id} aria-description={sortDescription(column.id)} aria-sort={column.sortKey !== undefined ? primarySort?.columnId === column.id ? primarySort.direction === 'asc' ? 'ascending' : 'descending' : 'none' : undefined}>{column.sortKey !== undefined ? <Button variant="ghost" size="sm" className="nova-data-table__sort" onClick={() => sort(column.id)}>{column.header}<SortIcon direction={current?.direction} /></Button> : column.header}</th>; })}
+          {rowActions ? <th scope="col" className="nova-data-table__actions">{strings.actions.replaceAll('{row}', '').trim()}</th> : null}{expansion ? <th scope="col" className="nova-data-table__expand"><span className="nova-visually-hidden">{strings.expandRow.replaceAll('{row}', '').trim()}</span></th> : null}
         </tr></thead>
-        <tbody>{loading && !rows.length ? <tr aria-hidden="true"><td colSpan={1 + columns.length + Number(!!rowActions) + Number(expansion)}><Skeleton shape="rect" /></td></tr> : null}{rows.map((row, index) => { const key = map.keys[index]!; return <Fragment key={map.encoded[index]}><tr aria-selected={state.selectedKeys.includes(key)}><td>{selection(row, key, index)}</td>{columns.map(column => <td key={column.id}>{column.cell(row)}</td>)}{rowActions ? <td>{actions(row, index)}</td> : null}{expansion ? <td>{disclosure(row, key, index)}</td> : null}</tr></Fragment>; })}</tbody>
+        <tbody>{loading && !rows.length ? <tr aria-hidden="true"><td colSpan={1 + columns.length + Number(!!rowActions) + Number(expansion)}><Skeleton shape="rect" /></td></tr> : null}{rows.map((row, index) => { const key = map.keys[index]!; return <Fragment key={map.encoded[index]}><tr aria-selected={state.selectedKeys.includes(key)}><td className="nova-data-table__select">{selection(row, key, index)}</td>{columns.map(column => <td key={column.id}>{column.cell(row)}</td>)}{rowActions ? <td className="nova-data-table__actions">{actions(row, index)}</td> : null}{expansion ? <td className="nova-data-table__expand">{disclosure(row, key, index)}</td> : null}</tr></Fragment>; })}</tbody>
       </table>
     </div>
     {renderMobileRow ? <div className="nova-data-table__mobile" role="group" aria-label={caption} aria-busy={loading || undefined}>
@@ -117,7 +125,7 @@ export function DataTable<T, K extends Key>({ rows, getRowKey, columns, state, o
       {loading && !rows.length ? <Skeleton shape="rect" /> : null}
       <div role="list" aria-label={caption}>{rows.map((row, index) => { const key = map.keys[index]!; return <div role="listitem" key={map.encoded[index]} className="nova-data-table__card">{selection(row, key, index)}{renderMobileRow(row)}{actions(row, index)}{disclosure(row, key, index)}</div>; })}</div>
     </div> : null}
-    {!loading && !rows.length && errorMessage === undefined ? <DataState state="empty" /> : null}
+    {!loading && !rows.length && errorMessage === undefined ? <DataState state="empty" className="nova-data-table__empty" /> : null}
     <TablePagination page={state.page} onPageChange={page => onStateChange({ ...state, page })} total={total} hasNextPage={hasNextPage} />
     <div className="nova-data-table__footer">{slots?.footer}</div>
   </div>;

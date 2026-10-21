@@ -1,9 +1,159 @@
 @layer nova.tokens, nova.base, nova.components;
+
 @layer nova.components {
- .nova-number-input { display: flex; align-items: center; gap: var(--nova-space-1); min-inline-size: 0; }
- .nova-number-input__input { flex: 1 1 auto; min-inline-size: 0; }
- .nova-number-input__step { flex: none; display: inline-flex; align-items: center; justify-content: center; min-inline-size: var(--nova-hit-target); min-block-size: var(--nova-hit-target); padding: var(--nova-space-1); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); }
- .nova-number-input__step:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
- .nova-number-input__step:disabled { background: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); cursor: not-allowed; }
- @media (forced-colors: active) { .nova-number-input__step { border-color: ButtonText; } .nova-number-input__step:focus-visible { outline-color: Highlight; } }
+  /* One control frame: [input][−][+]. Steppers are 32 wide (44 coarse), full
+     control height, separated by a 1px divider; the last one takes the outer corner. */
+  .nova-number-input {
+    display: flex;
+    align-items: stretch;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    min-block-size: var(--nova-control-md);
+    border: var(--nova-border-width) solid var(--nova-color-control-border);
+    border-radius: var(--nova-radius-control);
+    background-color: var(--nova-color-background);
+    color: var(--nova-color-text);
+    transition: border-color var(--nova-duration) ease;
+  }
+
+  .nova-number-input:hover {
+    border-color: var(--nova-color-text-muted);
+  }
+
+  .nova-number-input:has(> .nova-number-input__input:focus-visible) {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: var(--nova-focus-offset);
+  }
+
+  .nova-number-input:has(> .nova-number-input__input[aria-invalid="true"]) {
+    border-color: var(--nova-color-error-text);
+  }
+
+  .nova-number-input[data-readonly] {
+    background-color: var(--nova-color-surface);
+    border-color: var(--nova-color-border);
+  }
+
+  .nova-number-input[data-disabled] {
+    background-color: var(--nova-color-disabled-surface);
+    border-color: var(--nova-color-border);
+    color: var(--nova-color-disabled-text);
+  }
+
+  .nova-number-input > .nova-input.nova-number-input__input {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    min-block-size: var(--nova-control-md);
+    margin-block: calc(-1 * var(--nova-border-width));
+    border: 0;
+    background-color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nova-number-input > .nova-input.nova-number-input__input:focus-visible {
+    outline: none;
+  }
+
+  .nova-number-input__step {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: 32px;
+    margin: calc(-1 * var(--nova-border-width)) 0;
+    padding: 0;
+    border: var(--nova-border-width) solid transparent;
+    border-inline-end-width: 0;
+    border-inline-start-color: var(--nova-color-border);
+    border-radius: 0;
+    background-color: transparent;
+    background-clip: padding-box;
+    color: var(--nova-color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .nova-number-input__step:last-of-type {
+    margin-inline-end: calc(-1 * var(--nova-border-width));
+    border-inline-end-width: var(--nova-border-width);
+    border-start-end-radius: var(--nova-radius-control);
+    border-end-end-radius: var(--nova-radius-control);
+  }
+
+  .nova-number-input__step > svg {
+    display: block;
+    inline-size: 16px;
+    block-size: 16px;
+  }
+
+  .nova-number-input__step:hover:not(:disabled) {
+    background-color: var(--nova-color-surface-hover);
+  }
+
+  .nova-number-input__step:focus-visible {
+    outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
+    outline-offset: calc(-1 * var(--nova-focus-width));
+  }
+
+  /* Disabled icons use the control boundary color, never opacity. */
+  .nova-number-input__step:disabled {
+    background-color: transparent;
+    color: var(--nova-color-control-border);
+    cursor: not-allowed;
+  }
+
+  /* Read-only: steppers stay focusable but never change the value, so they look inert. */
+  .nova-number-input[data-readonly] > .nova-number-input__step {
+    background-color: transparent;
+    color: var(--nova-color-control-border);
+    cursor: default;
+  }
+
+  @media (max-width: 640px), (pointer: coarse) {
+    .nova-number-input {
+      min-block-size: var(--nova-hit-target);
+    }
+
+    .nova-number-input > .nova-input.nova-number-input__input {
+      min-block-size: var(--nova-hit-target);
+    }
+
+    .nova-number-input__step {
+      inline-size: var(--nova-hit-target);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nova-number-input {
+      border-color: FieldText;
+    }
+
+    .nova-number-input:has(> .nova-number-input__input:focus-visible),
+    .nova-number-input__step:focus-visible {
+      outline-color: Highlight;
+    }
+
+    .nova-number-input__step {
+      border-inline-start-color: ButtonText;
+      color: ButtonText;
+    }
+
+    /* The transparent block/end borders overlap the frame edge: draw them as the frame. */
+    .nova-number-input__step,
+    .nova-number-input__step:disabled {
+      border-block-color: FieldText;
+      border-inline-end-color: FieldText;
+    }
+
+    .nova-number-input__step:disabled {
+      color: GrayText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-number-input {
+      transition: none;
+    }
+  }
 }

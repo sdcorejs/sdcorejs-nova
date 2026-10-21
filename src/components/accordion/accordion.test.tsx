@@ -15,6 +15,11 @@ describe('collapsible heading and panel ownership', () => {
     await user.click(trigger);expect(change).toHaveBeenLastCalledWith(true);expect(change).toHaveBeenCalledTimes(1);expect(screen.getByText('Content')).toBeTruthy();
     await user.keyboard('{Enter}');expect(change).toHaveBeenLastCalledWith(false);expect(change).toHaveBeenCalledTimes(2);expect(screen.queryByText('Content')).toBeNull();
   });
+  it('the disclosure marker is a decorative chevron icon, not a +/− text glyph', () => {
+    render(<CollapsibleSection title="Details"><p>Content</p></CollapsibleSection>);
+    const trigger=screen.getByRole('button',{name:'Details'}),icon=trigger.querySelector('svg');
+    expect(icon?.getAttribute('aria-hidden')).toBe('true');expect(icon?.getAttribute('focusable')).toBe('false');expect(trigger.textContent).toBe('Details');
+  });
   it('controlled close stays a proposal until the consumer commits it', () => {
     const change=vi.fn(),view=render(<CollapsibleSection title="Details" value={true} onValueChange={change}><p>Content</p></CollapsibleSection>);
     fireEvent.click(screen.getByRole('button',{name:'Details'}));expect(change).toHaveBeenCalledExactlyOnceWith(false);expect(screen.getByText('Content')).toBeTruthy();

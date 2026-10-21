@@ -1,5 +1,8 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
-.nova-date-time-picker{display:flex;flex-wrap:wrap;align-items:start;gap:var(--nova-space-3)}.nova-date-time-picker>.nova-field{flex:1;min-inline-size:8rem}
-
+  /* Date (wider) and time side by side; wraps to one column when narrow. */
+  .nova-date-time-picker { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--nova-space-1) var(--nova-space-2); min-inline-size: 0; }
+  .nova-date-time-picker > .nova-field { flex: 1.2 1 10rem; min-inline-size: 0; }
+  .nova-date-time-picker > .nova-field + .nova-field { flex: 0.8 1 8rem; }
+  .nova-date-time-picker > .nova-field__error { flex-basis: 100%; margin: 0; }
 }

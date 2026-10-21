@@ -29,7 +29,12 @@
     border: var(--nova-border-width) solid var(--nova-color-control-border);
     border-radius: 999px;
     background: var(--nova-color-surface);
-    transition: background-color var(--nova-duration) ease;
+    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
+  }
+
+  .nova-switch:hover:not([data-disabled], [data-readonly]) .nova-switch__track,
+  .nova-field--inline:has(> .nova-label:hover) > .nova-switch-root > .nova-switch:not([data-disabled], [data-readonly]) .nova-switch__track {
+    border-color: var(--nova-color-text);
   }
 
   .nova-switch__thumb {
@@ -64,19 +69,28 @@
     cursor: default;
   }
 
+  .nova-switch[data-readonly] .nova-switch__track {
+    border-style: dashed;
+  }
+
   .nova-switch[data-disabled] {
     cursor: not-allowed;
   }
 
   .nova-switch[data-disabled] .nova-switch__track {
+    border-color: var(--nova-color-border);
     background: var(--nova-color-disabled-surface);
+  }
+
+  .nova-switch[data-disabled] .nova-switch__thumb {
+    background: var(--nova-color-control-border);
   }
 
   .nova-switch[aria-invalid="true"] .nova-switch__track {
     border-color: var(--nova-color-error-text);
   }
 
-  @media (pointer: coarse) {
+  @media (max-width: 640px), (pointer: coarse) {
     .nova-switch {
       min-inline-size: var(--nova-hit-target);
       block-size: var(--nova-hit-target);

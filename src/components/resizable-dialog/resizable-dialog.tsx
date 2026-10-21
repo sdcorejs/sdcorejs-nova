@@ -2,6 +2,7 @@
 import {useInsertionEffect,useLayoutEffect,useRef,useState,type MutableRefObject} from 'react';
 import {Dialog,type DialogProps} from '../dialog/dialog.js';
 import {cx} from '../../lib/cx.js';
+import {Icon} from '../../lib/icons.js';
 import {useControllableValue} from '../../lib/use-controllable-value.js';
 import {useDiagnostics,useNovaScope} from '../../providers/nova/context.js';
 
@@ -44,7 +45,7 @@ function ResizeHandle({owner,onViewport,label,disabled}:{owner:MutableRefObject<
    const end=(next:PointerEvent)=>{if(next.pointerId===pointer)finish();};
    const finish=()=>{doc.removeEventListener('pointermove',move);doc.removeEventListener('pointerup',end);doc.removeEventListener('pointercancel',end);target.removeEventListener('lostpointercapture',end);view?.removeEventListener('blur',finish);stop.current=null;try{if(target.hasPointerCapture?.(pointer))target.releasePointerCapture(pointer);}catch{/* detached/cancelled capture */}};
    stop.current=finish;doc.addEventListener('pointermove',move);doc.addEventListener('pointerup',end);doc.addEventListener('pointercancel',end);target.addEventListener('lostpointercapture',end);view?.addEventListener('blur',finish);try{target.setPointerCapture?.(pointer);}catch{finish();}
-  }}><span className="nova-resizable-dialog__icon" aria-hidden="true">↘</span></button>;
+  }}><span className="nova-resizable-dialog__icon" aria-hidden="true"><Icon name="grip"/></span></button>;
 }
 
 /** Composes Dialog without replacing its boolean state, portal or focus lifecycle. */

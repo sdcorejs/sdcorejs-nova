@@ -5,10 +5,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--nova-space-2);
+    gap: var(--nova-space-1);
     box-sizing: border-box;
     min-inline-size: 0;
-    padding: var(--nova-space-5) var(--nova-space-4);
+    padding: var(--nova-space-6) var(--nova-space-4);
     border-radius: var(--nova-radius-card);
     /* paints its own theme background: a scope (display: contents) cannot */
     background: var(--nova-color-background);
@@ -19,28 +19,39 @@
     text-align: center;
   }
 
+  /* 40×40 tile (radius 8) holding a 20px icon. */
   .nova-empty__icon {
     display: inline-flex;
-    inline-size: 2rem;
-    block-size: 2rem;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: 40px;
+    block-size: 40px;
+    margin-block-end: var(--nova-space-2);
+    border-radius: 8px;
+    background: var(--nova-color-surface-hover);
     color: var(--nova-color-text-muted);
   }
 
   .nova-empty__icon > svg {
-    inline-size: 100%;
-    block-size: 100%;
+    inline-size: 20px;
+    block-size: 20px;
   }
 
   .nova-empty__title {
+    max-inline-size: 440px;
     margin: 0;
     font-weight: var(--nova-font-weight-strong);
     overflow-wrap: anywhere;
   }
 
   .nova-empty__description {
+    max-inline-size: 440px;
     margin: 0;
     color: var(--nova-color-text-muted);
     overflow-wrap: anywhere;
+    text-wrap: pretty;
   }
 
   .nova-empty__actions {
@@ -48,5 +59,12 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--nova-space-2);
+    margin-block-start: var(--nova-space-3);
+  }
+
+  @media (forced-colors: active) {
+    .nova-empty__icon {
+      border: var(--nova-border-width) solid CanvasText;
+    }
   }
 }

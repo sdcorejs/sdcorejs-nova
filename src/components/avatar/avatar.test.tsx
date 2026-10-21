@@ -132,6 +132,14 @@ describe('AvatarGroup', () => {
     expect(overflow.textContent).toBe('+3');
   });
 
+  it('the +N avatar takes the size of the group avatars (md by default)', () => {
+    const small = ['An', 'Bình', 'Chi'].map((name) => <Avatar key={name} name={name} size="sm" />);
+    const view = render(<AvatarGroup label="g" max={2}>{small}</AvatarGroup>);
+    expect(screen.getByText('+1').closest('.nova-avatar')?.className).toContain('nova-avatar--sm');
+    view.rerender(<AvatarGroup label="g" max={2}>{five}</AvatarGroup>);
+    expect(screen.getByText('+3').closest('.nova-avatar')?.className).toContain('nova-avatar--md');
+  });
+
   it('singular overflow uses the one form', () => {
     render(<NovaProvider locale="en"><AvatarGroup label="g" max={4}>{five}</AvatarGroup></NovaProvider>);
     expect(screen.getByRole('img', { name: 'and 1 more person' })).toBeTruthy();

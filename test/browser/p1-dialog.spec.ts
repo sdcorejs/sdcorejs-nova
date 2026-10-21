@@ -29,3 +29,11 @@ for (const [trigger,source] of [['Filters','an explicit return ref'],['Sort','th
     await expect(sheet).toHaveCount(0);await expect(next).toBeFocused();
   });
 }
+
+test('design r2 dialog close is a 32 icon button on desktop and a 44 target when narrow',async({page})=>{
+  await page.setViewportSize({width:1280,height:800});await page.goto('/?scenario=p1-dialog');await expect(page.locator('body[data-harness="ready"]')).toHaveCount(1);
+  await page.getByRole('button',{name:'Open tools'}).click();await page.getByRole('button',{name:'Open dialog'}).click();const child=page.getByRole('dialog',{name:'Child dialog'}),close=child.getByRole('button',{name:'Close',exact:true});
+  let box=(await close.boundingBox())!;expect(await close.textContent()).toBe('');expect(Math.round(box.width)).toBe(32);expect(Math.round(box.height)).toBe(32);
+  await page.setViewportSize({width:320,height:740});box=(await close.boundingBox())!;expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);
+  const bounds=(await child.boundingBox())!;expect(bounds.x).toBeGreaterThanOrEqual(0);expect(bounds.x+bounds.width).toBeLessThanOrEqual(320);expect(box.x+box.width).toBeLessThanOrEqual(bounds.x+bounds.width);
+});

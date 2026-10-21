@@ -1,14 +1,39 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
- .nova-toast-viewport { position: fixed; z-index: 1; inset-inline-end: var(--nova-space-4); inset-block-end: calc(var(--nova-space-4) + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: var(--nova-space-2); inline-size: min(24rem, calc(100vw - 2 * var(--nova-space-4))); max-block-size: calc(100dvh - 2 * var(--nova-space-4)); overflow-y: auto; }
- .nova-toast { position: relative; box-sizing: border-box; font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); padding: var(--nova-space-3); border: 1px solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); color: var(--nova-color-text); overflow-wrap: anywhere; }
+ .nova-toast-viewport { position: fixed; z-index: 1; inset-inline-end: var(--nova-space-4); inset-block-end: calc(var(--nova-space-4) + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: var(--nova-space-2); inline-size: min(360px, calc(100vw - 2 * var(--nova-space-4))); max-block-size: calc(100dvh - 2 * var(--nova-space-4)); overflow-y: auto; }
+ /* While a card is shown, widen the scroll box outward (padding, cancelled by a negative
+    margin) so card shadows are not clipped; cards keep their position and an empty
+    viewport keeps a zero-size box. */
+ .nova-toast-viewport:has(> .nova-toast:not([data-ending], [data-limited])) { margin: calc(-1 * var(--nova-space-4)); padding: var(--nova-space-4); }
+ .nova-toast { position: relative; box-sizing: border-box; display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; column-gap: var(--nova-space-3); align-items: start; padding: var(--nova-space-3) var(--nova-space-2) var(--nova-space-3) var(--nova-space-4); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; background: var(--nova-color-background); color: var(--nova-color-text); box-shadow: 0 8px 24px rgb(0 0 0 / 0.12); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); overflow-wrap: anywhere; }
  .nova-toast[data-ending], .nova-toast[data-limited] { display: none; }
- .nova-toast__title { font-weight: var(--nova-font-weight-strong); }
- .nova-toast__description, .nova-toast__error { margin-block-start: var(--nova-space-1); }
- .nova-toast__error { color: var(--nova-color-error-text); }
- .nova-toast__controls { display: flex; align-items: center; justify-content: flex-end; gap: var(--nova-space-2); margin-block-start: var(--nova-space-2); }
- .nova-toast__action, .nova-toast__close { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); border: 1px solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: transparent; color: inherit; font: inherit; cursor: pointer; }
+ .nova-toast__icon { inline-size: 16px; block-size: 16px; margin-block-start: 2px; color: var(--nova-color-info-text); }
+ .nova-toast[data-tone="success"] > .nova-toast__icon { color: var(--nova-color-success-text); }
+ .nova-toast[data-tone="warning"] > .nova-toast__icon { color: var(--nova-color-warning-text); }
+ .nova-toast[data-tone="error"] > .nova-toast__icon { color: var(--nova-color-error-text); }
+ .nova-toast__content { display: grid; gap: 2px; min-inline-size: 0; }
+ .nova-toast__title { margin: 0; font-size: inherit; line-height: inherit; font-weight: var(--nova-font-weight-strong); }
+ .nova-toast__description { margin: 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
+ .nova-toast__error { color: var(--nova-color-error-text); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
+ .nova-toast__controls { display: flex; flex-wrap: wrap; gap: var(--nova-space-2); margin-block-start: 6px; }
+ /* Action: Button sm secondary look. */
+ .nova-toast__action { box-sizing: border-box; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 3px 10px; border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); color: var(--nova-color-text); font: inherit; font-weight: 500; cursor: pointer; transition: background-color var(--nova-duration) ease; }
+ .nova-toast__action:hover:not([aria-disabled="true"]) { background: var(--nova-color-surface-hover); }
+ .nova-toast__action:active:not([aria-disabled="true"]) { background: var(--nova-color-border); }
  .nova-toast__action[aria-disabled="true"] { cursor: wait; }
+ /* Close: 28 ghost icon button at the top end. */
+ .nova-toast__close { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: var(--nova-control-sm); block-size: var(--nova-control-sm); margin-block: -4px; padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text-muted); cursor: pointer; transition: background-color var(--nova-duration) ease; }
+ .nova-toast__close > .nova-icon { inline-size: 16px; block-size: 16px; }
+ .nova-toast__close:hover { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
+ .nova-toast__close:active { background: var(--nova-color-border); }
  .nova-toast__action:focus-visible, .nova-toast__close:focus-visible, .nova-toast-viewport:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+ /* Coarse: 44 elements; the close keeps a 32 visible surface. */
+ @media (max-width: 640px), (pointer: coarse) {
+  .nova-toast__action { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); padding-block: 11px; }
+  .nova-toast__close { inline-size: var(--nova-hit-target); block-size: var(--nova-hit-target); margin-block: -12px; border: 6px solid transparent; border-radius: 12px; background-clip: padding-box; }
+  .nova-toast__close:focus-visible { outline-offset: -4px; }
+ }
+ @media (prefers-reduced-motion: reduce) { .nova-toast__action, .nova-toast__close { transition: none; } }
  @media (forced-colors: active) { .nova-toast { border-color: CanvasText; background: Canvas; color: CanvasText; } .nova-toast__action:focus-visible, .nova-toast__close:focus-visible { outline-color: Highlight; } }
+ @media (forced-colors: active) and (max-width: 640px), (forced-colors: active) and (pointer: coarse) { .nova-toast__close { border-color: Canvas; } }
 }
