@@ -31,7 +31,10 @@ jobs:
           persist-credentials: false
       - name: Use the Dialog from main before PR #4
         if: matrix.variant == 'baseline'
-        run: git checkout 656d296 -- src/components/dialog/dialog.tsx
+        # build:showcase refuses a dirty tree, so commit the swap locally.
+        run: |
+          git checkout 656d296 -- src/components/dialog/dialog.tsx
+          git -c user.name=ci -c user.email=ci@localhost commit -q -m "baseline dialog" -- src/components/dialog/dialog.tsx
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
