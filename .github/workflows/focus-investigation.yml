@@ -33,7 +33,7 @@ jobs:
         if: matrix.variant == 'baseline'
         # build:showcase refuses a dirty tree, so commit the swap locally.
         run: |
-          git checkout 656d296 -- src/components/dialog/dialog.tsx
+          git checkout 5988703 -- src/components/dialog/dialog.tsx
           git -c user.name=ci -c user.email=ci@localhost commit -q -m "baseline dialog" -- src/components/dialog/dialog.tsx
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -43,7 +43,8 @@ jobs:
       - name: Install
         run: npm ci
       - name: Build library and showcase
-        run: npm run build && npm run build:showcase
+        # The showcase build pins GITHUB_SHA to HEAD; the baseline swap adds a local commit.
+        run: npm run build && GITHUB_SHA="$(git rev-parse HEAD)" npm run build:showcase
       - name: Install Chromium
         run: npx --no-install playwright install --with-deps chromium
       - name: Replay focus test
