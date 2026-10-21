@@ -120,12 +120,18 @@ function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogPr
     if (active && active !== owner.body && !popup.current?.contains(active)) opener.current = active as HTMLElement;
     closeReason.current = null;
   }, [open, scope.portalContainer]);
-  // Remember which node inside the overlay held focus when closing started.
+  // Remember the last node inside the overlay that held focus while it was
+  // open. The value survives the close so finalFocus can tell a parked node
+  // (same element, moved out) from a user focus move (different element).
   useLayoutEffect(() => {
-    if (open) {focusAtClose.current = null;return;}
-    const active = documentOwner.current?.activeElement;
-    focusAtClose.current = active && popup.current?.parentElement?.contains(active) ? active : null;
-  }, [open]);
+    if (!open || !popupElement) return;
+    const owner = popupElement.ownerDocument, overlay = popupElement.parentElement ?? popupElement;
+    const active = owner.activeElement;
+    focusAtClose.current = active && overlay.contains(active) ? active : null;
+    const track = (event: FocusEvent) => { if (event.target instanceof Element && overlay.contains(event.target)) focusAtClose.current = event.target; };
+    owner.addEventListener('focusin', track, true);
+    return () => owner.removeEventListener('focusin', track, true);
+  }, [open, popupElement]);
   const assignPopup = useCallback((element: HTMLDivElement | null) => {
     popup.current = element;setPopupElement(element);
     if (!element) {syncConsumerRef(null);return;}
