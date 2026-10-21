@@ -1,6 +1,6 @@
 'use client';
 import { Dialog as Primitive } from '@base-ui/react/dialog';
-import { useCallback, useId, useInsertionEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject, type Ref } from 'react';
+import { useCallback, useEffect, useId, useInsertionEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject, type Ref } from 'react';
 
 import { cx } from '../../lib/cx.js';
 import { Icon } from '../../lib/icons.js';
@@ -10,7 +10,8 @@ import { PortalScope } from '../../providers/nova/portal-scope.js';
 import type { SurfaceProps, ValueProps } from '../../types/index.js';
 
 export type CloseReason = 'escape' | 'outside' | 'action';
-export type DialogProps = ValueProps<boolean> & SurfaceProps & {
+/** Props shared by Dialog, Sheet/Drawer and ResizableDialog; each adds its own `size`. */
+export type DialogBaseProps = ValueProps<boolean> & SurfaceProps & {
   /** Rendered popup surface; separate from initial and return focus ownership. */
   ref?: Ref<HTMLDivElement>;
   title: ReactNode;
@@ -21,9 +22,24 @@ export type DialogProps = ValueProps<boolean> & SurfaceProps & {
   returnFocusRef?: RefObject<HTMLElement | null>;
   onCloseRequest?: (reason: CloseReason) => boolean | void;
   closeDisabled?: boolean;
+  /** Actions row pinned under the scrolling body. */
+  footer?: ReactNode;
 };
-export type SheetProps = DialogProps & {side?: 'start' | 'end' | 'bottom'; size?: 'sm' | 'md' | 'lg'};
+export type DialogProps = DialogBaseProps & {
+  /** sm 400, md 560, lg 800 px, or a custom width in px (`480` or `'480px'`). Omitted: 512 px. */
+  size?: 'sm' | 'md' | 'lg' | number | `${number}px`;
+};
+export type SheetProps = DialogBaseProps & {side?: 'start' | 'end' | 'bottom'; size?: 'sm' | 'md' | 'lg'};
 export type DrawerProps = SheetProps;
+
+const PX = /^\+?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?px$/iu;
+/** A named width, a positive finite custom width, or invalid (the default width is kept). */
+function dialogWidth(size: unknown): {name?: 'sm' | 'md' | 'lg'; width?: string; invalid: boolean} {
+  if (size === undefined) return {invalid: false};
+  if (size === 'sm' || size === 'md' || size === 'lg') return {name: size, invalid: false};
+  const px = typeof size === 'number' ? size : typeof size === 'string' && PX.test(size) ? Number.parseFloat(size) : Number.NaN;
+  return Number.isFinite(px) && px > 0 ? {width: `${px}px`, invalid: false} : {invalid: true};
+}
 
 const FOCUSABLE = 'a[href],button,input:not([type="hidden"]),select,textarea,summary,[tabindex],[contenteditable="true"]';
 function reachable(element: HTMLElement | null | undefined): element is HTMLElement {
@@ -38,11 +54,14 @@ function reachable(element: HTMLElement | null | undefined): element is HTMLElem
 }
 
 // Sheet/Drawer only supply layout variants to this same state and focus owner.
-function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | 'end' | 'bottom'; size?: 'sm' | 'md' | 'lg'}) {
-  const {value, defaultValue, onValueChange, title, description, children, modal=true, ref: surfaceRef,
+function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogProps['size']} | {sheet: true; side?: 'start' | 'end' | 'bottom'; size?: 'sm' | 'md' | 'lg'})) {
+  const {value, defaultValue, onValueChange, title, description, children, footer, modal=true, ref: surfaceRef,
     initialFocusRef, returnFocusRef, onCloseRequest, closeDisabled=false,
-    className, style, 'data-testid': testId, sheet=false, side='end', size='md'} = props;
+    className, style, 'data-testid': testId} = props;
+  const sheet = props.sheet === true, side = props.sheet ? props.side ?? 'end' : undefined;
   const scope = useNovaScope(), report = useDiagnostics('Dialog');
+  const layout = sheet ? {name: props.size ?? 'md', invalid: false} : dialogWidth(props.size);
+  useEffect(() => {if (layout.invalid) report('NOVA_DIALOG_INVALID_SIZE');}, [layout.invalid, report]);
   const [open, setOpen] = useControllableValue({value, defaultValue, onValueChange, fallback:false, report});
   const id = useId(), popup = useRef<HTMLDivElement | null>(null), body = useRef<HTMLDivElement | null>(null);
   const heading = useRef<HTMLHeadingElement | null>(null), opener = useRef<HTMLElement | null>(null);
@@ -154,8 +173,8 @@ function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | '
       {modal && <Primitive.Backdrop className="nova-dialog__backdrop"/>}
       <Primitive.Popup ref={assignPopup} initialFocus={initialFocus} finalFocus={finalFocus}
         aria-modal={modal || undefined} aria-labelledby={`${id}-title`} aria-describedby={description == null ? undefined : `${id}-description`}
-        className={cx('nova-dialog', sheet && 'nova-sheet', className)} style={style} data-testid={testId}
-        data-side={sheet ? side : undefined} data-size={sheet ? size : undefined}>
+        className={cx('nova-dialog', sheet && 'nova-sheet', className)} style={'width' in layout && layout.width ? {inlineSize: layout.width, ...style} : style} data-testid={testId}
+        data-side={side} data-size={layout.name}>
         <div className="nova-dialog__header">
           <div className="nova-dialog__intro">
             <Primitive.Title ref={heading} id={`${id}-title`} tabIndex={-1} className="nova-dialog__title">{title}</Primitive.Title>
@@ -164,6 +183,7 @@ function DialogSurface(props: DialogProps & {sheet?: boolean; side?: 'start' | '
           <Primitive.Close className="nova-dialog__close" disabled={closeDisabled} aria-label={scope.strings.common.close}><Icon name="close"/></Primitive.Close>
         </div>
         <div ref={body} className="nova-dialog__body">{children}</div>
+        {footer != null && <div className="nova-dialog__footer">{footer}</div>}
       </Primitive.Popup>
     </Primitive.Portal>}</PortalScope>
   </Primitive.Root>;

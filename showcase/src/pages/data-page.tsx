@@ -6,7 +6,7 @@ import {Input} from '@sdcorejs/nova/input';
 import {useConfirm} from '@sdcorejs/nova/confirm';
 import {useToast} from '@sdcorejs/nova/toast';
 import {useFormatter} from '@sdcorejs/nova/formatter';
-import {DataTable,type Column,type TableState} from '@sdcorejs/nova/data-table';
+import {DataTable,DEFAULT_PAGE_SIZE,type Column,type TableState} from '@sdcorejs/nova/data-table';
 import {QueryBar,type FilterRule,type FilterField} from '@sdcorejs/nova/query-bar';
 import {QueryBuilder,type QueryNode} from '@sdcorejs/nova/query-builder';
 import {serializeQuery} from '@sdcorejs/nova/query';
@@ -58,7 +58,7 @@ export function DataPage({locale}:{locale:Locale}){
 function EmployeeDirectory({t,locale}:{t:Translate;locale:Locale}){
  const format=useFormatter(),confirm=useConfirm();
  const [rows,setRows]=useState(employees);
- const [state,setState]=useState<TableState<string>>({page:{pageIndex:0,pageSize:10},sort:[],selectedKeys:[]});
+ const [state,setState]=useState<TableState<string>>({page:{pageIndex:0,pageSize:DEFAULT_PAGE_SIZE},sort:[],selectedKeys:[]});
  const [rules,setRules]=useState<readonly FilterRule[]>([{fieldId:'status',operator:'eq',value:'Đang làm việc'}]);
  const [query,setQuery]=useState(''),[expanded,setExpanded]=useState<readonly string[]>([]),[notice,setNotice]=useState<{vi:string;en:string}|null>(null);
  const fields:readonly FilterField[]=useMemo(()=>[{id:'status',label:t('Trạng thái','Status'),kind:'text',operators:['eq']},{id:'department',label:t('Phòng ban','Department'),kind:'text',operators:['eq']},{id:'location',label:t('Nơi làm việc','Location'),kind:'text',operators:['eq']}],[t]);
@@ -81,7 +81,7 @@ function EmployeeDirectory({t,locale}:{t:Translate;locale:Locale}){
  const rowActions:readonly MenuAction<Employee>[]=[
   {id:'view',label:t('Xem hồ sơ','View profile'),onAction:row=>setNotice({vi:'Đã mở hồ sơ '+row.name+'.',en:'Opened the profile of '+row.name+'.'})},
   {id:'email',label:t('Soạn email','Write an email'),onAction:row=>setNotice({vi:'Soạn email tới '+row.email+'.',en:'Drafting an email to '+row.email+'.'})},
-  {id:'offboard',label:t('Cho nghỉ việc…','Offboard…'),onAction:async row=>{
+  {id:'offboard',label:t('Cho nghỉ việc…','Offboard…'),tone:'danger',onAction:async row=>{
    if(row.status==='former'){setNotice({vi:row.name+' đã nghỉ việc trước đó.',en:row.name+' has already left.'});return;}
    const answer=await confirm({title:t('Cho '+row.name+' nghỉ việc?','Offboard '+row.name+'?'),description:t('Tài khoản bị khóa và hồ sơ chuyển sang trạng thái Đã nghỉ việc.','Their account is locked and the record becomes a former employee.'),confirmLabel:t('Cho nghỉ việc','Offboard'),cancelLabel:t('Giữ lại','Keep'),tone:'danger'});
    if(answer!=='confirmed')return;
@@ -97,7 +97,7 @@ function EmployeeDirectory({t,locale}:{t:Translate;locale:Locale}){
    <div className="showcase-search"><Input type="search" label={t('Tìm nhân sự','Search employees')} placeholder={t('Tên, email hoặc mã nhân viên','Name, email or employee ID')} value={query} onValueChange={value=>{setQuery(value);setState(resetPage);}}/></div>
    <QueryBar data-testid="query-demo" fields={fields} value={rules} onValueChange={next=>{setRules(next);setState(resetPage);}}/>
   </div>
-  <DataTable className="showcase-employee-table" caption={t('Nhân sự theo bộ lọc hiện tại','Employees matching the current filters')} rows={page} getRowKey={row=>row.id} columns={columns} state={state} onStateChange={setState} total={sorted.length}
+  <DataTable className="showcase-employee-table" caption={t('Nhân sự theo bộ lọc hiện tại','Employees matching the current filters')} rows={page} getRowKey={row=>row.id} columns={columns} state={state} onStateChange={setState} total={sorted.length} showFirstLast
    isRowSelectable={row=>row.status!=='former'} rowActions={rowActions} expandedKeys={expanded} onExpandedKeysChange={setExpanded}
    renderExpanded={row=><dl className="showcase-facts"><div><dt>{t('Mã nhân viên','Employee ID')}</dt><dd>{row.id}</dd></div><div><dt>{t('Quản lý trực tiếp','Manager')}</dt><dd>{row.manager}</dd></div><div><dt>{t('Nơi làm việc','Location')}</dt><dd>{row.location}</dd></div><div><dt>{t('Điện thoại','Phone')}</dt><dd className="showcase-num">{row.phone}</dd></div></dl>}
    renderMobileRow={row=><div className="showcase-mobile-row"><span className="showcase-person"><span className="showcase-person__name">{row.name}</span><span className="showcase-meta">{row.email}</span></span><span>{row.department} · {row.title}</span><span className="showcase-mobile-row__meta"><Badge tone={statusText[row.status].tone}>{statusLabel(t,row.status)}</Badge><span className="showcase-num">{money(row.salary)} ₫</span></span></div>}/>
@@ -184,7 +184,7 @@ function TypedKeys({t}:{t:Translate}){
  return <div className="showcase-typed-keys" data-testid="records-demo">
   <TechDetails t={t} topic={t('khóa hàng có kiểu (0 và "0")','typed row keys (0 and "0")')}>
    <p className="showcase-meta">{t('Hai hồ sơ có khóa số 0 và khóa chuỗi "0"; bảng giữ nguyên kiểu khi chọn, sắp xếp và chuyển trang.','Two records keyed by the number 0 and the string "0"; the table keeps each type through selection, sorting and paging.')}</p>
-   <DataTable caption={t('Hồ sơ dự án','Project records')} rows={sorted.slice(start,start+state.page.pageSize)} getRowKey={projectKey} columns={[{id:'title',header:t('Tên','Title'),sortKey:'title',cell:row=>row.title}]} state={state} onStateChange={setState} total={projects.length} renderMobileRow={row=><strong>{row.title}</strong>}/>
+   <DataTable pageSizeOptions={[]} caption={t('Hồ sơ dự án','Project records')} rows={sorted.slice(start,start+state.page.pageSize)} getRowKey={projectKey} columns={[{id:'title',header:t('Tên','Title'),sortKey:'title',cell:row=>row.title}]} state={state} onStateChange={setState} total={projects.length} renderMobileRow={row=><strong>{row.title}</strong>}/>
    <TechRow label="Selected record keys"><output aria-label="Selected record keys">{JSON.stringify(state.selectedKeys)}</output></TechRow>
    <TechRow label="Record page"><output aria-label="Record page">{state.page.pageIndex+1}</output></TechRow>
    <TechRow label="Record sort"><output aria-label="Record sort">{JSON.stringify(state.sort)}</output></TechRow>

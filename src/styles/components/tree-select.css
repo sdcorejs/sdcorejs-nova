@@ -2,5 +2,5 @@
 @layer nova.components {
   /* The trigger shares the EntityPicker Select-like frame (one-line value, chevron). */
   .nova-tree-select { min-inline-size: 0; }
-  .nova-entity-picker__dialog .nova-tree { padding: var(--nova-space-1); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; }
+  .nova-entity-picker__dialog .nova-tree { padding: var(--nova-space-1); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-popup); }
 }

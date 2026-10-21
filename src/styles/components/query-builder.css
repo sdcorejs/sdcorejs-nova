@@ -3,7 +3,7 @@
   .nova-query-builder { min-inline-size: 0; color: var(--nova-color-text); background: var(--nova-color-background); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
   .nova-query-builder__accepted { margin-block-end: var(--nova-space-2); padding: var(--nova-space-2) var(--nova-space-3); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
   /* Groups: 8px frame; nested groups indent 20px with a dashed frame on surface. */
-  .nova-query-builder__group, .nova-query-builder__rule { min-inline-size: 0; margin: var(--nova-space-2) 0; padding: var(--nova-space-2) var(--nova-space-3) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 8px; background: var(--nova-color-background); }
+  .nova-query-builder__group, .nova-query-builder__rule { min-inline-size: 0; margin: var(--nova-space-2) 0; padding: var(--nova-space-2) var(--nova-space-3) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-popup); background: var(--nova-color-background); }
   .nova-query-builder__children > .nova-query-builder__group { margin-inline-start: 20px; border-style: dashed; background: var(--nova-color-surface); }
   .nova-query-builder__group > legend, .nova-query-builder__rule > legend { padding-inline: var(--nova-space-1); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
   .nova-query-builder__actions { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--nova-space-2); margin-block: var(--nova-space-2); }
@@ -26,7 +26,7 @@
     .nova-query-builder input, .nova-query-builder select, .nova-query-builder .nova-button { min-block-size: var(--nova-hit-target); min-inline-size: var(--nova-hit-target); }
     .nova-query-builder select { font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }
   }
-  @media (max-width: 47.99rem) {
+  @media (max-width: 640px) {
     .nova-query-builder__group, .nova-query-builder__rule { padding: var(--nova-space-2); }
     .nova-query-builder__children > .nova-query-builder__group { margin-inline-start: var(--nova-space-2); }
     .nova-query-builder .nova-query-bar__editor, .nova-query-builder__compare, .nova-query-builder__readonly { grid-template-columns: minmax(0, 1fr); }

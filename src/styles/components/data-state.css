@@ -37,14 +37,14 @@
     inline-size: 40px;
     block-size: 40px;
     margin-block-end: var(--nova-space-2);
-    border-radius: 8px;
+    border-radius: var(--nova-radius-popup);
     background: var(--nova-color-error-surface);
     color: var(--nova-color-error-text);
   }
 
   .nova-data-state__icon > svg {
-    inline-size: 20px;
-    block-size: 20px;
+    inline-size: var(--nova-icon-lg);
+    block-size: var(--nova-icon-lg);
   }
 
   .nova-data-state__message {
@@ -72,8 +72,8 @@
   /* Fixed icon box: 16 for sm/md, 20 for lg (not em-based). */
   .nova-spinner__icon {
     flex: none;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
     animation: nova-spinner-spin 0.8s linear infinite;
   }
 
@@ -83,8 +83,8 @@
   }
 
   .nova-spinner--lg .nova-spinner__icon {
-    inline-size: 20px;
-    block-size: 20px;
+    inline-size: var(--nova-icon-lg);
+    block-size: var(--nova-icon-lg);
   }
 
   .nova-progress {

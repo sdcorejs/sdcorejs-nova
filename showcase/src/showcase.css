@@ -3,7 +3,7 @@
    Shell: sidebar 232, header 56, main padding 24 (16 at <=640), content max 1040
    (data page full width). Page heading h1 24/32. Cards: head / body (16) / foot.
    Single-line targets: 36 desktop, 44 at (max-width: 640px), (pointer: coarse).
-   The shell keeps the AppShell/Sidebar 48rem breakpoint (owner decision pending). */
+   The shell follows the AppShell/Sidebar 64rem (1024px) breakpoint; below it the sidebar is a drawer. */
 
 body:has(> #root .showcase) { margin: 0; }
 html:has(.showcase) { scroll-padding-block-start: 64px; }
@@ -16,7 +16,7 @@ html:has(.showcase) { scroll-padding-block-start: 64px; }
 /* ---------- Shell ---------- */
 .showcase.nova-app-shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); grid-template-rows: 56px 1fr; }
 /* Paint the sidebar column the full page height; the sticky sidebar itself is one viewport tall. */
-@media (min-width: 48rem) { .showcase.nova-app-shell { background: linear-gradient(to right, var(--nova-color-surface) 0 231px, var(--nova-color-border) 231px 232px, var(--nova-color-background) 232px); } .showcase.nova-app-shell:dir(rtl) { background: linear-gradient(to left, var(--nova-color-surface) 0 231px, var(--nova-color-border) 231px 232px, var(--nova-color-background) 232px); } }
+@media (min-width: 64rem) { .showcase.nova-app-shell { background: linear-gradient(to right, var(--nova-color-surface) 0 231px, var(--nova-color-border) 231px 232px, var(--nova-color-background) 232px); } .showcase.nova-app-shell:dir(rtl) { background: linear-gradient(to left, var(--nova-color-surface) 0 231px, var(--nova-color-border) 231px 232px, var(--nova-color-background) 232px); } }
 /* The header spans both rows so `sticky` has room to stay at the top while the page scrolls. */
 .showcase > .nova-app-shell__header { grid-column: 2; grid-row: 1 / -1; align-self: start; position: sticky; top: 0; z-index: 20; block-size: 56px; min-inline-size: 0; padding: 0; border-block-end: 1px solid var(--nova-color-border); background: var(--nova-color-background); }
 .showcase > .nova-app-shell__body { display: contents; }
@@ -180,8 +180,8 @@ html:has(.showcase) { scroll-padding-block-start: 64px; }
 .showcase .nova-import-wizard { min-inline-size: 0; }
 .showcase .nova-import-mapping { overflow-x: auto; }
 
-/* ---------- Narrow shell (AppShell/Sidebar breakpoint, unchanged) ---------- */
-@media (max-width: 47.999rem) {
+/* ---------- Narrow shell (below the AppShell/Sidebar 1024 breakpoint) ---------- */
+@media (max-width: 63.999rem) {
  .showcase.nova-app-shell { grid-template-columns: minmax(0, 1fr); }
  .showcase > .nova-app-shell__header, .showcase .nova-app-shell__main { grid-column: 1; }
  .showcase .nova-sidebar { display: contents; }
@@ -191,7 +191,6 @@ html:has(.showcase) { scroll-padding-block-start: 64px; }
  .showcase .nova-sidebar__trigger:focus-visible { outline: 2px solid var(--nova-color-focus-ring); outline-offset: -2px; }
  .showcase-topbar { padding: 0 8px 0 52px; }
 }
-@media (max-width: 47.999rem) { .nova-dialog.nova-sheet:has(.nova-sidebar__drawer) { inset-block: 0; inset-inline-start: 0; inset-inline-end: auto; inline-size: min(300px, calc(100vw - 32px)); max-inline-size: calc(100vw - 32px); max-block-size: 100dvh; border-radius: 0; } }
 
 /* ---------- Phone width and coarse pointers ---------- */
 @media (max-width: 640px), (pointer: coarse) {

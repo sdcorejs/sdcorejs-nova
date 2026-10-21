@@ -83,8 +83,8 @@
 
   .nova-number-input__step > svg {
     display: block;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
   }
 
   .nova-number-input__step:hover:not(:disabled) {

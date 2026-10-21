@@ -14,7 +14,7 @@
     padding-block: var(--nova-space-3);
     padding-inline: var(--nova-space-4) var(--nova-space-3);
     border: var(--nova-border-width) solid;
-    border-radius: 8px;
+    border-radius: var(--nova-radius-popup);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
@@ -25,8 +25,8 @@
     display: inline-flex;
     grid-column: 1;
     grid-row: 1;
-    inline-size: 16px;
-    block-size: 16px;
+    inline-size: var(--nova-icon-sm);
+    block-size: var(--nova-icon-sm);
     margin-block-start: 2px;
   }
 

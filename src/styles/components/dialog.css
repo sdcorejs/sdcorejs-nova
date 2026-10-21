@@ -1,8 +1,8 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
   .nova-overlay-scope { display: block; position: relative; isolation: isolate; z-index: 1000; }
-  .nova-dialog__backdrop { position: fixed; inset: 0; z-index: 0; background: rgb(0 0 0 / 35%); }
-  .nova-dialog { box-sizing: border-box; display: flex; flex-direction: column; position: fixed; z-index: 1; inset-block-start: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%); inline-size: 32rem; max-inline-size: calc(100vw - 32px); max-block-size: calc(100dvh - 32px); padding: 0; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-overlay); background: var(--nova-color-background); color: var(--nova-color-text); box-shadow: 0 8px 24px rgb(0 0 0 / 0.12); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-dialog__backdrop { position: fixed; inset: 0; z-index: 0; background: var(--nova-color-backdrop); }
+  .nova-dialog { box-sizing: border-box; display: flex; flex-direction: column; position: fixed; z-index: 1; inset-block-start: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%); inline-size: 32rem; max-inline-size: calc(100vw - 32px); max-block-size: calc(100dvh - 32px); padding: 0; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-overlay); background: var(--nova-color-background); color: var(--nova-color-text); box-shadow: var(--nova-shadow-overlay); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
   .nova-dialog:dir(rtl) { transform: translate(50%, -50%); }
   /* Header 56: title 18/24 aligned with a 32 close button; the body scrolls on its own. */
   .nova-dialog__header { flex: none; display: flex; align-items: flex-start; gap: var(--nova-space-3); box-sizing: border-box; min-block-size: 56px; padding-block: var(--nova-space-3); padding-inline: var(--nova-space-4) var(--nova-space-3); }
@@ -11,14 +11,22 @@
   .nova-dialog__description { margin: 2px 0 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
   .nova-dialog__body { flex: 1 1 auto; min-block-size: 0; min-inline-size: 0; padding: var(--nova-space-1) var(--nova-space-4) var(--nova-space-4); overflow: auto; overscroll-behavior: contain; overflow-wrap: anywhere; }
   .nova-dialog__close { flex: none; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: 32px; block-size: 32px; min-inline-size: 32px; min-block-size: 32px; padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text); font: inherit; cursor: pointer; transition: background-color var(--nova-duration) ease; }
-  .nova-dialog__close > .nova-icon { inline-size: 16px; block-size: 16px; }
+  .nova-dialog__close > .nova-icon { inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); }
   .nova-dialog__close:hover:not(:disabled) { background: var(--nova-color-surface-hover); }
   .nova-dialog__close:active:not(:disabled) { background: var(--nova-color-border); }
   .nova-dialog__close:disabled { color: var(--nova-color-control-border); cursor: not-allowed; }
   .nova-dialog__close:focus-visible, .nova-dialog:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
+  /* Named widths; a custom width arrives as an inline inline-size and keeps the viewport cap. */
+  .nova-dialog:not(.nova-sheet)[data-size="sm"] { inline-size: 400px; }
+  .nova-dialog:not(.nova-sheet)[data-size="md"] { inline-size: 560px; }
+  .nova-dialog:not(.nova-sheet)[data-size="lg"] { inline-size: 800px; }
+  /* Footer 56: stays under the scrolling body, actions at the end. */
+  .nova-dialog__footer { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--nova-space-2); box-sizing: border-box; min-block-size: 56px; min-inline-size: 0; padding: 10px var(--nova-space-4); border-block-start: var(--nova-border-width) solid var(--nova-color-border); }
   .nova-sheet { inset-block: 0; inset-inline-start: auto; inset-inline-end: 0; transform: none; inline-size: 32rem; max-block-size: 100dvh; border-radius: 0; }
   .nova-sheet:dir(rtl) { transform: none; }
   .nova-sheet > .nova-dialog__body { padding-block-end: max(var(--nova-space-4), env(safe-area-inset-bottom)); }
+  .nova-sheet > .nova-dialog__body:not(:last-child) { padding-block-end: var(--nova-space-4); }
+  .nova-sheet > .nova-dialog__footer { padding-block-end: max(10px, env(safe-area-inset-bottom)); }
   .nova-sheet[data-side="start"] { inset-inline-start: 0; inset-inline-end: auto; }
   .nova-sheet[data-side="bottom"] { inset-block-start: auto; inset-block-end: 0; inset-inline: 0; inline-size: 100%; max-inline-size: 100%; max-block-size: 85dvh; border-radius: var(--nova-radius-overlay) var(--nova-radius-overlay) 0 0; }
   .nova-sheet[data-size="sm"] { inline-size: 24rem; }
@@ -33,6 +41,6 @@
   }
   @media (max-width: 640px) { .nova-dialog { inline-size: calc(100vw - 32px); } .nova-sheet { inset-block-start: auto; inset-block-end: 0; inset-inline: 0; inline-size: 100%; max-inline-size: 100%; max-block-size: 90dvh; border-radius: var(--nova-radius-overlay) var(--nova-radius-overlay) 0 0; } .nova-sheet[data-size="sm"], .nova-sheet[data-size="lg"] { inline-size: 100%; } }
   @media (prefers-reduced-motion: reduce) { .nova-dialog__close { transition: none; } }
-  @media (forced-colors: active) { .nova-dialog { border-color: CanvasText; } .nova-dialog__close:focus-visible, .nova-dialog:focus-visible { outline-color: Highlight; } }
+  @media (forced-colors: active) { .nova-dialog, .nova-dialog__footer { border-color: CanvasText; } .nova-dialog__close:focus-visible, .nova-dialog:focus-visible { outline-color: Highlight; } }
   @media (forced-colors: active) and (max-width: 640px), (forced-colors: active) and (pointer: coarse) { .nova-dialog__close { border-color: Canvas; } }
 }

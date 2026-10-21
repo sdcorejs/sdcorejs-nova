@@ -3,7 +3,7 @@ import { userEvent } from '@testing-library/user-event';
 import { act, useEffect, useRef, useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { NovaProvider } from '../../providers/nova/nova-provider.js';
-import { DataTable, TablePagination, type TableState } from './index.js';
+import { DataTable, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS, TablePagination, type TableState } from './index.js';
 
 type Row = { id: number | string; title: string; disabled?: boolean };
 const rows: readonly Row[] = [{ id: 0, title: 'Number zero' }, { id: '0', title: 'String zero' }, { id: 2, title: 'Disabled row', disabled: true }];
@@ -110,6 +110,49 @@ describe('D01 pagination', () => {
   it.each([{ pageIndex: -1, pageSize: 10 }, { pageIndex: 0, pageSize: 0 }, { pageIndex: 0.5, pageSize: 1 }, { pageIndex: 0, pageSize: NaN }])('AC-007 rejects invalid page %j', page => { vi.spyOn(console, 'warn').mockImplementation(() => {}); const { container } = render(<Pagination page={page} />); expect(container.querySelector('[data-nova-config-error="NOVA_TABLE_INVALID_CONFIGURATION"]')).toBeTruthy(); expect(screen.queryByRole('navigation')).toBeNull(); });
   it.each([-1, Infinity, 0.5])('AC-007 rejects invalid total %s', total => { vi.spyOn(console, 'warn').mockImplementation(() => {}); render(<Pagination total={total} />); expect(screen.queryByRole('navigation')).toBeNull(); });
   it('disables next at an exact known boundary and previous proposes the preceding page', async () => { const change = vi.fn(); render(<Pagination total={20} page={{ pageIndex: 1, pageSize: 10 }} onPageChange={change} />); expect((screen.getByRole('button', { name: 'Next page' }) as HTMLButtonElement).disabled).toBe(true); await userEvent.click(screen.getByRole('button', { name: 'Previous page' })); expect(change).toHaveBeenCalledExactlyOnceWith({ pageIndex: 0, pageSize: 10 }); });
+  const range = () => document.querySelector('.nova-table-pagination__range')?.textContent;
+  it('case-p2-d01-q1-unit defaults to 20/50/100 and still lists a current size outside the options', async () => {
+    expect(DEFAULT_PAGE_SIZE_OPTIONS).toEqual([20, 50, 100]); expect(DEFAULT_PAGE_SIZE).toBe(20); expect(Object.isFrozen(DEFAULT_PAGE_SIZE_OPTIONS)).toBe(true);
+    render(<Pagination total={95} />); const select = screen.getByRole('combobox', { name: 'Rows per page' });
+    expect(select.textContent).toBe('10'); await userEvent.click(select);
+    expect((await screen.findAllByRole('option')).map(option => option.textContent)).toEqual(['10', '20', '50', '100']);
+  });
+  it('case-p2-d01-q1-unit choosing a size proposes page index 0 and the same size proposes nothing', async () => {
+    const change = vi.fn(); render(<Pagination total={95} page={{ pageIndex: 3, pageSize: 20 }} onPageChange={change} />);
+    await userEvent.click(screen.getByRole('combobox', { name: 'Rows per page' })); await userEvent.click(await screen.findByRole('option', { name: '20' }));
+    expect(change).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole('combobox', { name: 'Rows per page' })); await userEvent.click(await screen.findByRole('option', { name: '50' }));
+    expect(change).toHaveBeenCalledExactlyOnceWith({ pageIndex: 0, pageSize: 50 });
+  });
+  it('case-p2-d01-q1-unit an empty option list removes the page-size control', () => {
+    render(<Pagination total={95} pageSizeOptions={[]} />); expect(screen.queryByRole('combobox')).toBeNull(); expect(screen.queryByText('Rows per page')).toBeNull();
+  });
+  it('case-p2-d01-q2-unit first and last buttons are opt-in, bounded by the known total and omit last for unknown totals', async () => {
+    const change = vi.fn(); const { rerender } = render(<Pagination total={95} />);
+    expect(screen.queryByRole('button', { name: 'First page' })).toBeNull(); expect(screen.queryByRole('button', { name: 'Last page' })).toBeNull();
+    rerender(<Pagination total={95} showFirstLast page={{ pageIndex: 0, pageSize: 10 }} onPageChange={change} />);
+    expect((screen.getByRole('button', { name: 'First page' }) as HTMLButtonElement).disabled).toBe(true);
+    await userEvent.click(screen.getByRole('button', { name: 'Last page' })); expect(change).toHaveBeenLastCalledWith({ pageIndex: 9, pageSize: 10 });
+    rerender(<Pagination total={95} showFirstLast page={{ pageIndex: 9, pageSize: 10 }} onPageChange={change} />);
+    expect((screen.getByRole('button', { name: 'Last page' }) as HTMLButtonElement).disabled).toBe(true);
+    await userEvent.click(screen.getByRole('button', { name: 'First page' })); expect(change).toHaveBeenLastCalledWith({ pageIndex: 0, pageSize: 10 });
+    rerender(<Pagination total={undefined} hasNextPage showFirstLast page={{ pageIndex: 2, pageSize: 10 }} onPageChange={change} />);
+    expect(screen.getByRole('button', { name: 'First page' })).toBeTruthy(); expect(screen.queryByRole('button', { name: 'Last page' })).toBeNull();
+  });
+  it('case-p2-d01-q3-unit range text covers known, empty, unknown-full and unknown-unbounded pages', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const { rerender } = render(<Pagination total={1248} page={{ pageIndex: 62, pageSize: 20 }} />); expect(range()).toBe('1,241–1,248 of 1,248');
+    rerender(<Pagination total={0} />); expect(range()).toBe('0–0 of 0');
+    rerender(<Pagination total={undefined} hasNextPage page={{ pageIndex: 1, pageSize: 10 }} />); expect(range()).toBe('11–20');
+    rerender(<Pagination total={undefined} hasNextPage={false} page={{ pageIndex: 1, pageSize: 10 }} />); expect(range()).toBe('Page 2');
+  });
+  it('case-p2-d01-q3-unit Vietnamese defaults and consumer overrides of the new optional keys', () => {
+    const { rerender } = render(<NovaProvider locale="vi"><TablePagination page={{ pageIndex: 0, pageSize: 20 }} onPageChange={() => {}} total={1248} showFirstLast /></NovaProvider>);
+    expect(range()).toBe('1–20 trên 1.248'); for (const name of ['Trang đầu', 'Trang trước', 'Trang sau', 'Trang cuối']) expect(screen.getByRole('button', { name })).toBeTruthy();
+    expect(screen.getByRole('combobox', { name: 'Số hàng mỗi trang' })).toBeTruthy();
+    rerender(<NovaProvider locale="en" strings={{ navigation: { tableRange: 'Rows {start} to {end} ({total})', tablePageSizeLabel: 'Page size', tableFirst: 'Start', tableLast: 'End' } }}><TablePagination page={{ pageIndex: 0, pageSize: 20 }} onPageChange={() => {}} total={30} showFirstLast /></NovaProvider>);
+    expect(range()).toBe('Rows 1 to 20 (30)'); expect(screen.getByRole('combobox', { name: 'Page size' })).toBeTruthy(); expect(screen.getByRole('button', { name: 'Start' })).toBeTruthy(); expect(screen.getByRole('button', { name: 'End' })).toBeTruthy();
+  });
 });
 
 
@@ -130,7 +173,9 @@ it('case-p2-d01-ac05-unit multi-sort exposes only the primary header via aria-so
   render(<Table columns={[columns[0]!, { id: 'id', header: 'Identifier', sortKey: 'id', cell: row => row.id }]} state={{ ...initial, sort: [{ columnId: 'title', direction: 'asc' }, { columnId: 'id', direction: 'desc' }] }} />);
   const headers = screen.getAllByRole('columnheader');
   expect(headers.filter(header => ['ascending', 'descending'].includes(header.getAttribute('aria-sort') ?? ''))).toHaveLength(1);
-  expect(screen.getByRole('columnheader', { name: /Identifier/ }).getAttribute('aria-description')).toContain('2');
+  const sort = screen.getByRole('button', { name: 'Identifier' }), description = document.getElementById(sort.getAttribute('aria-describedby')!);
+  expect(description?.textContent).toBe('Sort priority 2: Descending'); expect(description?.hidden).toBe(true);
+  expect(screen.getByRole('columnheader', { name: 'Identifier' })).toBeTruthy(); expect(document.querySelector('[aria-description]')).toBeNull();
 });
 
 
@@ -189,8 +234,54 @@ it('case-p2-d01-design-r2-unit decorative icons replace text glyphs while names 
   const expand = screen.getByRole('button', { name: 'Expand row 1' });
   expect(expand.textContent).toBe(''); expect(expand.getAttribute('aria-expanded')).toBe('false'); expect(expand.querySelector('svg[aria-hidden="true"]')).toBeTruthy();
   expect(screen.getByRole('columnheader', { name: 'Expand row' })).toBeTruthy(); expect(screen.getByRole('columnheader', { name: 'Row actions' })).toBeTruthy();
-  expect(screen.getByRole('button', { name: 'Row actions 1' }).textContent).toBe('Row actions 1');
+  const trigger = screen.getByRole('button', { name: 'Row actions 1' });
+  expect(trigger.textContent).toBe(''); expect(trigger.getAttribute('aria-label')).toBe('Row actions 1'); expect(trigger.querySelector('svg[aria-hidden="true"]')).toBeTruthy();
   const navigation = screen.getByRole('navigation', { name: 'Table pagination' });
   for (const name of ['Previous page', 'Next page']) { const button = within(navigation).getByRole('button', { name }); expect(button.textContent).toBe(''); expect(button.querySelector('svg[aria-hidden="true"]')).toBeTruthy(); }
-  expect(navigation.textContent).toBe('Rows per page: 10Page 3 of 5');
+  expect(within(navigation).getByRole('combobox', { name: 'Rows per page' }).textContent).toBe('10');
+  expect(navigation.querySelector('.nova-table-pagination__range')?.textContent).toBe('21–30 of 50');
+});
+it('case-p2-d01-q8-unit expansion column follows selection and open details span one full-width row', () => {
+  render(<Table rowActions={[{ id: 'inspect', label: 'Inspect', onAction: () => {} }]} renderExpanded={row => <span>Details {row.title}</span>} expandedKeys={[0]} onExpandedKeysChange={() => {}} />);
+  const table = screen.getByRole('table', { name: 'Files' }), headers = within(table).getAllByRole('columnheader').map(header => header.textContent);
+  expect(headers).toEqual(['', 'Expand row', 'Title', 'Row actions']);
+  const firstRow = table.querySelector('tbody tr')!;
+  expect(firstRow.children[1]!.querySelector('button')?.getAttribute('aria-label')).toBe('Collapse row 1');
+  const collapse = screen.getByRole('button', { name: 'Collapse row 1' }), detail = document.getElementById(collapse.getAttribute('aria-controls')!)!;
+  expect(detail.textContent).toBe('Details Number zero');
+  const cell = detail.closest('td')!;
+  expect(cell.colSpan).toBe(4); expect(cell.closest('tr')).toBe(firstRow.nextElementSibling); expect(cell.closest('tr')!.hasAttribute('aria-selected')).toBe(false);
+  expect(within(table).getAllByRole('row')).toHaveLength(1 + rows.length + 1);
+});
+it('case-p2-d01-q5-unit slots.empty replaces the default empty state only when there are no rows', () => {
+  const { rerender } = render(<Table rows={[]} slots={{ empty: <p>No matching files</p> }} />);
+  expect(screen.getByText('No matching files')).toBeTruthy(); expect(screen.queryByText('No data')).toBeNull();
+  rerender(<Table rows={[]} />); expect(screen.getByText('No data')).toBeTruthy();
+  rerender(<Table slots={{ empty: <p>No matching files</p> }} />); expect(screen.queryByText('No matching files')).toBeNull();
+  rerender(<Table rows={[]} loading slots={{ empty: <p>No matching files</p> }} />); expect(screen.queryByText('No matching files')).toBeNull();
+});
+it('case-p2-d01-q6-unit danger actions keep their menu item role and expose the tone for styling', async () => {
+  render(<Table rowActions={[{ id: 'inspect', label: 'Inspect', onAction: () => {} }, { id: 'delete', label: 'Delete', tone: 'danger', onAction: () => {} }]} />);
+  await userEvent.click(screen.getByRole('button', { name: 'Row actions 1' }));
+  expect((await screen.findByRole('menuitem', { name: 'Delete' })).getAttribute('data-tone')).toBe('danger');
+  expect(screen.getByRole('menuitem', { name: 'Inspect' }).hasAttribute('data-tone')).toBe(false);
+});
+it('case-p2-d01-q1-unit DataTable forwards page-size options and first/last; a size change proposes the first page', async () => {
+  const change = vi.fn(); render(<Table pageSizeOptions={[10, 25]} showFirstLast onStateChange={change} />);
+  const navigation = screen.getByRole('navigation', { name: 'Table pagination' });
+  await userEvent.click(within(navigation).getByRole('combobox', { name: 'Rows per page' }));
+  expect((await screen.findAllByRole('option')).map(option => option.textContent)).toEqual(['10', '25']);
+  await userEvent.click(screen.getByRole('option', { name: '25' }));
+  expect(change).toHaveBeenCalledExactlyOnceWith({ ...initial, page: { pageIndex: 0, pageSize: 25 } });
+  await userEvent.click(within(navigation).getByRole('button', { name: 'Last page' }));
+  expect(change).toHaveBeenLastCalledWith({ ...initial, page: { pageIndex: 4, pageSize: 10 } });
+});
+it('case-p2-d01-q1-unit DataTable uses its loaded row count for an unknown-total last page', () => {
+  vi.spyOn(console, 'warn').mockImplementation(() => {});
+  render(<Table total={undefined} hasNextPage={false} />);
+  expect(document.querySelector('.nova-table-pagination__range')?.textContent).toBe('21–23');
+});
+it('case-p2-d01-q1-unit rejects non-positive page-size options as an invalid configuration', () => {
+  vi.spyOn(console, 'warn').mockImplementation(() => {}); const { container } = render(<Table pageSizeOptions={[10, 0]} />);
+  expect(container.querySelector('[data-nova-config-error="NOVA_TABLE_INVALID_CONFIGURATION"]')).toBeTruthy(); expect(screen.queryByRole('table')).toBeNull();
 });

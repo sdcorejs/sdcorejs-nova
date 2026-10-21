@@ -161,7 +161,7 @@ export { CalendarChips } from './components/calendar-chips/index.js';
 export type { CalendarChipsProps } from './components/calendar-chips/index.js';
 export { ColorInput } from './components/color-input/index.js';
 export type { ColorInputProps } from './components/color-input/index.js';
-export { DataTable, TablePagination } from './components/data-table/index.js';
+export { DataTable, TablePagination, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from './components/data-table/index.js';
 export type { Column, DataTableProps, TablePaginationProps, PageState, Sort, TableState } from './components/data-table/index.js';
 export { EntityPicker } from './components/entity-picker/index.js';
 export type { EntityPickerProps } from './components/entity-picker/index.js';

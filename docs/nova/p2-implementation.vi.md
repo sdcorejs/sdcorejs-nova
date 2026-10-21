@@ -63,7 +63,7 @@ export function Records() {
 }
 ```
 
-`DataTable` và `TablePagination` dùng state controlled. Khi thêm sortKey, search, filter hoặc pagination thật, app tính/fetch tập rows tương ứng rồi xác nhận proposal bằng props. `renderMobileRow` hỗ trợ trình bày mobile theo raw row. Expanded state và selection giữ key domain; loading, error, empty và retry là các trạng thái hiển thị riêng.
+`DataTable` và `TablePagination` dùng state controlled. Khi thêm sortKey, search, filter hoặc pagination thật, app tính/fetch tập rows tương ứng rồi xác nhận proposal bằng props. `renderMobileRow` hỗ trợ trình bày mobile theo raw row. Expanded state và selection giữ key domain; loading, error, empty và retry là các trạng thái hiển thị riêng. Từ vòng 2, pagination có Select số hàng (mặc định `DEFAULT_PAGE_SIZE_OPTIONS` 20/50/100, đổi cỡ đề xuất trang đầu), `showFirstLast`, khoảng hàng "{start}–{end} trên {total}" và `slots.empty`; xem [D01](specs/D01.vi.md).
 
 `QueryBar`/`FilterPanel` giữ applied business value thuộc app, draft chỉnh sửa thuộc UI. `QueryBuilder` dùng AST có ID ổn định, bounds depth/rules và validation metadata; `serializeQuery` trả dữ liệu thuần cho adapter của app, không tạo hoặc thực thi SQL. `Tree` hỗ trợ static/remote source; consumer giữ key ổn định, scope và loadChildren. `EntityPicker`/`TreeSelect` giữ raw key và nhãn chưa resolve; không đoán key từ display text.
 

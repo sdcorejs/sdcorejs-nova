@@ -83,6 +83,7 @@ export const scaleTokens: Readonly<Record<string, string>> = {
   'line-height-label': '18px',
   'font-size-title': '20px',
   'line-height-title': '28px',
+  'font-weight-medium': '500',
   'font-weight-strong': '600',
   'space-1': '4px',
   'space-2': '8px',
@@ -94,6 +95,7 @@ export const scaleTokens: Readonly<Record<string, string>> = {
   'radius-control': '6px',
   'radius-card': '10px',
   'radius-overlay': '12px',
+  'radius-popup': '8px',
   'border-width': '1px',
   'focus-width': '2px',
   'focus-offset': '2px',
@@ -101,6 +103,11 @@ export const scaleTokens: Readonly<Record<string, string>> = {
   'control-md': '36px',
   'control-lg': '44px',
   'hit-target': '44px',
+  'icon-sm': '16px',
+  'icon-lg': '20px',
+  'shadow-overlay': '0 8px 24px rgb(0 0 0 / 0.12)',
+  /** Modal backdrop; theme-independent, so it lives with the scale tokens rather than the hex palettes. */
+  'color-backdrop': 'rgb(0 0 0 / 0.35)',
   duration: '150ms',
 };
 

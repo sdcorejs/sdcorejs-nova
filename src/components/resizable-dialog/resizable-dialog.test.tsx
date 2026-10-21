@@ -33,10 +33,10 @@ it('negative and crafted geometry reject arbitrary CSS; committed viewport shrin
 
 import {StrictMode,Suspense,startTransition,useState,type ComponentType,type Ref} from 'react';
 import {act} from '@testing-library/react';
-import {Dialog,Sheet,Drawer,type DialogProps} from '../dialog/dialog.js';
+import {Dialog,Sheet,Drawer,type DialogBaseProps} from '../dialog/dialog.js';
 // Test-only projection lets the RED run exercise the already loadable surfaces.
 const popupSurfaces=[['Dialog',Dialog],['Sheet',Sheet],['Drawer',Drawer],['ResizableDialog',ResizableDialog]] as const;
-const popupProjection=(component:typeof Dialog)=>component as ComponentType<DialogProps&{ref?:Ref<HTMLDivElement>}>;
+const popupProjection=(component:(typeof popupSurfaces)[number][1])=>component as ComponentType<DialogBaseProps&{ref?:Ref<HTMLDivElement>}>;
 for(const [name,component] of popupSurfaces){
  it('OVERLAY-R1 '+name+' object ref receives the actual popup through close/reopen/unmount',async()=>{
   const Surface=popupProjection(component),ref=createRef<HTMLDivElement>();const element=(open:boolean)=><Surface title="Ref tools" value={open} onValueChange={()=>{}} ref={ref}><button>Inside ref</button></Surface>;

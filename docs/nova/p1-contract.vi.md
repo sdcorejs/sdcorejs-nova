@@ -101,8 +101,9 @@ Dossier nền: [C11](specs/C11.vi.md). Dependencies P1: không.
 
 ```ts
 type CloseReason = 'escape' | 'outside' | 'action';
-type DialogProps = ValueProps<boolean> & SurfaceProps & {title: ReactNode; description?: ReactNode; children: ReactNode; modal?: boolean; initialFocusRef?: RefObject<HTMLElement | null>; returnFocusRef?: RefObject<HTMLElement | null>; onCloseRequest?: (reason: CloseReason) => boolean | void; closeDisabled?: boolean};
-type SheetProps = DialogProps & {side?: 'start' | 'end' | 'bottom'; size?: 'sm' | 'md' | 'lg'};
+type DialogBaseProps = ValueProps<boolean> & SurfaceProps & {title: ReactNode; description?: ReactNode; children: ReactNode; footer?: ReactNode; modal?: boolean; initialFocusRef?: RefObject<HTMLElement | null>; returnFocusRef?: RefObject<HTMLElement | null>; onCloseRequest?: (reason: CloseReason) => boolean | void; closeDisabled?: boolean};
+type DialogProps = DialogBaseProps & {size?: 'sm' | 'md' | 'lg' | number | `${number}px`};
+type SheetProps = DialogBaseProps & {side?: 'start' | 'end' | 'bottom'; size?: 'sm' | 'md' | 'lg'};
 type DrawerProps = SheetProps;
 ```
 
@@ -289,7 +290,7 @@ type TimeInputProps = ValueProps<LocalTime | null> & ControlProps & P1InputProps
 type TimeRangeInputProps = ValueProps<{start: LocalTime | null; end: LocalTime | null}> & ControlProps & {name?: never; names?: {start: string; end: string}; form?: string; ref?: Ref<HTMLInputElement>; allowOvernight?: boolean};
 type WallTimeResult = {status: 'resolved'; instant: ISOInstant} | {status: 'invalid'; reason: 'gap' | 'ambiguous' | 'invalid-date' | 'invalid-time' | 'invalid-zone'};
 type DateTimeAdapter = {resolve(input: {date: ISODate; time: LocalTime; timeZone: string; disambiguation: 'reject' | 'earlier' | 'later'}): WallTimeResult};
-type DateTimePickerProps = ValueProps<ISOInstant | null> & ControlProps & CalendarBase & {form?: string; ref?: Ref<HTMLInputElement>; timeZone: string; adapter: DateTimeAdapter; disambiguation?: 'reject' | 'earlier' | 'later'};
+type DateTimePickerProps = ValueProps<ISOInstant | null> & ControlProps & CalendarBase & {form?: string; ref?: Ref<HTMLInputElement>; timeZone: string; adapter: DateTimeAdapter; disambiguation?: 'reject' | 'earlier' | 'later'; precision?: 'minute' | 'second'}; // precision mặc định 'minute' từ vòng 2
 createTemporalAdapter(): DateTimeAdapter; // only ./adapters/temporal
 ```
 
@@ -334,7 +335,7 @@ type SidebarProps = ValueProps<boolean> & MobileSidebarProps & SurfaceProps & {l
 type NavigationProps = SurfaceProps & {label: string; items: readonly NavItem[]; currentId?: string | null; onNavigate?: (item: NavLink) => void; renderLink?: (args: {item: NavLink; current: boolean; linkProps: {href: string; 'aria-current'?: 'page'; onClick: (event: MouseEvent<HTMLElement>) => void}}) => ReactNode};
 ```
 
-Desktop value là expanded/collapsed; mobileValue là drawer open, paired callback enforced bởi union khi supplied; defaultMobileValue initialize một lần, false nếu absent. Hai state không đồng nghĩa, page state không reset. Sidebar mobile dùng Drawer modal; crossing desktop breakpoint phải close/cleanup lock/inert, focus visible fallback nếu opener hidden, không chỉ CSS-hide open dialog. AppShell semantic header/nav/main, skip focus main không đổi hash route. Navigation currentId explicit, one-level children, native safe href; custom router renderer phải giữ semantics/handlers. Không tenant/auth filters hoặc router patch; consumer owns route. Showcase tích hợp thay consumer shell bằng public P1 composition mà giữ approved 232 px desktop/sidebar layout và current compact neutral menu, mobile44/focus tokens.
+Desktop value là expanded/collapsed; mobileValue là drawer open, paired callback enforced bởi union khi supplied; defaultMobileValue initialize một lần, false nếu absent. Hai state không đồng nghĩa, page state không reset. Sidebar dưới 64rem (1024 px, vòng 2) dùng Drawer modal; crossing desktop breakpoint phải close/cleanup lock/inert, focus visible fallback nếu opener hidden, không chỉ CSS-hide open dialog. AppShell semantic header/nav/main, skip focus main không đổi hash route. Navigation currentId explicit, one-level children, native safe href; custom router renderer phải giữ semantics/handlers. Không tenant/auth filters hoặc router patch; consumer owns route. Showcase tích hợp thay consumer shell bằng public P1 composition mà giữ approved 232 px desktop/sidebar layout và current compact neutral menu, mobile44/focus tokens.
 
 ## S07 — UnsavedChanges và navigation adapter
 

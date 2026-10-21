@@ -43,7 +43,7 @@ function Interview({t,locale}:{t:Translate;locale:Locale}){
    <DatePicker label={t('Ngày phỏng vấn','Interview date')} referenceDate={TODAY} min={TODAY} value={date} onValueChange={setDate} description={date&&left!==null?weekday(date,locale)+' · '+(left>=0?t('còn '+left+' ngày','in '+left+' days'):t('đã qua','in the past')):t('Chọn một ngày.','Pick a day.')}/>
    <TimeRangeInput label={t('Khung giờ (giờ Hà Nội)','Time slot (Hà Nội time)')} value={slot} onValueChange={setSlot} description={length!==null?t(length+' phút.',length+' minutes.'):t('Nhập giờ bắt đầu và kết thúc.','Enter a start and end time.')}/>
    <Select<string,string> label={t('Múi giờ ứng viên','Candidate time zone')} options={ZONES.map(item=>({key:item.key,label:t(item.vi,item.en),data:item.key}))} value={zone} onValueChange={setZone}/>
-   <DateTimePicker label={t('Giờ gửi lời mời (giờ ứng viên)','Invitation time (candidate time)')} timeZone={zone??'UTC'} referenceDate={TODAY} value={instant} onValueChange={setInstant} adapter={adapter} description={t('Hiển thị theo múi giờ đã chọn.','Shown in the selected time zone.')}/>
+   <DateTimePicker label={t('Giờ gửi lời mời (giờ ứng viên)','Invitation time (candidate time)')} precision="minute" timeZone={zone??'UTC'} referenceDate={TODAY} value={instant} onValueChange={setInstant} adapter={adapter} description={t('Hiển thị theo múi giờ đã chọn.','Shown in the selected time zone.')}/>
   </div>
   <TechDetails t={t} topic={t('giá trị','values')}><code>{JSON.stringify({interview:date,slot,timeZone:zone,invitation:instant})}</code></TechDetails>
  </DemoCard>;
