@@ -65,7 +65,7 @@ function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogPr
   const [open, setOpen] = useControllableValue({value, defaultValue, onValueChange, fallback:false, report});
   const id = useId(), popup = useRef<HTMLDivElement | null>(null), body = useRef<HTMLDivElement | null>(null);
   const heading = useRef<HTMLHeadingElement | null>(null), opener = useRef<HTMLElement | null>(null);
-  const documentOwner = useRef<Document | null>(null), closeReason = useRef<CloseReason | null>(null);
+  const documentOwner = useRef<Document | null>(null), closeReason = useRef<CloseReason | null>(null), focusAtClose = useRef<Element | null>(null);
   const [popupElement,setPopupElement]=useState<HTMLDivElement|null>(null);
   const consumerRef = useRef(surfaceRef);
   const consumerLease = useRef<{node: HTMLDivElement; ref: Ref<HTMLDivElement>; release: () => void} | null>(null);
@@ -120,6 +120,12 @@ function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogPr
     if (active && active !== owner.body && !popup.current?.contains(active)) opener.current = active as HTMLElement;
     closeReason.current = null;
   }, [open, scope.portalContainer]);
+  // Remember which node inside the overlay held focus when closing started.
+  useLayoutEffect(() => {
+    if (open) {focusAtClose.current = null;return;}
+    const active = documentOwner.current?.activeElement;
+    focusAtClose.current = active && popup.current?.parentElement?.contains(active) ? active : null;
+  }, [open]);
   const assignPopup = useCallback((element: HTMLDivElement | null) => {
     popup.current = element;setPopupElement(element);
     if (!element) {syncConsumerRef(null);return;}
@@ -146,10 +152,10 @@ function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogPr
     // Base UI skips its own "focus moved elsewhere" check for a function
     // finalFocus. Restore only while focus is lost to the body or still in the
     // closing overlay; focus the user or app moved outside during exit stays.
-    // Decide now, while the overlay is attached: unmount may later move a
-    // focused descendant out of it (e.g. a Sidebar parking its content).
+    // Content parked out of the overlay (e.g. a Sidebar moving its host back)
+    // keeps the node focused at close start; that is not a user focus move.
     const owner=documentOwner.current,active=owner?.activeElement,overlay=popup.current?.parentElement;
-    const mayReturn=(target:HTMLElement)=>!active||active===owner?.body||active===target||!!overlay?.contains(active);
+    const mayReturn=(target:HTMLElement)=>!active||active===owner?.body||active===target||active===focusAtClose.current||!!overlay?.contains(active);
     const explicit=returnFocusRef?.current;
     if (reachable(explicit)) {
       if (!mayReturn(explicit)) return false;

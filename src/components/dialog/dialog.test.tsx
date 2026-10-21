@@ -27,6 +27,18 @@ describe('dialog requests and portal semantics',()=>{
     finish();await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());await new Promise(resolve=>setTimeout(resolve));
     expect(document.activeElement).toBe(next);
   });
+  it('content parked out of the overlay with its focus kept still returns focus to the explicit target',async()=>{
+    const user=userEvent.setup(),launch=document.createElement('button'),parking=document.createElement('div');launch.textContent='Menu';document.body.append(launch,parking);hosts.push(launch,parking);launch.focus();
+    let finish!:()=>void;const finished=new Promise<void>(resolve=>{finish=resolve;});
+    render(<NovaProvider locale="en"><Sheet title="Explore" defaultValue returnFocusRef={{current:launch}}><a href="#/files">Files</a></Sheet></NovaProvider>);
+    const popup=await screen.findByRole('dialog'),link=screen.getByRole('link',{name:'Files'});await waitFor(()=>expect(document.activeElement).toBe(link));
+    Object.defineProperty(popup,'getAnimations',{configurable:true,value:()=>[{finished}]});
+    await user.keyboard('{Escape}');await waitFor(()=>expect(popup.hasAttribute('data-closed')).toBe(true));
+    // Like AppShell's Sidebar: the focused content is moved out of the closing drawer and React restores focus to the same node.
+    parking.append(link);link.focus();expect(document.activeElement).toBe(link);
+    finish();await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
+    await waitFor(()=>expect(document.activeElement).toBe(launch));
+  });
   it('keeps a programmatic outside focus attempt inside the active modal',async()=>{
     render(<NovaProvider locale="en"><input aria-label="Outside"/><Dialog title="Rename" defaultValue><input aria-label="Inside"/></Dialog></NovaProvider>);
     const popup=await screen.findByRole('dialog');await waitFor(()=>expect(popup.contains(document.activeElement)).toBe(true));
