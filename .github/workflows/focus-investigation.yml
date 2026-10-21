@@ -1,0 +1,55 @@
+# INVESTIGATION ONLY (never merge): replays the showcase sidebar focus test on
+# Linux Chromium, with and without the PR #4 Dialog change, and keeps traces.
+name: Focus investigation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: focus-investigation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  replay:
+    if: github.head_ref == 'investigate/dialog-focus-linux'
+    name: Replay (${{ matrix.variant }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [with-pr4, baseline]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Use the Dialog from main before PR #4
+        if: matrix.variant == 'baseline'
+        run: git checkout 656d296 -- src/components/dialog/dialog.tsx
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22.22.2'
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Build library and showcase
+        run: npm run build && npm run build:showcase
+      - name: Install Chromium
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Replay focus test
+        run: npx playwright test --config test/showcase/playwright.investigation.config.ts --repeat-each=10
+      - name: Upload traces and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: focus-investigation-${{ matrix.variant }}
+          path: test-results/investigation
+          retention-days: 3
+          if-no-files-found: ignore

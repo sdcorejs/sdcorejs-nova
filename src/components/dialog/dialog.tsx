@@ -163,6 +163,10 @@ function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogPr
     const owner=documentOwner.current,active=owner?.activeElement,overlay=popup.current?.parentElement;
     const mayReturn=(target:HTMLElement)=>!active||active===owner?.body||active===target||active===focusAtClose.current||!!overlay?.contains(active);
     const explicit=returnFocusRef?.current;
+    // INVESTIGATION ONLY (never merge): trace the return-focus decision.
+    const debug=(globalThis as {__NOVA_FOCUS_DEBUG__?:(entry:Record<string,unknown>)=>void}).__NOVA_FOCUS_DEBUG__;
+    const label=(node:unknown)=>node instanceof Element?node.tagName.toLowerCase()+(node.id?'#'+node.id:'')+'['+(node.getAttribute('aria-label')??node.textContent??'').slice(0,16)+']'+(node.isConnected?'':'(detached)'):String(node);
+    debug?.({step:'finalFocus',active:label(active),focusAtClose:label(focusAtClose.current),sameAsAtClose:active===focusAtClose.current,overlay:!!overlay,overlayContains:!!overlay?.contains(active??null),explicit:label(explicit),reachable:reachable(explicit),mayReturn:reachable(explicit)?mayReturn(explicit as HTMLElement):null,closeReason:closeReason.current});
     if (reachable(explicit)) {
       if (!mayReturn(explicit)) return false;
       // React restores the pre-mutation focused node after moving a portal
@@ -170,8 +174,11 @@ function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogPr
       // rather than its first tabbable child (e.g. a tabindex -1 main).
       const ownership=focusOwner.current;
       queueMicrotask(()=>{
-        if(focusOwner.current!==ownership||ownership.open||!reachable(explicit)||explicit.closest('[aria-hidden="true"]'))return;
+        const skip=focusOwner.current!==ownership?'ownership':ownership.open?'open':!reachable(explicit)?'unreachable':explicit.closest('[aria-hidden="true"]')?'aria-hidden':null;
+        debug?.({step:'microtask',skip,activeBefore:label(owner?.activeElement)});
+        if(skip)return;
         explicit.focus({preventScroll:true});
+        debug?.({step:'focused',activeAfter:label(owner?.activeElement)});
       });
       return false;
     }
