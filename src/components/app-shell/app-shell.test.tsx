@@ -106,6 +106,21 @@ describe('C14 AppShell', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 
+  it('C14-AC02: desktop crossing before focus enters the drawer still returns focus to the explicit target', async () => {
+    const resize = media(false);
+    const main = document.createElement('main');main.tabIndex = -1;document.body.append(main);
+    try {
+      render(<Sidebar label="Workspace" triggerLabel="Open menu" returnFocusRef={{current: main}}><a href="#/files">Files</a></Sidebar>);
+      const trigger = screen.getByRole('button', {name: 'Open menu'});
+      // Open and cross to desktop in one turn, before the drawer moves focus inside (Linux CI timing).
+      act(() => { trigger.focus(); trigger.click(); });
+      expect(document.activeElement).toBe(trigger);
+      resize(true);
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+      await waitFor(() => expect(document.activeElement).toBe(main));
+    } finally { main.remove(); }
+  });
+
   it('C14-AC02: desktop crossing parks focused drawer content and still returns focus to the explicit target', async () => {
     const resize = media(false);
     const user = userEvent.setup();

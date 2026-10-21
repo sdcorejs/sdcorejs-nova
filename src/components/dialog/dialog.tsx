@@ -160,8 +160,10 @@ function DialogSurface(props: DialogBaseProps & ({sheet?: false; size?: DialogPr
     // closing overlay; focus the user or app moved outside during exit stays.
     // Content parked out of the overlay (e.g. a Sidebar moving its host back)
     // keeps the node focused at close start; that is not a user focus move.
+    // Focus still on the opener means it never entered the overlay (closed
+    // before initial focus, e.g. a Sidebar drawer closed by a desktop resize).
     const owner=documentOwner.current,active=owner?.activeElement,overlay=popup.current?.parentElement;
-    const mayReturn=(target:HTMLElement)=>!active||active===owner?.body||active===target||active===focusAtClose.current||!!overlay?.contains(active);
+    const mayReturn=(target:HTMLElement)=>!active||active===owner?.body||active===target||active===opener.current||active===focusAtClose.current||!!overlay?.contains(active);
     const explicit=returnFocusRef?.current;
     if (reachable(explicit)) {
       if (!mayReturn(explicit)) return false;
