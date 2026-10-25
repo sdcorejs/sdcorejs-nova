@@ -90,7 +90,10 @@ test('v2 profile screen keeps the compact metrics in light and dark and fits 375
   await page.setViewportSize({width:1280,height:900});await page.goto('./?theme='+theme+'#/profile');await expect(page.getByRole('heading',{level:1})).toHaveText('Hồ sơ nhân sự');
   const metrics=await page.evaluate(()=>{const box=(selector:string)=>Math.round(document.querySelector(selector)!.getBoundingClientRect().height);return {input:box('form .nova-input'),select:box('form .nova-select__trigger'),button:box('form .nova-button--primary'),header:box('.nova-data-table__table th'),pagination:box('.nova-table-pagination__button'),label:getComputedStyle(document.querySelector('form .nova-label')!).fontWeight};});
   expect(metrics).toEqual({input:32,select:32,button:32,header:36,pagination:28,label:'500'});
-  await page.getByRole('radio',{name:'Dày · 32'}).click();expect(Math.round(await page.locator('.nova-data-table__table tbody td').first().evaluate(node=>node.getBoundingClientRect().height))).toBe(32);
+  // Long cells may wrap (fonts differ per OS) and grow their row; a one-line row is exactly the density height.
+  const shortestRow=()=>page.locator('.nova-data-table__table tbody tr').evaluateAll(rows=>Math.round(Math.min(...rows.map(row=>row.getBoundingClientRect().height))));
+  expect(await shortestRow()).toBe(40);
+  await page.getByRole('radio',{name:'Dày · 32'}).click();await expect.poll(shortestRow).toBe(32);
   await page.setViewportSize({width:375,height:812});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  }
 });
