@@ -17,11 +17,11 @@
   .nova-tree__controls { display: contents; }
   .nova-tree__row .nova-button.nova-tree__toggle { order: -1; flex: none; box-sizing: border-box; inline-size: 24px; min-inline-size: 24px; block-size: 24px; min-block-size: 24px; padding: 0; border: 0; border-radius: 4px; background: transparent; background-clip: padding-box; color: var(--nova-color-text-muted); }
   .nova-tree__row .nova-button.nova-tree__toggle:hover:not(:disabled) { background-color: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-tree__row .nova-button.nova-tree__toggle:active:not(:disabled) { background-color: var(--nova-color-border); }
+  .nova-tree__row .nova-button.nova-tree__toggle:active:not(:disabled) { background-color: var(--nova-color-surface-active); }
   .nova-tree__row .nova-button.nova-tree__toggle:disabled { background: transparent; color: var(--nova-color-control-border); }
   .nova-tree__row .nova-button.nova-tree__toggle:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
   .nova-tree__toggle > .nova-button__label { display: inline-flex; }
-  .nova-tree__toggle .nova-icon { display: block; transition: transform var(--nova-duration) ease; }
+  .nova-tree__toggle .nova-icon { display: block; transition: transform var(--nova-duration) var(--nova-ease-standard); }
   .nova-tree__toggle:dir(rtl) .nova-icon { transform: scaleX(-1); }
   .nova-tree__item[aria-expanded="true"] > .nova-tree__row .nova-tree__toggle .nova-icon { transform: rotate(90deg); }
   /* Leaves keep the label column aligned with sibling branches. */
@@ -29,7 +29,7 @@
   /* Compact row actions (24-28px), muted until hovered. */
   .nova-tree__row .nova-action-menu__trigger { flex: 0 1 auto; box-sizing: border-box; min-inline-size: 0; min-block-size: var(--nova-control-sm); padding: 0 var(--nova-space-2); border-color: transparent; background: transparent; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-medium); overflow-wrap: anywhere; }
   .nova-tree__row .nova-action-menu__trigger:hover:not(:disabled) { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-tree__row .nova-action-menu__trigger[aria-expanded="true"] { background: var(--nova-color-border); color: var(--nova-color-text); }
+  .nova-tree__row .nova-action-menu__trigger[aria-expanded="true"] { background: var(--nova-color-surface-active); color: var(--nova-color-text); }
   .nova-tree__row .nova-button:not(.nova-tree__toggle) { flex: none; }
   .nova-tree__status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-1) var(--nova-space-2); padding-block: var(--nova-space-1); padding-inline: 32px var(--nova-space-2); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
   .nova-tree__status > [role="alert"] { margin: 0; color: var(--nova-color-error-text); }

@@ -329,7 +329,8 @@
     "check:showcase": "node scripts/check-showcase.mjs && node --test test/showcase/artifact.test.mjs",
     "test:showcase": "playwright test --config test/showcase/playwright.config.ts",
     "check:adapters": "node scripts/check-p1-adapters.mjs",
-    "check:p2": "node scripts/check-p2-contracts.mjs"
+    "check:p2": "node scripts/check-p2-contracts.mjs",
+    "report:contrast": "node scripts/report-contrast.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",

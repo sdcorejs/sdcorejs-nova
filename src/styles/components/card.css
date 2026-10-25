@@ -65,8 +65,8 @@
   }
 
   .nova-section__title:is(h3, h4) {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: var(--nova-font-size-md);
+    line-height: var(--nova-line-height-md);
   }
 
   .nova-section__description {

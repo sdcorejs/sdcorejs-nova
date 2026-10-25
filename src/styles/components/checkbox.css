@@ -27,15 +27,16 @@
     inline-size: 16px;
     block-size: 16px;
     border: var(--nova-border-width) solid var(--nova-color-control-border);
-    border-radius: 4px;
+    border-radius: var(--nova-radius-xs);
     background: var(--nova-color-background);
+    box-shadow: var(--nova-shadow-xs);
     color: var(--nova-color-on-action);
-    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
+    transition: background-color var(--nova-duration-fast) var(--nova-ease-standard), border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
-  .nova-checkbox:hover:not([data-disabled], [data-readonly]) .nova-checkbox__box,
-  .nova-field--inline:has(> .nova-label:hover) > .nova-checkbox-root > .nova-checkbox:not([data-disabled], [data-readonly]) .nova-checkbox__box {
-    border-color: var(--nova-color-text);
+  .nova-checkbox:hover:not([data-disabled], [data-readonly], [data-checked], [data-indeterminate]) .nova-checkbox__box,
+  .nova-field--inline:has(> .nova-label:hover) > .nova-checkbox-root > .nova-checkbox:not([data-disabled], [data-readonly], [data-checked], [data-indeterminate]) .nova-checkbox__box {
+    border-color: var(--nova-color-control-border-hover);
   }
 
   .nova-checkbox[data-checked] .nova-checkbox__box,
@@ -79,8 +80,9 @@
   }
 
   .nova-checkbox[data-disabled] .nova-checkbox__box {
-    border-color: var(--nova-color-control-border);
+    border-color: var(--nova-color-border-strong);
     background: var(--nova-color-disabled-surface);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
   }
 

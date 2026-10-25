@@ -100,9 +100,9 @@ test('case-p2-d01-r1-browser external collapse preserves the overflow region aft
 test('case-p2-d01-design-r2-browser compact desktop table controls and 44px narrow targets', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 }); await page.goto('/?scenario=p2-d01');
   const table = page.getByRole('table', { name: 'Files', exact: true }), navigation = page.getByRole('navigation', { name: 'Table pagination' }).first();
-  expect(Math.round((await table.getByRole('columnheader', { name: 'Title' }).boundingBox())!.height)).toBe(40);
-  const sort = table.getByRole('button', { name: 'Title', exact: true }); expect(await sort.textContent()).toBe('Title'); expect(Math.round((await sort.boundingBox())!.height)).toBe(28);
-  const expand = table.getByRole('button', { name: 'Expand row 1', exact: true }); expect(await expand.textContent()).toBe(''); expect(Math.round((await expand.boundingBox())!.width)).toBe(28);
+  expect(Math.round((await table.getByRole('columnheader', { name: 'Title' }).boundingBox())!.height)).toBe(36);
+  const sort = table.getByRole('button', { name: 'Title', exact: true }); expect(await sort.textContent()).toBe('Title'); expect(Math.round((await sort.boundingBox())!.height)).toBe(24);
+  const expand = table.getByRole('button', { name: 'Expand row 1', exact: true }); expect(await expand.textContent()).toBe(''); expect(Math.round((await expand.boundingBox())!.width)).toBe(24);
   for (const name of ['Previous page', 'Next page']) { const button = navigation.getByRole('button', { name }), box = (await button.boundingBox())!; expect(await button.textContent()).toBe(''); expect(Math.round(box.width)).toBe(28); expect(Math.round(box.height)).toBe(28); }
   await page.setViewportSize({ width: 320, height: 740 }); await page.getByRole('button', { name: 'Toggle mobile renderer' }).click(); await expect(table).toBeVisible();
   const [previous, next] = await Promise.all(['Previous page', 'Next page'].map(name => navigation.getByRole('button', { name }).boundingBox()));
@@ -115,7 +115,7 @@ test('case-p2-d01-design-r2-browser compact desktop table controls and 44px narr
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
 
-test('case-p2-d01-q7-q8-browser disclosure follows selection, details span the table and row actions are a 28px icon', async ({ page }) => {
+test('case-p2-d01-q7-q8-browser disclosure follows selection, details span the table and row actions are a 24px (xs) icon', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 }); await page.goto('/?scenario=p2-d01'); await page.getByRole('button', { name: 'Toggle mobile renderer' }).click();
   const table = page.getByRole('table', { name: 'Files', exact: true }), expand = table.getByRole('button', { name: 'Expand row 1', exact: true });
   const select = (await table.getByRole('checkbox', { name: 'Select row 1', exact: true }).boundingBox())!, toggle = (await expand.boundingBox())!, title = (await table.getByRole('cell', { name: 'Number zero', exact: true }).boundingBox())!;
@@ -125,7 +125,7 @@ test('case-p2-d01-q7-q8-browser disclosure follows selection, details span the t
   expect(Math.round(detailBox.width)).toBe(Math.round(tableBox.width)); expect(detailBox.y).toBeGreaterThan(title.y);
   await expect(table.getByRole('button', { name: 'Collapse row 1', exact: true })).toHaveAttribute('aria-controls', /.+/);
   const actions = table.getByRole('button', { name: 'Row actions 1', exact: true }), box = (await actions.boundingBox())!;
-  expect(await actions.textContent()).toBe(''); expect(Math.round(box.width)).toBe(28); expect(Math.round(box.height)).toBe(28);
+  expect(await actions.textContent()).toBe(''); expect(Math.round(box.width)).toBe(24); expect(Math.round(box.height)).toBe(24);
   await page.setViewportSize({ width: 320, height: 740 }); const narrow = (await actions.boundingBox())!;
   expect(narrow.width).toBeGreaterThanOrEqual(44); expect(narrow.height).toBeGreaterThanOrEqual(44);
 });

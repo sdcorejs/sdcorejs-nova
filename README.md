@@ -11,6 +11,7 @@ Trạng thái: P0 (12 dossier) đã merge tại `c7e4bbbf5a948208618bd4b54e492bd
 - [API và tích hợp P1](docs/nova/p1-contract.vi.md)
 - [Phạm vi và kiểm chứng P1](docs/nova/p1-plan.vi.md)
 - [API, tích hợp và giới hạn kiểm chứng P2](docs/nova/p2-implementation.vi.md)
+- [Theme Nova v2: foundations và component](docs/nova/design-system-v2.vi.md)
 
 Tài liệu có 59 spec, architecture/conventions candidate, inventory provenance và review độc lập. API P0/P1/P2 có source local và declaration exports; P1/P2 chưa merge hoặc phát hành. P2 bổ sung 22 subpath và 16 stylesheet component; adapter storage chỉ nằm tại `@sdcorejs/nova/adapters/storage`. Revision online không được xác minh lại trong đợt local này.
 

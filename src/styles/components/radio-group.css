@@ -49,12 +49,13 @@
     border: var(--nova-border-width) solid var(--nova-color-control-border);
     border-radius: 50%;
     background: var(--nova-color-background);
+    box-shadow: var(--nova-shadow-xs);
     grid-area: 1 / 1;
-    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
+    transition: background-color var(--nova-duration-fast) var(--nova-ease-standard), border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
-  .nova-radio-option:hover > .nova-radio:not([data-disabled], [data-readonly])::before {
-    border-color: var(--nova-color-text);
+  .nova-radio-option:hover > .nova-radio:not([data-disabled], [data-readonly], [data-checked])::before {
+    border-color: var(--nova-color-control-border-hover);
   }
 
   /* Checked matches Checkbox: filled action circle, 8px on-action dot. */
@@ -90,8 +91,9 @@
   }
 
   .nova-radio[data-disabled]::before {
-    border-color: var(--nova-color-control-border);
+    border-color: var(--nova-color-border-strong);
     background: var(--nova-color-disabled-surface);
+    box-shadow: none;
   }
 
   .nova-radio[data-disabled] .nova-radio__dot {

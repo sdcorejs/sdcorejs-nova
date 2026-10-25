@@ -1,18 +1,18 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
-  /* Track 36 (1px border, 2px padding, 30px items); coarse 44. Every item is
+  /* Track 32 (1px border, 2px padding, 26px items); coarse 44. Every item is
      weight 500 so selecting one never changes its width. */
   .nova-segmented {
     display: inline-flex;
     flex-wrap: wrap;
     align-items: stretch;
-    gap: 2px;
+    gap: var(--nova-space-0-5);
     box-sizing: border-box;
     min-inline-size: 0;
     max-inline-size: 100%;
     min-block-size: var(--nova-control-md);
-    padding: 2px;
+    padding: var(--nova-space-0-5);
     border: var(--nova-border-width) solid transparent;
     border-radius: var(--nova-radius-control);
     color: var(--nova-color-text);
@@ -21,13 +21,15 @@
     line-height: var(--nova-line-height-body);
   }
 
+  /* Light: a muted track (shadcn tabs list); the selected segment lifts with shadow-xs. */
   .nova-segmented--light {
-    background-color: var(--nova-color-surface);
+    background-color: var(--nova-color-surface-hover);
     border-color: var(--nova-color-border);
   }
 
   .nova-segmented--outline {
     border-color: var(--nova-color-control-border);
+    box-shadow: var(--nova-shadow-xs);
   }
 
   .nova-segmented--vertical {
@@ -54,15 +56,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--nova-space-1-5);
     box-sizing: border-box;
-    min-inline-size: 30px;
+    min-inline-size: calc(var(--nova-control-md) - 2 * (var(--nova-space-0-5) + var(--nova-border-width)));
     max-inline-size: 100%;
-    min-block-size: 30px;
+    min-block-size: calc(var(--nova-control-md) - 2 * (var(--nova-space-0-5) + var(--nova-border-width)));
     margin: 0;
-    padding: 0 10px;
+    padding: 0 var(--nova-space-2-5);
     border: var(--nova-border-width) solid transparent;
-    border-radius: 4px;
+    border-radius: var(--nova-radius-xs);
     background-color: transparent;
     color: var(--nova-color-text-muted);
     font: inherit;
@@ -99,6 +101,7 @@
   .nova-segmented__item[aria-pressed="true"] {
     background-color: var(--nova-color-background);
     border-color: var(--nova-color-control-border);
+    box-shadow: var(--nova-shadow-xs);
     color: var(--nova-color-text);
   }
 
@@ -117,6 +120,7 @@
   .nova-segmented__item:disabled:is([aria-checked="true"], [aria-pressed="true"]) {
     background-color: var(--nova-color-disabled-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
   }
 
@@ -185,7 +189,7 @@
   }
 
   /* Coarse: a 44px track whose items are 44px-tall elements; a transparent 3px
-     border keeps the visible segment inset as in the 36px track. */
+     border keeps the visible segment inset as in the 32px track. */
   @media (max-width: 640px), (pointer: coarse) {
     .nova-segmented {
       min-block-size: var(--nova-hit-target);
@@ -205,7 +209,7 @@
     .nova-segmented--horizontal > .nova-segmented__item {
       margin-block: calc(-1 * var(--nova-border-width));
       border: 3px solid transparent;
-      border-radius: 7px;
+      border-radius: calc(var(--nova-radius-xs) + 3px);
       background-clip: padding-box;
     }
 

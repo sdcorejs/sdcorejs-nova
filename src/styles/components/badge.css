@@ -1,22 +1,22 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
-  /* Fixed 22px pill, one line: a long label is truncated with an ellipsis (the full
-     text stays in the DOM / accessible name). The transparent border only shows in
-     forced colors. */
+  /* v2: fixed 20px pill, 12/16 500, one line: a long label is truncated with an
+     ellipsis (the full text stays in the DOM / accessible name). Tone badges draw a
+     tone border so the pill keeps its shape on the dark 12% tint surfaces. */
   .nova-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--nova-space-1);
     box-sizing: border-box;
     max-inline-size: 100%;
-    block-size: 22px;
+    block-size: calc(var(--nova-line-height-xs) + 2 * var(--nova-space-0-5));
     padding: 0 var(--nova-space-2);
     border: var(--nova-border-width) solid transparent;
-    border-radius: 11px;
+    border-radius: var(--nova-radius-full);
     font-family: var(--nova-font-family);
-    font-size: var(--nova-font-size-label);
-    line-height: var(--nova-line-height-label);
+    font-size: var(--nova-font-size-xs);
+    line-height: var(--nova-line-height-xs);
     font-weight: var(--nova-font-weight-medium);
     white-space: nowrap;
     vertical-align: middle;
@@ -25,8 +25,8 @@
   .nova-badge__icon {
     display: inline-flex;
     flex: none;
-    inline-size: var(--nova-icon-sm);
-    block-size: var(--nova-icon-sm);
+    inline-size: var(--nova-icon-xs);
+    block-size: var(--nova-icon-xs);
   }
 
   .nova-badge__icon > svg {
@@ -41,26 +41,31 @@
   }
 
   .nova-badge--neutral {
+    border-color: var(--nova-color-border);
     background: var(--nova-color-surface-hover);
     color: var(--nova-color-text-muted);
   }
 
   .nova-badge--success {
+    border-color: var(--nova-color-success-border);
     background: var(--nova-color-success-surface);
     color: var(--nova-color-success-text);
   }
 
   .nova-badge--warning {
+    border-color: var(--nova-color-warning-border);
     background: var(--nova-color-warning-surface);
     color: var(--nova-color-warning-text);
   }
 
   .nova-badge--error {
+    border-color: var(--nova-color-error-border);
     background: var(--nova-color-error-surface);
     color: var(--nova-color-error-text);
   }
 
   .nova-badge--info {
+    border-color: var(--nova-color-info-border);
     background: var(--nova-color-info-surface);
     color: var(--nova-color-info-text);
   }

@@ -106,12 +106,12 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    inline-size: 24px;
-    block-size: 24px;
+    inline-size: var(--nova-control-xs);
+    block-size: var(--nova-control-xs);
     margin: 0;
     padding: 0;
     border: 0;
-    border-radius: 4px;
+    border-radius: var(--nova-radius-xs);
     background: transparent;
     background-clip: padding-box;
     color: var(--nova-color-text);
@@ -131,7 +131,7 @@
 
   .nova-breadcrumb__toggle:active,
   .nova-breadcrumb__toggle[aria-expanded="true"] {
-    background-color: var(--nova-color-border);
+    background-color: var(--nova-color-surface-active);
   }
 
   .nova-breadcrumb__toggle:focus-visible {

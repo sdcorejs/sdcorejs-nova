@@ -18,7 +18,7 @@ const check = (css: string, kind: Kind = 'component') => checkCss(css, { kind, f
 describe('check-css positive controls', () => {
   it('accepts a scoped component stylesheet with exact light fallbacks', () => {
     const css = component(`
-      .nova-button { color: var(--nova-color-text, #171717); padding: var(--nova-space-2, 8px); }
+      .nova-button { color: var(--nova-color-text, #17171a); padding: var(--nova-space-2, 8px); }
       .nova-button:where([data-disabled]) > svg { inline-size: 1em; }
       @media (forced-colors: active) { .nova-button:focus-visible { outline-color: CanvasText; } }
       @media (prefers-reduced-motion: reduce) { .nova-button { transition: none; } }`);
@@ -89,7 +89,7 @@ describe('build-css fallback injection', () => {
 
 describe('check-css untyped declaration fallbacks', () => {
   it('treats var() in properties lightningcss keeps as untyped (e.g. outline-offset) as normal declarations', () => {
-    const css = component('.nova-a:focus-visible { outline-offset: var(--nova-focus-offset, 2px); outline: var(--nova-focus-width, 2px) solid var(--nova-color-focus-ring, #171717); }');
+    const css = component('.nova-a:focus-visible { outline-offset: var(--nova-focus-offset, 2px); outline: var(--nova-focus-width, 2px) solid var(--nova-color-focus-ring, #17171a); }');
     expect(check(css)).toEqual([]);
     expect(check(component('.nova-a { outline-offset: var(--nova-focus-offset); }')).join('\n')).toMatch(/fallback/);
   });
@@ -124,7 +124,7 @@ describe('check-css guaranteed scope', () => {
 
   it('keeps guaranteed scopes accepted', () => {
     const css = component(`
-      .nova-a:is(.nova-b, .nova-c) { color: var(--nova-color-text, #171717); }
+      .nova-a:is(.nova-b, .nova-c) { color: var(--nova-color-text, #17171a); }
       :where(.nova-a, .nova-b) > svg { inline-size: 1em; }
       .nova-a:not([data-x]) .nova-b { inline-size: 1em; }
       .nova-a:has(> svg) { inline-size: 1em; }`);
@@ -162,7 +162,7 @@ describe('check-css guaranteed scope (round 2 R4)', () => {
       .nova-a > .x ~ .y { inline-size: 1em; }
       .nova-a + .nova-b { inline-size: 1em; }
       .nova-a::before { content: ""; }
-      .nova-a > .x::placeholder { color: var(--nova-color-text, #171717); }
+      .nova-a > .x::placeholder { color: var(--nova-color-text, #17171a); }
       :is(.nova-a .x, .nova-b > .z) + .y { inline-size: 1em; }
       .x:is(.nova-a) { inline-size: 1em; }`);
     expect(check(css)).toEqual([]);

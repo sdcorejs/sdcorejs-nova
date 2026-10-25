@@ -34,8 +34,8 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    inline-size: 40px;
-    block-size: 40px;
+    inline-size: var(--nova-control-lg);
+    block-size: var(--nova-control-lg);
     margin-block-end: var(--nova-space-2);
     border-radius: var(--nova-radius-popup);
     background: var(--nova-color-error-surface);
@@ -113,7 +113,7 @@
     text-align: end;
   }
 
-  /* 6px borderless track (radius 3) with an action-coloured fill. */
+  /* 6px borderless pill track with an action-coloured fill. */
   .nova-progress__bar {
     grid-column: 1 / -1;
     grid-row: 2;
@@ -122,24 +122,24 @@
     inline-size: 100%;
     block-size: 6px;
     border: 0;
-    border-radius: 3px;
+    border-radius: var(--nova-radius-full);
     background: var(--nova-color-surface-hover);
     color: var(--nova-color-action);
     overflow: hidden;
   }
 
   .nova-progress__bar::-webkit-progress-bar {
-    border-radius: 3px;
+    border-radius: var(--nova-radius-full);
     background: var(--nova-color-surface-hover);
   }
 
   .nova-progress__bar::-webkit-progress-value {
-    border-radius: 3px;
+    border-radius: var(--nova-radius-full);
     background: var(--nova-color-action);
   }
 
   .nova-progress__bar::-moz-progress-bar {
-    border-radius: 3px;
+    border-radius: var(--nova-radius-full);
     background: var(--nova-color-action);
   }
 

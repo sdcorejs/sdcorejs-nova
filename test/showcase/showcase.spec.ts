@@ -28,9 +28,9 @@ test('compact navigation keeps restrained selected, hover and focus states in bo
     const fg=rgb(css.color),bg=rgb(css.backgroundColor),a=luminance(fg),b=luminance(bg);
     return {height:el.getBoundingClientRect().height,padding:css.paddingInlineStart,shadow:css.boxShadow,weight:css.fontWeight,background:css.backgroundColor,backgroundRgb:bg,surface:nav.backgroundColor,contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),icon:getComputedStyle(el.querySelector('path')!).stroke,color:css.color};
    });
-   if(width>=900){expect(metrics.height).toBeGreaterThanOrEqual(36);expect(metrics.height).toBeLessThanOrEqual(40);}else expect(metrics.height).toBeGreaterThanOrEqual(44);
+   if(width>=900){expect(metrics.height).toBeGreaterThanOrEqual(32);expect(metrics.height).toBeLessThanOrEqual(36);}else expect(metrics.height).toBeGreaterThanOrEqual(44);
    expect(metrics.padding).toBe('10px');expect(metrics.shadow).toBe('none');expect(metrics.weight).toBe('500');expect(metrics.background).not.toBe(metrics.surface);expect(metrics.backgroundRgb[3]).toBe(255);expect(Math.max(...metrics.backgroundRgb.slice(0,3))-Math.min(...metrics.backgroundRgb.slice(0,3))).toBeLessThanOrEqual(8);expect(metrics.contrast).toBeGreaterThanOrEqual(4.5);expect(metrics.icon).toBe(metrics.color);await expect(host.locator('.showcase-nav-dot')).toHaveCount(0);
-   const rows=await host.locator('.showcase-navigation a').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().height));for(const height of rows)expect(height).toBeGreaterThanOrEqual(width<900?44:36);
+   const rows=await host.locator('.showcase-navigation a').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().height));for(const height of rows)expect(height).toBeGreaterThanOrEqual(width<900?44:32);
    await link.hover();expect(await link.evaluate(el=>getComputedStyle(el).backgroundColor)).not.toBe(metrics.background);
    await page.mouse.move(0,0);await page.keyboard.press('Tab');await link.focus();await expect(link).toBeFocused();const focus=await link.evaluate(el=>({visible:el.matches(':focus-visible'),width:parseFloat(getComputedStyle(el).outlineWidth),style:getComputedStyle(el).outlineStyle}));expect(focus.visible).toBe(true);expect(focus.width).toBeGreaterThanOrEqual(2);expect(focus.style).toBe('solid');
    if(width<900){await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Mở menu'})).toBeFocused();}
@@ -61,9 +61,9 @@ test('responsive geometry, dark theme, mobile hit targets and single-line breadc
 });
 
 test('P1 pages render in Vietnamese and English on desktop/mobile without overflow',async({page})=>{
- test.setTimeout(60000);const english:Record<string,string>={actions:'Profile actions',navigation:'Onboarding a new hire',overlays:'Contract management',dates:'Schedules and time',feedback:'Notifications and status',utilities:'Everyday utilities'};
+ test.setTimeout(60000);const english:Record<string,string>={profile:'Employee records',actions:'Profile actions',navigation:'Onboarding a new hire',overlays:'Contract management',dates:'Schedules and time',feedback:'Notifications and status',utilities:'Everyday utilities'};
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
- for(const width of [1440,320])for(const route of ['actions','navigation','overlays','dates','feedback','utilities']){
+ for(const width of [1440,320])for(const route of ['profile','actions','navigation','overlays','dates','feedback','utilities']){
   await page.setViewportSize({width,height:900});await page.goto(`./#/${route}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   const vietnamese=page.getByRole('button',{name:'Tiếng Việt',exact:true});if(await vietnamese.isVisible())await vietnamese.click();await page.getByRole('button',{name:'English',exact:true}).click();await expect(page.getByRole('heading',{level:1})).toHaveText(english[route]!);await expect(page.getByRole('button',{name:'Tiếng Việt',exact:true})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  }
@@ -75,11 +75,25 @@ test('P1 light/dark, mobile and 200% layout produce review screenshots',async({p
 
 test('P1 pages retain automated accessibility in light/dark and forced colors',async({page})=>{
  test.setTimeout(120000);
- for(const theme of ['light','dark'])for(const route of ['forms','actions','navigation','overlays','dates','feedback','utilities']){
+ for(const theme of ['light','dark'])for(const route of ['forms','profile','actions','navigation','overlays','dates','feedback','utilities']){
   await page.goto('./?theme='+theme+'#/'+route);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
   expect(result.violations,theme+'/'+route).toEqual([]);
  }
  await page.emulateMedia({forcedColors:'active',reducedMotion:'reduce'});await page.setViewportSize({width:320,height:900});await page.goto('./#/dates');
  await page.getByRole('button',{name:'Mở menu'}).click();const dialog=page.getByRole('dialog',{name:'Khám phá Nova'});await expect(dialog).toBeVisible();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Mở menu'})).toBeFocused();
+});
+
+// Theme Nova v2 reference screen: compact density in both themes, phone width without overflow.
+test('v2 profile screen keeps the compact metrics in light and dark and fits 375px',async({page})=>{
+ for(const theme of ['light','dark']){
+  await page.setViewportSize({width:1280,height:900});await page.goto('./?theme='+theme+'#/profile');await expect(page.getByRole('heading',{level:1})).toHaveText('Hồ sơ nhân sự');
+  const metrics=await page.evaluate(()=>{const box=(selector:string)=>Math.round(document.querySelector(selector)!.getBoundingClientRect().height);return {input:box('form .nova-input'),select:box('form .nova-select__trigger'),button:box('form .nova-button--primary'),header:box('.nova-data-table__table th'),pagination:box('.nova-table-pagination__button'),label:getComputedStyle(document.querySelector('form .nova-label')!).fontWeight};});
+  expect(metrics).toEqual({input:32,select:32,button:32,header:36,pagination:28,label:'500'});
+  // Long cells may wrap (fonts differ per OS) and grow their row; a one-line row is exactly the density height.
+  const shortestRow=()=>page.locator('.nova-data-table__table tbody tr').evaluateAll(rows=>Math.round(Math.min(...rows.map(row=>row.getBoundingClientRect().height))));
+  expect(await shortestRow()).toBe(40);
+  await page.getByRole('radio',{name:'Dày · 32'}).click();await expect.poll(shortestRow).toBe(32);
+  await page.setViewportSize({width:375,height:812});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ }
 });

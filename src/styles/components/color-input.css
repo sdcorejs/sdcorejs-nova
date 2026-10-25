@@ -1,7 +1,7 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
-  /* One 36px control (coarse 44): [hex text][swatch picker 24][clear 24].
+  /* One 32px control (coarse 44): [hex text][swatch picker 24][clear 24].
      DOM and Tab order stay text → picker → clear. */
   .nova-color-input {
     display: flex;
@@ -10,16 +10,17 @@
     box-sizing: border-box;
     min-inline-size: 0;
     min-block-size: var(--nova-control-md);
-    padding-inline-end: 6px;
+    padding-inline-end: var(--nova-space-1-5);
     border: var(--nova-border-width) solid var(--nova-color-control-border);
+    box-shadow: var(--nova-shadow-xs);
     border-radius: var(--nova-radius-control);
     background-color: var(--nova-color-background);
     color: var(--nova-color-text);
-    transition: border-color var(--nova-duration) ease;
+    transition: border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
   .nova-color-input:hover {
-    border-color: var(--nova-color-text-muted);
+    border-color: var(--nova-color-control-border-hover);
   }
 
   .nova-color-input:has(> .nova-color-input__text:focus-visible) {
@@ -34,11 +35,13 @@
   .nova-color-input:has(> .nova-color-input__text:read-only:not(:disabled)) {
     background-color: var(--nova-color-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
   }
 
   .nova-color-input:has(> .nova-color-input__text:disabled) {
     background-color: var(--nova-color-disabled-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
   }
 
@@ -53,6 +56,7 @@
     padding-inline: var(--nova-space-3) var(--nova-space-1);
     border: 0;
     background-color: transparent;
+    box-shadow: none;
     font-variant-numeric: tabular-nums;
   }
 

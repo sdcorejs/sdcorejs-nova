@@ -1,14 +1,15 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
-  /* Round 2: fixed heights 28 / 36 / 44, one line + ellipsis on desktop,
-     weight 500; wrapping comes back at ≤ 640px (C01: long labels wrap on mobile). */
+  /* v2: fixed heights 28 / 32 / 40, one line + ellipsis on desktop, weight 500,
+     16px icons 6px from the label; wrapping comes back at ≤ 640px (C01: long
+     labels wrap on mobile). */
   .nova-button {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--nova-space-1-5);
     box-sizing: border-box;
     block-size: var(--nova-control-md);
     min-inline-size: 0;
@@ -25,18 +26,16 @@
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease, color var(--nova-duration) ease;
+    transition: background-color var(--nova-duration-fast) var(--nova-ease-standard), border-color var(--nova-duration-fast) var(--nova-ease-standard), color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
   .nova-button--sm {
     block-size: var(--nova-control-sm);
-    gap: var(--nova-space-1);
-    padding: 0 10px;
+    padding: 0 var(--nova-space-2-5);
   }
 
   .nova-button--lg {
     block-size: var(--nova-control-lg);
-    gap: var(--nova-space-2);
     padding: 0 var(--nova-space-4);
   }
 
@@ -48,7 +47,7 @@
     white-space: nowrap;
   }
 
-  /* Icons: 16px (20px on lg) in a fixed box, never stretched by the line box. */
+  /* Icons: 16px at every size in a fixed box, never stretched by the line box. */
   .nova-button > svg,
   .nova-button__label > svg,
   .nova-button__icon {
@@ -59,17 +58,9 @@
     vertical-align: -3px;
   }
 
-  .nova-button--lg > svg,
-  .nova-button--lg > .nova-button__label > svg,
-  .nova-button--lg .nova-button__icon {
-    inline-size: var(--nova-icon-lg);
-    block-size: var(--nova-icon-lg);
-    vertical-align: -5px;
-  }
-
   .nova-button__label > svg + *,
   .nova-button__label > * + svg {
-    margin-inline-start: 6px;
+    margin-inline-start: var(--nova-space-1-5);
   }
 
   .nova-button--primary {
@@ -82,13 +73,15 @@
   }
 
   .nova-button--primary:active:not(:disabled, [aria-disabled="true"]) {
-    background-color: var(--nova-color-text-muted);
+    background-color: var(--nova-color-action-active);
   }
 
+  /* Secondary is the default, bordered look: control boundary plus shadow-xs. */
   .nova-button--secondary {
     background-color: var(--nova-color-background);
     color: var(--nova-color-text);
     border-color: var(--nova-color-control-border);
+    box-shadow: var(--nova-shadow-xs);
   }
 
   .nova-button--ghost {
@@ -107,7 +100,7 @@
   .nova-button--ghost[aria-pressed="true"]:not(:disabled),
   .nova-button--secondary[aria-expanded="true"]:not(:disabled),
   .nova-button--ghost[aria-expanded="true"]:not(:disabled) {
-    background-color: var(--nova-color-border);
+    background-color: var(--nova-color-surface-active);
   }
 
   .nova-button--danger {
@@ -116,11 +109,11 @@
   }
 
   .nova-button--danger:hover:not(:disabled, [aria-disabled="true"]) {
-    background-color: color-mix(in srgb, var(--nova-color-danger) 86%, var(--nova-color-text));
+    background-color: var(--nova-color-danger-hover);
   }
 
   .nova-button--danger:active:not(:disabled, [aria-disabled="true"]) {
-    background-color: color-mix(in srgb, var(--nova-color-danger) 72%, var(--nova-color-text));
+    background-color: color-mix(in srgb, var(--nova-color-danger-hover) 85%, var(--nova-color-text));
   }
 
   .nova-button:focus-visible {
@@ -134,6 +127,7 @@
     background-color: var(--nova-color-disabled-surface);
     color: var(--nova-color-disabled-text);
     border-color: transparent;
+    box-shadow: none;
     cursor: not-allowed;
   }
 
@@ -159,7 +153,7 @@
     animation: nova-button-busy 0.8s ease-in-out infinite alternate;
   }
 
-  /* IconButton: square 28 / 36 / 44. */
+  /* IconButton: square 28 / 32 / 40, 16px icon. */
   .nova-icon-button {
     flex: none;
     inline-size: var(--nova-control-md);
@@ -190,22 +184,17 @@
     block-size: var(--nova-icon-sm);
   }
 
-  .nova-icon-button.nova-button--lg .nova-icon-button__icon {
-    inline-size: var(--nova-icon-lg);
-    block-size: var(--nova-icon-lg);
-  }
-
   .nova-icon-button__icon > svg {
     display: block;
     inline-size: 100%;
     block-size: 100%;
   }
 
-  /* Disabled icons use the control boundary color (≥ 3:1), never opacity. */
+  /* Disabled icons use the disabled text color (≥ 4.5:1 on background, surface and disabled-surface), never opacity. */
   .nova-icon-button:disabled,
   .nova-icon-button[aria-disabled="true"]:not(.nova-button--loading) {
     background-color: transparent;
-    color: var(--nova-color-control-border);
+    color: var(--nova-color-disabled-text);
   }
 
   .nova-icon-button.nova-button--secondary:disabled,

@@ -5,7 +5,7 @@
 
   /* Above the frame, DOM order unchanged: a muted status row and an error alert. */
   .nova-data-table > .nova-data-table__status { display: flex; align-items: center; gap: var(--nova-space-2); box-sizing: border-box; min-block-size: var(--nova-control-md); padding-block: var(--nova-space-2); color: var(--nova-color-text-muted); }
-  .nova-data-table__error { display: flex; align-items: center; gap: var(--nova-space-3); margin-block-end: var(--nova-space-3); padding: var(--nova-space-3) var(--nova-space-4); border: var(--nova-border-width) solid color-mix(in srgb, var(--nova-color-error-text) 30%, transparent); border-radius: var(--nova-radius-popup); background: var(--nova-color-error-surface); color: var(--nova-color-text); }
+  .nova-data-table__error { display: flex; align-items: center; gap: var(--nova-space-3); margin-block-end: var(--nova-space-3); padding: var(--nova-space-3) var(--nova-space-4); border: var(--nova-border-width) solid var(--nova-color-error-border); border-radius: var(--nova-radius-card); background: var(--nova-color-error-surface); color: var(--nova-color-text); }
   .nova-data-table__error-icon { flex: none; inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); color: var(--nova-color-error-text); }
   .nova-data-table__error .nova-data-state--error { flex: 1 1 auto; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--nova-space-2) var(--nova-space-3); min-inline-size: 0; padding: 0; text-align: start; }
   .nova-data-table__error .nova-data-state__message { flex: 1 1 12rem; min-inline-size: 0; }
@@ -21,40 +21,50 @@
   .nova-data-table__table { inline-size: 100%; border-collapse: separate; border-spacing: 0; text-align: start; }
   .nova-data-table__table caption { padding: var(--nova-space-3); text-align: start; font-weight: var(--nova-font-weight-strong); overflow-wrap: anywhere; }
   .nova-data-table__table th, .nova-data-table__table td { text-align: start; vertical-align: middle; border-block-end: var(--nova-border-width) solid var(--nova-color-border); }
-  .nova-data-table__table th { box-sizing: border-box; block-size: 40px; padding: 0 var(--nova-space-3); background: var(--nova-color-surface); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); white-space: nowrap; }
-  .nova-data-table__table td { padding: 10px var(--nova-space-3); overflow-wrap: anywhere; }
+  /* v2 density: header 36, rows 40 (dense 32); one-line cells sit centred, longer text grows the row. */
+  .nova-data-table__table th { box-sizing: border-box; block-size: var(--nova-row-header); padding: 0 var(--nova-space-3); background: var(--nova-color-surface); color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); white-space: nowrap; }
+  .nova-data-table__table td { box-sizing: border-box; block-size: var(--nova-row-md); padding: var(--nova-space-2) var(--nova-space-3); overflow-wrap: anywhere; }
+  .nova-data-table--dense .nova-data-table__table td { block-size: var(--nova-row-sm); }
+  .nova-data-table--dense .nova-data-table__table td:not(.nova-data-table__select, .nova-data-table__expand, .nova-data-table__actions) { padding-block: var(--nova-space-1); }
   .nova-data-table__table tbody tr:last-child > td { border-block-end: 0; }
   .nova-data-table__table tbody tr:hover > td { background: var(--nova-color-surface); }
   .nova-data-table__table tbody tr[aria-selected="true"] > td, .nova-data-table__card:has([aria-checked="true"]) { background: var(--nova-color-surface-hover); }
 
-  /* Fixed columns: selection 40, disclosure 40 right after it, row actions 48 at the end. */
-  .nova-data-table__table .nova-data-table__select, .nova-data-table__table .nova-data-table__expand { box-sizing: border-box; inline-size: 40px; min-inline-size: 40px; padding: 0; text-align: center; }
-  .nova-data-table__table .nova-data-table__actions { box-sizing: border-box; inline-size: 48px; min-inline-size: 48px; padding: 0; text-align: center; }
-  .nova-data-table__col-select, .nova-data-table__col-expand { inline-size: 40px; }
-  .nova-data-table__col-actions { inline-size: 48px; }
+  /* Fixed columns: selection 36, disclosure 36 right after it, row actions 40 at the end. */
+  .nova-data-table__table .nova-data-table__select, .nova-data-table__table .nova-data-table__expand { box-sizing: border-box; inline-size: var(--nova-col-select); min-inline-size: var(--nova-col-select); padding: 0; text-align: center; }
+  .nova-data-table__table .nova-data-table__actions { box-sizing: border-box; inline-size: var(--nova-col-actions); min-inline-size: var(--nova-col-actions); padding: 0; text-align: center; }
+  .nova-data-table__col-select, .nova-data-table__col-expand { inline-size: var(--nova-col-select); }
+  .nova-data-table__col-actions { inline-size: var(--nova-col-actions); }
   .nova-data-table__table .nova-data-table__select .nova-checkbox-root { display: flex; justify-content: center; }
   .nova-data-table__table .nova-data-table__expand > .nova-data-table__disclosure, .nova-data-table__table .nova-data-table__actions > .nova-action-menu__trigger { display: flex; margin-inline: auto; }
 
   /* Open details: one full-width row under its row, text aligned with the first data column. */
   .nova-data-table__table tbody tr.nova-data-table__detail-row > td, .nova-data-table__table tbody tr.nova-data-table__detail-row:hover > td { background: var(--nova-color-surface); }
-  .nova-data-table__table .nova-data-table__detail-cell { padding: var(--nova-space-3) var(--nova-space-4) var(--nova-space-4) calc(80px + var(--nova-space-3)); }
+  .nova-data-table__table .nova-data-table__detail-cell { padding: var(--nova-space-3) var(--nova-space-4) var(--nova-space-4) calc(2 * var(--nova-col-select) + var(--nova-space-3)); }
+  /* Buttons inside body cells use the xs size on fine pointers: 24 tall, 8px padding, 13/18 text, 14px icons. */
+  @media (min-width: 641px) and (pointer: fine) {
+    .nova-data-table__table td .nova-button:not(.nova-icon-button) { block-size: var(--nova-control-xs); padding: 0 var(--nova-space-2); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); }
+    .nova-data-table__table td .nova-icon-button { inline-size: var(--nova-control-xs); block-size: var(--nova-control-xs); min-inline-size: var(--nova-control-xs); }
+    .nova-data-table__table td .nova-button :is(.nova-button__icon, .nova-icon-button__icon) { inline-size: var(--nova-icon-xs); block-size: var(--nova-icon-xs); }
+    .nova-data-table__table td .nova-action-menu__trigger.nova-action-menu__trigger--icon { inline-size: var(--nova-control-xs); block-size: var(--nova-control-xs); min-inline-size: var(--nova-control-xs); min-block-size: var(--nova-control-xs); }
+  }
 
-  /* Compact sort control inside the header cell. */
-  .nova-data-table__table .nova-data-table__sort { box-sizing: border-box; min-block-size: var(--nova-control-sm); min-inline-size: 0; max-inline-size: none; margin-inline: -6px; padding: 0 6px; border: 0; border-radius: 4px; background: transparent; color: inherit; font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); white-space: nowrap; text-align: start; }
+  /* Compact sort control inside the 36 header: xs 24, text aligned with the cells below. */
+  .nova-data-table__table .nova-data-table__sort { box-sizing: border-box; block-size: var(--nova-control-xs); min-block-size: var(--nova-control-xs); min-inline-size: 0; max-inline-size: none; margin-inline: calc(-1 * var(--nova-space-1-5)); padding: 0 var(--nova-space-1-5); border: 0; border-radius: var(--nova-radius-xs); box-shadow: none; background: transparent; color: inherit; font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); white-space: nowrap; text-align: start; }
   .nova-data-table__table .nova-data-table__sort:hover { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-data-table__table .nova-data-table__sort:active { background: var(--nova-color-border); }
+  .nova-data-table__table .nova-data-table__sort:active { background: var(--nova-color-surface-active); }
   .nova-data-table__sort .nova-button__label { display: inline-flex; align-items: center; gap: var(--nova-space-1); min-inline-size: 0; }
   .nova-data-table__sort-icon { display: inline-flex; flex: none; inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); color: var(--nova-color-text); }
   .nova-data-table__sort-icon > svg { inline-size: 100%; block-size: 100%; }
   .nova-data-table__sort-icon--none { color: var(--nova-color-control-border); }
 
-  /* Disclosure: ghost 28 icon button, chevron turns down when expanded. */
-  .nova-data-table .nova-data-table__disclosure { box-sizing: border-box; inline-size: var(--nova-control-sm); block-size: var(--nova-control-sm); min-inline-size: var(--nova-control-sm); min-block-size: var(--nova-control-sm); padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text-muted); }
+  /* Disclosure: ghost xs 24 icon button, chevron turns down when expanded. */
+  .nova-data-table .nova-data-table__disclosure { box-sizing: border-box; inline-size: var(--nova-control-xs); block-size: var(--nova-control-xs); min-inline-size: var(--nova-control-xs); min-block-size: var(--nova-control-xs); padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text-muted); }
   .nova-data-table__table .nova-data-table__expand > .nova-data-table__disclosure { display: flex; }
   .nova-data-table .nova-data-table__disclosure:hover { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-data-table .nova-data-table__disclosure:active { background: var(--nova-color-border); }
+  .nova-data-table .nova-data-table__disclosure:active { background: var(--nova-color-surface-active); }
   .nova-data-table__disclosure .nova-icon-button__icon { inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); }
-  .nova-data-table__disclosure .nova-icon { transition: transform var(--nova-duration) ease; }
+  .nova-data-table__disclosure .nova-icon { transition: transform var(--nova-duration) var(--nova-ease-standard); }
   .nova-data-table__disclosure:dir(rtl) .nova-icon { transform: scaleX(-1); }
   .nova-data-table__disclosure[aria-expanded="true"] .nova-icon { transform: rotate(90deg); }
   .nova-data-table__details { min-inline-size: 0; text-align: start; overflow-wrap: anywhere; }
@@ -68,17 +78,18 @@
   .nova-data-table__card > .nova-data-table__details { align-self: stretch; padding: var(--nova-space-3) var(--nova-space-4); border-radius: var(--nova-radius-popup); background: var(--nova-color-surface); }
 
   /* TablePagination: page-size label and Select at the start, row range and icon buttons at the end. */
-  .nova-table-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--nova-space-2) var(--nova-space-4); box-sizing: border-box; min-block-size: 52px; padding: var(--nova-space-3) var(--nova-space-4); color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); font-variant-numeric: tabular-nums; }
+  /* Footer: padding 10/16 around 28px controls, so the bar is 48 plus the frame border. */
+  .nova-table-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--nova-space-2) var(--nova-space-4); box-sizing: border-box; min-block-size: calc(var(--nova-control-sm) + 2 * var(--nova-space-2-5)); padding: var(--nova-space-2-5) var(--nova-space-4); color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); font-variant-numeric: tabular-nums; }
   .nova-table-pagination__size { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nova-space-1) var(--nova-space-2); min-inline-size: 0; }
   .nova-table-pagination__size-label { min-inline-size: 0; color: var(--nova-color-text-muted); overflow-wrap: anywhere; }
-  .nova-table-pagination__select .nova-input.nova-select__trigger { box-sizing: border-box; min-inline-size: 64px; min-block-size: var(--nova-control-sm); block-size: var(--nova-control-sm); padding-inline: var(--nova-space-2) var(--nova-space-1); font-variant-numeric: tabular-nums; }
+  .nova-table-pagination__select .nova-input.nova-select__trigger { box-sizing: border-box; min-inline-size: calc(2 * var(--nova-space-6)); min-block-size: var(--nova-control-sm); block-size: var(--nova-control-sm); padding-inline: var(--nova-space-2) var(--nova-space-1); font-variant-numeric: tabular-nums; }
   .nova-table-pagination__range { min-inline-size: 0; white-space: nowrap; }
   .nova-table-pagination__nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--nova-space-1) var(--nova-space-4); min-inline-size: 0; margin-inline-start: auto; }
   .nova-table-pagination__buttons { display: flex; align-items: center; gap: var(--nova-space-1); }
   .nova-table-pagination .nova-table-pagination__button { box-sizing: border-box; inline-size: var(--nova-control-sm); block-size: var(--nova-control-sm); min-inline-size: var(--nova-control-sm); min-block-size: var(--nova-control-sm); padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text); }
   .nova-table-pagination .nova-table-pagination__button:hover:not(:disabled) { background: var(--nova-color-surface-hover); }
-  .nova-table-pagination .nova-table-pagination__button:active:not(:disabled) { background: var(--nova-color-border); }
-  .nova-table-pagination .nova-table-pagination__button:disabled { border-color: transparent; background: transparent; color: var(--nova-color-control-border); cursor: not-allowed; }
+  .nova-table-pagination .nova-table-pagination__button:active:not(:disabled) { background: var(--nova-color-surface-active); }
+  .nova-table-pagination .nova-table-pagination__button:disabled { border-color: transparent; background: transparent; color: var(--nova-color-disabled-text); cursor: not-allowed; }
   .nova-table-pagination__button .nova-icon-button__icon { inline-size: var(--nova-icon-sm); block-size: var(--nova-icon-sm); }
   .nova-table-pagination__button .nova-icon:dir(rtl) { transform: scaleX(-1); }
 

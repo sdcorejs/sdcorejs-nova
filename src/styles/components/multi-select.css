@@ -5,7 +5,8 @@
     min-inline-size: 0;
   }
 
-  /* Control: min 36 (coarse 44), wraps chips; MultiSelect reserves 32px for its chevron. */
+  /* Control: min 32 (coarse 44), wraps 24px chips with 3px padding so one line is exactly
+     the control height; MultiSelect reserves the chevron column like Combobox. */
   .nova-multi-select__control {
     position: relative;
     box-sizing: border-box;
@@ -16,23 +17,24 @@
     gap: var(--nova-space-1);
     min-inline-size: 0;
     min-block-size: var(--nova-control-md);
-    padding: var(--nova-space-1);
+    padding: calc((var(--nova-control-md) - var(--nova-control-xs)) / 2 - var(--nova-border-width));
     border: var(--nova-border-width) solid var(--nova-color-control-border);
     border-radius: var(--nova-radius-control);
     background-color: var(--nova-color-background);
+    box-shadow: var(--nova-shadow-xs);
     color: var(--nova-color-text);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
-    transition: border-color var(--nova-duration) ease;
+    transition: border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
   .nova-multi-select__control--picker {
-    padding-inline-end: 32px;
+    padding-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-2-5) + var(--nova-space-1));
   }
 
   .nova-multi-select__control:hover {
-    border-color: var(--nova-color-text-muted);
+    border-color: var(--nova-color-control-border-hover);
   }
 
   .nova-multi-select__control:has(> .nova-multi-select__input:focus-visible) {
@@ -51,26 +53,28 @@
   .nova-multi-select__control:has(> .nova-multi-select__input:read-only:not(:disabled)) {
     background-color: var(--nova-color-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
   }
 
   .nova-multi-select__control[data-disabled] {
     background-color: var(--nova-color-disabled-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
     cursor: not-allowed;
   }
 
-  /* Chip: 26 tall (coarse 32), radius 4, one line with ellipsis. */
+  /* Chip: control-xs 24 (coarse 32), radius 4, muted fill, one line with ellipsis. */
   .nova-multi-select__chip {
     display: inline-flex;
     align-items: center;
     box-sizing: border-box;
     min-inline-size: 0;
     max-inline-size: 100%;
-    block-size: 26px;
+    block-size: var(--nova-control-xs);
     border: var(--nova-border-width) solid var(--nova-color-border);
-    border-radius: 4px;
-    background-color: var(--nova-color-surface);
+    border-radius: var(--nova-radius-xs);
+    background-color: var(--nova-color-surface-hover);
   }
 
   .nova-multi-select__chip-label {
@@ -81,19 +85,20 @@
     white-space: nowrap;
   }
 
+  /* Remove: fills the chip's inner height (22), xs icon 14 with a 1.75 stroke (1.5 optical). */
   .nova-multi-select__remove {
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    inline-size: 24px;
-    block-size: 24px;
+    inline-size: calc(var(--nova-control-xs) - 2 * var(--nova-border-width));
+    block-size: calc(var(--nova-control-xs) - 2 * var(--nova-border-width));
     margin: 0;
-    margin-inline-start: -6px;
+    margin-inline-start: calc(-1 * var(--nova-space-1-5));
     padding: 0;
     border: 0;
-    border-radius: 3px;
+    border-radius: calc(var(--nova-radius-xs) - var(--nova-border-width));
     background-color: transparent;
     color: var(--nova-color-text-muted);
     font: inherit;
@@ -102,13 +107,13 @@
 
   .nova-multi-select__remove > svg {
     display: block;
-    inline-size: 12px;
-    block-size: 12px;
+    inline-size: var(--nova-icon-xs);
+    block-size: var(--nova-icon-xs);
     stroke-width: 1.75;
   }
 
   .nova-multi-select__remove:hover {
-    background-color: var(--nova-color-surface-hover);
+    background-color: var(--nova-color-surface-active);
     color: var(--nova-color-text);
   }
 
@@ -123,7 +128,7 @@
     inline-size: 96px;
     min-inline-size: 96px;
     max-inline-size: 100%;
-    block-size: 26px;
+    block-size: var(--nova-control-xs);
     margin: 0;
     padding: 0 var(--nova-space-1);
     border: 0;
@@ -145,26 +150,29 @@
     cursor: not-allowed;
   }
 
-  /* Decorative chevron anchored to the first line, aligned with Select's. */
+  /* Decorative chevron anchored to the first line, at the same spot as Select's (10 from the inner edge). */
   .nova-multi-select__chevron {
     position: absolute;
-    inset-block-start: 9px;
-    inset-inline-end: 9px;
+    inset-block-start: calc((var(--nova-control-md) - var(--nova-icon-sm)) / 2 - var(--nova-border-width));
+    inset-inline-end: var(--nova-space-2-5);
     display: block;
     inline-size: var(--nova-icon-sm);
     block-size: var(--nova-icon-sm);
     color: var(--nova-color-text-muted);
     pointer-events: none;
-    transition: transform var(--nova-duration) ease;
+    transition: transform var(--nova-duration) var(--nova-ease-standard);
   }
 
   .nova-multi-select__input[aria-expanded="true"] ~ .nova-multi-select__chevron {
     transform: rotate(180deg);
   }
 
-  .nova-multi-select__control[data-disabled] > .nova-multi-select__chevron,
   .nova-multi-select__input:read-only ~ .nova-multi-select__chevron {
     color: var(--nova-color-control-border);
+  }
+
+  .nova-multi-select__control[data-disabled] > .nova-multi-select__chevron {
+    color: var(--nova-color-disabled-text);
   }
 
   .nova-multi-select__disabled-option {
@@ -178,7 +186,7 @@
     z-index: 1;
   }
 
-  /* Popup: radius 8, 1px border, overlay shadow, padding 4, rows 36 (coarse 44). */
+  /* Popup: radius 8, 1px border, shadow-md, padding 4, rows 32 (coarse 44), rows radius 4. */
   .nova-multi-select__popup {
     box-sizing: border-box;
     min-inline-size: var(--anchor-width);
@@ -188,8 +196,8 @@
     padding: var(--nova-space-1);
     border: var(--nova-border-width) solid var(--nova-color-border);
     border-radius: var(--nova-radius-popup);
-    background-color: var(--nova-color-background);
-    box-shadow: var(--nova-shadow-overlay);
+    background-color: var(--nova-color-popover);
+    box-shadow: var(--nova-shadow-md);
     color: var(--nova-color-text);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
@@ -204,9 +212,9 @@
     box-sizing: border-box;
     inline-size: 100%;
     min-block-size: var(--nova-control-md);
-    padding: var(--nova-space-2) var(--nova-space-2) var(--nova-space-2) var(--nova-space-3);
+    padding: var(--nova-space-1-5) var(--nova-space-2);
     border: 0;
-    border-radius: 4px;
+    border-radius: var(--nova-radius-xs);
     background-color: transparent;
     color: inherit;
     font: inherit;
@@ -259,34 +267,34 @@
   @media (max-width: 640px), (pointer: coarse) {
     .nova-multi-select__control {
       min-block-size: var(--nova-hit-target);
-      padding: 5px;
+      padding: calc((var(--nova-hit-target) - var(--nova-control-md)) / 2 - var(--nova-border-width));
       gap: var(--nova-space-3) var(--nova-space-2);
     }
 
     .nova-multi-select__control--picker {
-      padding-inline-end: 36px;
+      padding-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-3) + var(--nova-space-2));
     }
 
     .nova-multi-select__chip {
-      block-size: 32px;
+      block-size: var(--nova-control-md);
     }
 
     .nova-multi-select__remove {
       inline-size: var(--nova-hit-target);
       block-size: var(--nova-hit-target);
-      margin: -6px;
+      margin: calc((var(--nova-control-md) - var(--nova-hit-target)) / 2);
       margin-inline-start: calc(-1 * var(--nova-space-2));
     }
 
     .nova-multi-select__input {
-      block-size: 32px;
+      block-size: var(--nova-control-md);
       font-size: var(--nova-font-size-input-mobile);
       line-height: var(--nova-line-height-input-mobile);
     }
 
     .nova-multi-select__chevron {
-      inset-block-start: 13px;
-      inset-inline-end: 11px;
+      inset-block-start: calc((var(--nova-hit-target) - var(--nova-icon-sm)) / 2 - var(--nova-border-width));
+      inset-inline-end: var(--nova-space-3);
     }
 
     .nova-multi-select__option {

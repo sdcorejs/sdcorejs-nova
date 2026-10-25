@@ -4,9 +4,12 @@ import { describe, expect, it } from 'vitest';
 import {
   COLOR_TOKEN_NAMES,
   CONTROL_BOUNDARY_TOKEN,
+  EFFECT_TOKEN_NAMES,
   colorTokens,
   contrastRatio,
+  effectTokens,
   generateTokensCss,
+  grayRamp,
   lightFallbacks,
   meetsContrast,
   scaleTokens,
@@ -59,6 +62,38 @@ describe('token palette contrast', () => {
     expect(meetsContrast(ratio(theme, 'disabled-text', 'disabled-surface'), 4.5)).toBe(true);
     expect(meetsContrast(ratio(theme, 'on-action', 'action'), 4.5)).toBe(true);
     expect(meetsContrast(ratio(theme, 'on-danger', 'danger'), 4.5)).toBe(true);
+  });
+
+  // v2 interaction states keep their text pairs: hover/pressed fills, popups, action states.
+  it.each(THEMES)('v2 state fills keep text ≥ 4.5:1 (%s)', (theme) => {
+    for (const fg of ['text', 'text-muted'] as const) {
+      for (const bg of ['surface-hover', 'surface-active', 'popover'] as const) {
+        expect(meetsContrast(ratio(theme, fg, bg), 4.5), `${fg} on ${bg}`).toBe(true);
+      }
+    }
+    for (const bg of ['action-hover', 'action-active'] as const) {
+      expect(meetsContrast(ratio(theme, 'on-action', bg), 4.5), `on-action on ${bg}`).toBe(true);
+    }
+    expect(meetsContrast(ratio(theme, 'on-danger', 'danger-hover'), 4.5)).toBe(true);
+    expect(meetsContrast(ratio(theme, 'danger', 'background'), 4.5)).toBe(true);
+  });
+
+  it.each(THEMES)('control-border-hover stays a ≥ 3:1 boundary and differs from rest (%s)', (theme) => {
+    for (const bg of ['background', 'surface'] as const) {
+      expect(meetsContrast(ratio(theme, 'control-border-hover', bg), 3), `control-border-hover on ${bg}`).toBe(true);
+    }
+    expect(colorTokens[theme]['control-border-hover']).not.toBe(colorTokens[theme]['control-border']);
+  });
+
+  it('every neutral token points at a step of the gray ramp', () => {
+    const ramp = new Set<string>(Object.values(grayRamp));
+    const tonal = /^(error|success|warning|info|tip)-|^(danger|danger-hover|on-danger)$/;
+    for (const theme of THEMES) {
+      for (const name of COLOR_TOKEN_NAMES) {
+        if (tonal.test(name)) continue;
+        expect(ramp.has(colorTokens[theme][name]), `${theme}.${name}`).toBe(true);
+      }
+    }
   });
 
   it.each(THEMES)('control-border ≥ 3:1 vs background and surface (%s)', (theme) => {
@@ -136,15 +171,36 @@ describe('tokens.css generator', () => {
   it('fallback map equals light values', () => {
     const fallbacks = lightFallbacks();
     for (const name of COLOR_TOKEN_NAMES) expect(fallbacks[`--nova-color-${name}`]).toBe(colorTokens.light[name]);
+    for (const name of EFFECT_TOKEN_NAMES) expect(fallbacks[`--nova-${name}`]).toBe(effectTokens.light[name]);
     for (const [name, value] of Object.entries(scaleTokens)) expect(fallbacks[`--nova-${name}`]).toBe(value);
-    expect(Object.keys(fallbacks).length).toBe(COLOR_TOKEN_NAMES.length + Object.keys(scaleTokens).length);
+    expect(Object.keys(fallbacks).length)
+      .toBe(COLOR_TOKEN_NAMES.length + EFFECT_TOKEN_NAMES.length + Object.keys(scaleTokens).length);
+  });
+
+  it('effects (shadows, backdrop) are declared per theme', () => {
+    const { inside } = layerBlock(css, 'nova.tokens');
+    for (const name of EFFECT_TOKEN_NAMES) {
+      expect(inside).toContain(`--nova-${name}: ${effectTokens.light[name]};`);
+      expect(inside).toContain(`--nova-${name}: ${effectTokens.dark[name]};`);
+    }
+    expect(effectTokens.light['shadow-overlay']).toBe(effectTokens.light['shadow-md']);
+    expect(effectTokens.dark['shadow-overlay']).toBe(effectTokens.dark['shadow-md']);
+  });
+
+  it('v2 compact density: controls 24/28/32/40, hit target 44, table 36/40/32', () => {
+    expect([scaleTokens['control-xs'], scaleTokens['control-sm'], scaleTokens['control-md'], scaleTokens['control-lg']])
+      .toEqual(['24px', '28px', '32px', '40px']);
+    expect(scaleTokens['hit-target']).toBe('44px');
+    expect([scaleTokens['row-header'], scaleTokens['row-md'], scaleTokens['row-sm']]).toEqual(['36px', '40px', '32px']);
+    expect([scaleTokens['radius-xs'], scaleTokens['radius-control'], scaleTokens['radius-card'], scaleTokens['radius-overlay']])
+      .toEqual(['4px', '6px', '8px', '10px']);
   });
 });
 
 // every surface a control can sit on (INV-013).
 describe('control boundary on every supported surface', () => {
   const CONTROL_SURFACES = [
-    'background', 'surface', 'surface-hover', 'disabled-surface',
+    'background', 'surface', 'surface-hover', 'popover', 'disabled-surface',
     'error-surface', 'success-surface', 'warning-surface', 'info-surface', 'tip-surface',
   ] as const;
 

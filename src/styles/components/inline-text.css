@@ -69,6 +69,7 @@
 
   .nova-inline-text--seamless > .nova-inline-text__input:not(:disabled, [aria-invalid="true"]) {
     border-color: transparent;
+    box-shadow: none;
   }
 
   .nova-inline-text--seamless > .nova-inline-text__input:not(:disabled):focus-visible {

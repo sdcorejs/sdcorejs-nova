@@ -76,31 +76,31 @@
   }
 
   .nova-alert--tip {
-    border-color: color-mix(in srgb, var(--nova-color-tip-text) 30%, transparent);
+    border-color: var(--nova-color-tip-border);
     background: var(--nova-color-tip-surface);
     color: var(--nova-color-tip-text);
   }
 
   .nova-alert--info {
-    border-color: color-mix(in srgb, var(--nova-color-info-text) 30%, transparent);
+    border-color: var(--nova-color-info-border);
     background: var(--nova-color-info-surface);
     color: var(--nova-color-info-text);
   }
 
   .nova-alert--success {
-    border-color: color-mix(in srgb, var(--nova-color-success-text) 30%, transparent);
+    border-color: var(--nova-color-success-border);
     background: var(--nova-color-success-surface);
     color: var(--nova-color-success-text);
   }
 
   .nova-alert--warning {
-    border-color: color-mix(in srgb, var(--nova-color-warning-text) 30%, transparent);
+    border-color: var(--nova-color-warning-border);
     background: var(--nova-color-warning-surface);
     color: var(--nova-color-warning-text);
   }
 
   .nova-alert--error {
-    border-color: color-mix(in srgb, var(--nova-color-error-text) 30%, transparent);
+    border-color: var(--nova-color-error-border);
     background: var(--nova-color-error-surface);
     color: var(--nova-color-error-text);
   }

@@ -1,19 +1,19 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
   .nova-calendar-chips { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
-  /* One 36px control: 26px chips, the input and a 24px calendar button inside the frame. */
-  .nova-calendar-chips__control { position: relative; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; gap: var(--nova-space-1); min-inline-size: 0; min-block-size: var(--nova-control-md); padding: 4px 34px 4px 4px; border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); transition: border-color var(--nova-duration) ease; }
-  .nova-calendar-chips:not([data-disabled]) .nova-calendar-chips__control:hover { border-color: var(--nova-color-text-muted); }
+  /* One 32px control: 24px chips, the input and a 24px calendar button inside the frame (3px inset, like MultiSelect). */
+  .nova-calendar-chips__control { position: relative; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; gap: var(--nova-space-1); min-inline-size: 0; min-block-size: var(--nova-control-md); padding: calc((var(--nova-control-md) - var(--nova-control-xs)) / 2 - var(--nova-border-width)) calc(var(--nova-control-xs) + 2 * calc((var(--nova-control-md) - var(--nova-control-xs)) / 2 - var(--nova-border-width))) calc((var(--nova-control-md) - var(--nova-control-xs)) / 2 - var(--nova-border-width)) calc((var(--nova-control-md) - var(--nova-control-xs)) / 2 - var(--nova-border-width)); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background: var(--nova-color-background); transition: border-color var(--nova-duration-fast) var(--nova-ease-standard); }
+  .nova-calendar-chips:not([data-disabled]) .nova-calendar-chips__control:hover { border-color: var(--nova-color-control-border-hover); }
   .nova-calendar-chips[data-disabled] .nova-calendar-chips__control { border-color: var(--nova-color-border); background: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); cursor: not-allowed; }
-  .nova-calendar-chips__chip { display: inline-flex; align-items: center; box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; block-size: 26px; padding-inline-start: var(--nova-space-2); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: 4px; background: var(--nova-color-surface); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-calendar-chips__chip { display: inline-flex; align-items: center; box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; block-size: var(--nova-control-xs); padding-inline-start: var(--nova-space-2); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-xs); background: var(--nova-color-surface-hover); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
   .nova-calendar-chips__chip > span { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .nova-calendar-chips[data-disabled] .nova-calendar-chips__chip { padding-inline-end: var(--nova-space-2); color: var(--nova-color-disabled-text); }
-  .nova-calendar-chips__chip > button { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; inline-size: 24px; block-size: 24px; margin: 0; margin-inline-start: 2px; padding: 0; border: 0; border-radius: 3px; background: transparent; background-clip: padding-box; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; }
-  .nova-calendar-chips__chip > button > .nova-icon { inline-size: 12px; block-size: 12px; stroke-width: 1.75; }
-  .nova-calendar-chips__chip > button:hover { background-color: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-calendar-chips__chip > button:active { background-color: var(--nova-color-border); color: var(--nova-color-text); }
+  .nova-calendar-chips__chip > button { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; inline-size: calc(var(--nova-control-xs) - 2 * var(--nova-border-width)); block-size: calc(var(--nova-control-xs) - 2 * var(--nova-border-width)); margin: 0; margin-inline-start: var(--nova-space-0-5); padding: 0; border: 0; border-radius: calc(var(--nova-radius-xs) - var(--nova-border-width)); background: transparent; background-clip: padding-box; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; }
+  .nova-calendar-chips__chip > button > .nova-icon { inline-size: var(--nova-icon-xs); block-size: var(--nova-icon-xs); stroke-width: 1.75; }
+  .nova-calendar-chips__chip > button:hover { background-color: var(--nova-color-surface-active); color: var(--nova-color-text); }
+  .nova-calendar-chips__chip > button:active { background-color: var(--nova-color-surface-active); color: var(--nova-color-text); }
   .nova-calendar-chips__chip > button:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
-  .nova-calendar-chips__input { flex: 1 1 96px; box-sizing: border-box; inline-size: 0; min-inline-size: 96px; block-size: 26px; margin: 0; padding: 0 var(--nova-space-1); border: 0; border-radius: 4px; background: transparent; color: inherit; font: inherit; font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
+  .nova-calendar-chips__input { flex: 1 1 96px; box-sizing: border-box; inline-size: 0; min-inline-size: 96px; block-size: var(--nova-control-xs); margin: 0; padding: 0 var(--nova-space-1); border: 0; border-radius: var(--nova-radius-xs); background: transparent; color: inherit; font: inherit; font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
   .nova-calendar-chips__input:disabled { cursor: not-allowed; }
   .nova-calendar-chips__input:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
   /* The ring belongs to the whole control frame when the browser can tell. */
@@ -21,13 +21,13 @@
     .nova-calendar-chips__control:has(> .nova-calendar-chips__input:focus-visible) { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
     .nova-calendar-chips__input:focus-visible { outline: none; }
   }
-  .nova-calendar-chips__trigger { position: absolute; inset-block-start: 5px; inset-inline-end: 5px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: 24px; block-size: 24px; margin: 0; padding: 0; border: 0; border-radius: 4px; background: transparent; background-clip: padding-box; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; }
+  .nova-calendar-chips__trigger { position: absolute; inset-block-start: calc((var(--nova-control-md) - var(--nova-control-xs)) / 2 - var(--nova-border-width)); inset-inline-end: calc((var(--nova-control-md) - var(--nova-control-xs)) / 2 - var(--nova-border-width)); display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: var(--nova-control-xs); block-size: var(--nova-control-xs); margin: 0; padding: 0; border: 0; border-radius: var(--nova-radius-xs); background: transparent; background-clip: padding-box; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; }
   .nova-calendar-chips__trigger:hover:not(:disabled, [data-disabled]) { background-color: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-calendar-chips__trigger:active:not(:disabled, [data-disabled]), .nova-calendar-chips__trigger[aria-expanded="true"] { background-color: var(--nova-color-border); color: var(--nova-color-text); }
-  .nova-calendar-chips__trigger:disabled, .nova-calendar-chips__trigger[data-disabled] { color: var(--nova-color-control-border); cursor: not-allowed; }
+  .nova-calendar-chips__trigger:active:not(:disabled, [data-disabled]), .nova-calendar-chips__trigger[aria-expanded="true"] { background-color: var(--nova-color-surface-active); color: var(--nova-color-text); }
+  .nova-calendar-chips__trigger:disabled, .nova-calendar-chips__trigger[data-disabled] { color: var(--nova-color-disabled-text); cursor: not-allowed; }
   .nova-calendar-chips__trigger:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
   /* Read-only copy of the dates, same frame as a read-only input. */
-  .nova-calendar-chips > [role="textbox"] { box-sizing: border-box; min-block-size: var(--nova-control-md); padding: 7px var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); overflow-wrap: anywhere; }
+  .nova-calendar-chips > [role="textbox"] { box-sizing: border-box; min-block-size: var(--nova-control-md); padding: calc((var(--nova-control-md) - var(--nova-line-height-body)) / 2 - var(--nova-border-width)) var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); overflow-wrap: anywhere; }
   .nova-calendar-chips > [role="textbox"][aria-disabled="true"] { background: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); }
   .nova-calendar-chips > [role="textbox"]:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
   .nova-calendar-chips > p[role="status"] { margin: 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
@@ -36,7 +36,7 @@
   .nova-calendar-chips__popup .nova-calendar td > button[aria-disabled="true"] { text-decoration: none; }
   @media (max-width: 640px), (pointer: coarse) {
     .nova-calendar-chips__control { min-block-size: var(--nova-hit-target); padding: 5px 52px 5px 5px; gap: 12px var(--nova-space-2); }
-    .nova-calendar-chips__chip { block-size: 32px; }
+    .nova-calendar-chips__chip { block-size: var(--nova-control-md); }
     /* 44px target, 30px visible surface that stays inside the chip. */
     .nova-calendar-chips__chip > button { inline-size: var(--nova-hit-target); block-size: var(--nova-hit-target); margin-block: -7px; margin-inline: -5px -7px; border: 7px solid transparent; border-radius: var(--nova-radius-control); }
     .nova-calendar-chips__input { block-size: var(--nova-hit-target); margin-block: -6px; font-size: var(--nova-font-size-input-mobile); line-height: var(--nova-line-height-input-mobile); }

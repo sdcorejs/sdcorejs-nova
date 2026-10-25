@@ -19,15 +19,15 @@
     text-align: center;
   }
 
-  /* 40×40 tile (radius 8) holding a 20px icon. */
+  /* 40×40 tile (control-lg, radius 8) holding a 20px icon. */
   .nova-empty__icon {
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    inline-size: 40px;
-    block-size: 40px;
+    inline-size: var(--nova-control-lg);
+    block-size: var(--nova-control-lg);
     margin-block-end: var(--nova-space-2);
     border-radius: var(--nova-radius-popup);
     background: var(--nova-color-surface-hover);
