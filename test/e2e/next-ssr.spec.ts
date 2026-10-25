@@ -131,7 +131,7 @@ async function firstPaintBackground(browser: Browser, colorScheme: 'light' | 'da
 }
 
 test('system theme first paint uses media query without markup change', async ({ browser, page }) => {
-  expect(await firstPaintBackground(browser, 'dark')).toEqual({ background: 'rgb(17, 17, 19)', theme: 'system' });
+  expect(await firstPaintBackground(browser, 'dark')).toEqual({ background: 'rgb(15, 15, 17)', theme: 'system' });
   expect(await firstPaintBackground(browser, 'light')).toEqual({ background: 'rgb(255, 255, 255)', theme: 'system' });
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto(origin);

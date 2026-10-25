@@ -69,7 +69,7 @@ test('theme switch changes computed background', async ({ page }) => {
   await page.getByRole('button', { name: 'Chế độ tối' }).click();
   await expect.poll(() => card.evaluate((element) => getComputedStyle(element).backgroundColor)).not.toBe(before);
   expect(before).toBe('rgb(255, 255, 255)');
-  expect(await card.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgb(17, 17, 19)');
+  expect(await card.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgb(15, 15, 17)');
 });
 
 test('checkbox and radio produce expected FormData', async ({ page }) => {
