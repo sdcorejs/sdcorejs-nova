@@ -91,13 +91,13 @@ test('fine pointer keeps the compact visual size', async ({ page }) => {
   expect((await box(page, 'icon-1')).height).toBeLessThan(44);
 });
 
-// Round 2: fixed heights (sm 28 / md 36), weight 500, one line with ellipsis on desktop.
+// v2: fixed heights (sm 28 / md 32), weight 500, one line with ellipsis on desktop.
 test('desktop buttons keep fixed heights and a single-line label', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await open(page);
   const fine = await page.evaluate(() => matchMedia('(pointer: fine)').matches);
   test.skip(!fine, 'engine does not report (pointer: fine)');
-  expect((await box(page, 'long')).height).toBeCloseTo(36, 0);
+  expect((await box(page, 'long')).height).toBeCloseTo(32, 0);
   expect((await box(page, 'small')).height).toBeCloseTo(28, 0);
   expect((await box(page, 'icon-1')).width).toBeCloseTo(28, 0);
   const label = await page.getByTestId('long').locator('.nova-button__label').evaluate((element) => {

@@ -21,7 +21,7 @@
     align-items: center;
     gap: var(--nova-space-1);
     padding-block: 0;
-    padding-inline: var(--nova-space-3) 10px;
+    padding-inline: var(--nova-space-3) var(--nova-space-2-5);
     color: var(--nova-color-text);
     font-weight: normal;
     text-align: start;
@@ -46,7 +46,7 @@
     inline-size: var(--nova-icon-sm);
     block-size: var(--nova-icon-sm);
     color: var(--nova-color-text-muted);
-    transition: transform var(--nova-duration) ease;
+    transition: transform var(--nova-duration) var(--nova-ease-standard);
   }
 
   .nova-select__trigger[data-popup-open],
@@ -59,24 +59,31 @@
     transform: rotate(180deg);
   }
 
+  /* Room for the 24px clear button plus a 4px gap before the chevron. */
   .nova-select__control--clearable > .nova-select__trigger > .nova-select__chevron {
-    margin-inline-start: 28px;
+    margin-inline-start: calc(var(--nova-control-xs) + var(--nova-space-1));
   }
 
   .nova-input.nova-select__trigger[data-readonly] {
     background-color: var(--nova-color-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     cursor: default;
   }
 
   .nova-input.nova-select__trigger[data-disabled] {
     background-color: var(--nova-color-disabled-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
     cursor: not-allowed;
   }
 
-  .nova-select__trigger:is(:disabled, [data-disabled], [data-readonly]) > .nova-select__chevron {
+  .nova-select__trigger:is(:disabled, [data-disabled]) > .nova-select__chevron {
+    color: var(--nova-color-disabled-text);
+  }
+
+  .nova-select__trigger[data-readonly] > .nova-select__chevron {
     color: var(--nova-color-control-border);
   }
 
@@ -84,19 +91,20 @@
     color: var(--nova-color-disabled-text);
   }
 
-  /* Combobox: the input is the frame; clear and chevron sit inside its end padding. */
+  /* Combobox: the input is the frame; clear and chevron sit inside its end padding
+     (chevron 16 at 10 from the edge, clear 24, 4–8 gaps), mirroring the Select trigger. */
   .nova-select__control--combobox > .nova-input {
-    padding-inline-end: 30px;
+    padding-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-2-5) + var(--nova-space-1));
   }
 
   .nova-select__control--combobox.nova-select__control--clearable > .nova-input {
-    padding-inline-end: 58px;
+    padding-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-2-5) + var(--nova-control-xs) + var(--nova-space-2));
   }
 
   .nova-select__control--combobox > .nova-select__chevron {
     position: absolute;
     inset-block-start: 50%;
-    inset-inline-end: 10px;
+    inset-inline-end: var(--nova-space-2-5);
     transform: translateY(-50%);
     pointer-events: none;
   }
@@ -109,24 +117,28 @@
     transform: translateY(-50%) rotate(180deg);
   }
 
-  .nova-select__control--combobox > .nova-input:is(:disabled, :read-only) ~ .nova-select__chevron {
+  .nova-select__control--combobox > .nova-input:read-only ~ .nova-select__chevron {
     color: var(--nova-color-control-border);
+  }
+
+  .nova-select__control--combobox > .nova-input:disabled ~ .nova-select__chevron {
+    color: var(--nova-color-disabled-text);
   }
 
   .nova-select__clear {
     position: absolute;
     inset-block-start: 50%;
-    inset-inline-end: 30px;
+    inset-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-2-5) + var(--nova-space-1));
     display: inline-flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    inline-size: 24px;
-    block-size: 24px;
+    inline-size: var(--nova-control-xs);
+    block-size: var(--nova-control-xs);
     margin: 0;
     padding: 0;
     border: 0;
-    border-radius: 4px;
+    border-radius: var(--nova-radius-xs);
     background-color: transparent;
     color: var(--nova-color-text-muted);
     transform: translateY(-50%);
@@ -149,8 +161,12 @@
     outline-offset: calc(-1 * var(--nova-focus-width));
   }
 
+  .nova-select__clear:active:not(:disabled) {
+    background-color: var(--nova-color-surface-active);
+  }
+
   .nova-select__clear:disabled {
-    color: var(--nova-color-control-border);
+    color: var(--nova-color-disabled-text);
     cursor: not-allowed;
   }
 
@@ -165,7 +181,7 @@
     z-index: 1;
   }
 
-  /* Popup: radius 8, 1px border, overlay shadow, padding 4, rows 36 (coarse 44). */
+  /* Popup: radius 8, 1px border, shadow-md, padding 4, rows 32 (coarse 44), rows radius 4. */
   .nova-select__popup {
     box-sizing: border-box;
     min-inline-size: var(--anchor-width);
@@ -175,14 +191,15 @@
     padding: var(--nova-space-1);
     border: var(--nova-border-width) solid var(--nova-color-border);
     border-radius: var(--nova-radius-popup);
-    background-color: var(--nova-color-background);
-    box-shadow: var(--nova-shadow-overlay);
+    background-color: var(--nova-color-popover);
+    box-shadow: var(--nova-shadow-md);
     color: var(--nova-color-text);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
   }
 
+  /* 6/8 padding: a one-line option is exactly 32 and its text lines up with the trigger's. */
   .nova-select__option {
     display: flex;
     align-items: center;
@@ -191,9 +208,9 @@
     box-sizing: border-box;
     inline-size: 100%;
     min-block-size: var(--nova-control-md);
-    padding: var(--nova-space-2) var(--nova-space-2) var(--nova-space-2) var(--nova-space-3);
+    padding: var(--nova-space-1-5) var(--nova-space-2);
     border: 0;
-    border-radius: 4px;
+    border-radius: var(--nova-radius-xs);
     background-color: transparent;
     color: inherit;
     font: inherit;
@@ -248,15 +265,15 @@
     }
 
     .nova-select__control--clearable > .nova-select__trigger > .nova-select__chevron {
-      margin-inline-start: 48px;
+      margin-inline-start: calc(var(--nova-hit-target) + var(--nova-space-1));
     }
 
     .nova-select__control--combobox > .nova-input {
-      padding-inline-end: 32px;
+      padding-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-3) + var(--nova-space-1));
     }
 
     .nova-select__control--combobox.nova-select__control--clearable > .nova-input {
-      padding-inline-end: 80px;
+      padding-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-3) + var(--nova-hit-target) + var(--nova-space-2));
     }
 
     .nova-select__control--combobox > .nova-select__chevron {
@@ -264,7 +281,7 @@
     }
 
     .nova-select__clear {
-      inset-inline-end: 32px;
+      inset-inline-end: calc(var(--nova-icon-sm) + var(--nova-space-3) + var(--nova-space-1));
       inline-size: var(--nova-hit-target);
       block-size: var(--nova-hit-target);
       padding-block: var(--nova-border-width);

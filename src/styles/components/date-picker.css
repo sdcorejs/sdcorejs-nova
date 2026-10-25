@@ -1,23 +1,23 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
   .nova-date-picker { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; }
-  /* The calendar trigger sits inside the input frame (one 36px control). */
+  /* The calendar trigger (24) sits inside the input frame (one 32px control), 6px from its end. */
   .nova-date-picker__control { position: relative; display: flex; align-items: center; min-inline-size: 0; }
-  .nova-date-picker__control > .nova-input { flex: 1 1 auto; inline-size: 100%; min-inline-size: 0; padding-inline-end: 36px; font-variant-numeric: tabular-nums; }
-  .nova-date-picker__trigger { position: absolute; inset-block: 0; inset-inline-end: 6px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: 24px; block-size: 24px; margin-block: auto; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; transition: background-color var(--nova-duration) ease, color var(--nova-duration) ease; }
+  .nova-date-picker__control > .nova-input { flex: 1 1 auto; inline-size: 100%; min-inline-size: 0; padding-inline-end: calc(var(--nova-control-xs) + var(--nova-space-1-5) + var(--nova-space-1-5)); font-variant-numeric: tabular-nums; }
+  .nova-date-picker__trigger { position: absolute; inset-block: 0; inset-inline-end: var(--nova-space-1-5); display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: var(--nova-control-xs); block-size: var(--nova-control-xs); margin-block: auto; padding: 0; border: 0; border-radius: var(--nova-radius-xs); background: transparent; color: var(--nova-color-text-muted); font: inherit; cursor: pointer; transition: background-color var(--nova-duration-fast) var(--nova-ease-standard), color var(--nova-duration-fast) var(--nova-ease-standard); }
   .nova-date-picker__trigger:hover:not(:disabled, [data-disabled]) { background: var(--nova-color-surface-hover); color: var(--nova-color-text); }
-  .nova-date-picker__trigger:active:not(:disabled, [data-disabled]), .nova-date-picker__trigger[aria-expanded="true"] { background: var(--nova-color-border); color: var(--nova-color-text); }
-  .nova-date-picker__trigger:disabled, .nova-date-picker__trigger[data-disabled] { color: var(--nova-color-control-border); cursor: not-allowed; }
+  .nova-date-picker__trigger:active:not(:disabled, [data-disabled]), .nova-date-picker__trigger[aria-expanded="true"] { background: var(--nova-color-surface-active); color: var(--nova-color-text); }
+  .nova-date-picker__trigger:disabled, .nova-date-picker__trigger[data-disabled] { color: var(--nova-color-disabled-text); cursor: not-allowed; }
   .nova-date-picker__trigger:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: calc(-1 * var(--nova-focus-width)); }
   .nova-date-picker > .nova-field__error { margin: 0; }
 
   /* Specificity above .nova-popover: popover.css is imported after this file. */
-  .nova-popover.nova-date-picker__popup { box-sizing: border-box; inline-size: min-content; min-inline-size: 0; max-inline-size: calc(100vw - 32px); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-popup); background: var(--nova-color-background); box-shadow: var(--nova-shadow-overlay); }
+  .nova-popover.nova-date-picker__popup { box-sizing: border-box; inline-size: min-content; min-inline-size: 0; max-inline-size: calc(100vw - 32px); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-popup); background: var(--nova-color-popover); box-shadow: var(--nova-shadow-md); }
   .nova-date-picker__popup > p { margin: var(--nova-space-2) 0 0; color: var(--nova-color-text-muted); font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); overflow-wrap: anywhere; }
   .nova-date-picker__footer { display: flex; justify-content: flex-end; margin-block-start: var(--nova-space-2); padding-block-start: var(--nova-space-2); border-block-start: var(--nova-border-width) solid var(--nova-color-border); }
   .nova-date-picker__close { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-block-size: var(--nova-control-sm); margin: 0; padding: 0 10px; border: 0; border-radius: var(--nova-radius-control); background: transparent; color: var(--nova-color-text); font: inherit; font-weight: var(--nova-font-weight-medium); white-space: nowrap; cursor: pointer; }
   .nova-date-picker__close:hover { background: var(--nova-color-surface-hover); }
-  .nova-date-picker__close:active { background: var(--nova-color-border); }
+  .nova-date-picker__close:active { background: var(--nova-color-surface-active); }
   .nova-date-picker__close:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
 
   .nova-calendar { display: grid; gap: var(--nova-space-2); min-inline-size: 0; color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); }
@@ -25,7 +25,7 @@
   .nova-calendar__title { flex: 1; min-inline-size: 0; text-align: center; font-weight: var(--nova-font-weight-strong); overflow-wrap: anywhere; }
   .nova-calendar__nav { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; inline-size: var(--nova-control-sm); block-size: var(--nova-control-sm); margin: 0; padding: 0; border: 0; border-radius: var(--nova-radius-control); background: transparent; background-clip: padding-box; color: var(--nova-color-text); font: inherit; cursor: pointer; }
   .nova-calendar__nav:hover:not(:disabled) { background-color: var(--nova-color-surface-hover); }
-  .nova-calendar__nav:active:not(:disabled) { background-color: var(--nova-color-border); }
+  .nova-calendar__nav:active:not(:disabled) { background-color: var(--nova-color-surface-active); }
   .nova-calendar__nav:disabled { color: var(--nova-color-control-border); cursor: not-allowed; }
   .nova-calendar__nav:dir(rtl) > .nova-icon { transform: scaleX(-1); }
   .nova-calendar table { border-collapse: separate; border-spacing: 2px; margin: -2px; }

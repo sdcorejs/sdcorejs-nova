@@ -7,3 +7,4 @@ Trạng thái: P0 (12 dossier) đã được triển khai và kiểm cục bộ,
 
 - [Kiến trúc P0](nova/p0-architecture.vi.md) — API, ownership, SSR, CSS và CSP.
 - [Showcase và Pages](nova/showcase-pages.vi.md) — chạy, kiểm tra và đối chiếu revision.
+- [Theme Nova v2](nova/design-system-v2.vi.md) — foundations, token, thông số component, tương phản và câu hỏi cho owner.

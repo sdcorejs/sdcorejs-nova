@@ -1,7 +1,7 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
-  /* One control frame: [input][−][+]. Steppers are 32 wide (44 coarse), full
+  /* One control frame: [input][−][+]. Steppers are square (32 wide, 44 coarse), full
      control height, separated by a 1px divider; the last one takes the outer corner. */
   .nova-number-input {
     display: flex;
@@ -12,12 +12,13 @@
     border: var(--nova-border-width) solid var(--nova-color-control-border);
     border-radius: var(--nova-radius-control);
     background-color: var(--nova-color-background);
+    box-shadow: var(--nova-shadow-xs);
     color: var(--nova-color-text);
-    transition: border-color var(--nova-duration) ease;
+    transition: border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
   .nova-number-input:hover {
-    border-color: var(--nova-color-text-muted);
+    border-color: var(--nova-color-control-border-hover);
   }
 
   .nova-number-input:has(> .nova-number-input__input:focus-visible) {
@@ -32,11 +33,13 @@
   .nova-number-input[data-readonly] {
     background-color: var(--nova-color-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
   }
 
   .nova-number-input[data-disabled] {
     background-color: var(--nova-color-disabled-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
   }
 
@@ -47,6 +50,7 @@
     margin-block: calc(-1 * var(--nova-border-width));
     border: 0;
     background-color: transparent;
+    box-shadow: none;
     font-variant-numeric: tabular-nums;
   }
 
@@ -60,7 +64,7 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    inline-size: 32px;
+    inline-size: var(--nova-control-md);
     margin: calc(-1 * var(--nova-border-width)) 0;
     padding: 0;
     border: var(--nova-border-width) solid transparent;
@@ -91,15 +95,19 @@
     background-color: var(--nova-color-surface-hover);
   }
 
+  .nova-number-input__step:active:not(:disabled) {
+    background-color: var(--nova-color-surface-active);
+  }
+
   .nova-number-input__step:focus-visible {
     outline: var(--nova-focus-width) solid var(--nova-color-focus-ring);
     outline-offset: calc(-1 * var(--nova-focus-width));
   }
 
-  /* Disabled icons use the control boundary color, never opacity. */
+  /* Disabled icons use the disabled text color, never opacity. */
   .nova-number-input__step:disabled {
     background-color: transparent;
-    color: var(--nova-color-control-border);
+    color: var(--nova-color-disabled-text);
     cursor: not-allowed;
   }
 

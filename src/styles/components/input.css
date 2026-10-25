@@ -1,7 +1,7 @@
 @layer nova.tokens, nova.base, nova.components;
 
 @layer nova.components {
-  /* Single-line control: 36px desktop, 44px coarse (round 2). */
+  /* v2 single-line control: 32px desktop, 44px coarse, control boundary plus shadow-xs. */
   .nova-input {
     box-sizing: border-box;
     inline-size: 100%;
@@ -12,12 +12,13 @@
     border: var(--nova-border-width) solid var(--nova-color-control-border);
     border-radius: var(--nova-radius-control);
     background-color: var(--nova-color-background);
+    box-shadow: var(--nova-shadow-xs);
     color: var(--nova-color-text);
     font-family: var(--nova-font-family);
     font-size: var(--nova-font-size-body);
     line-height: var(--nova-line-height-body);
     text-overflow: ellipsis;
-    transition: border-color var(--nova-duration) ease;
+    transition: border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
   .nova-input::placeholder {
@@ -27,7 +28,7 @@
 
   /* Low specificity: invalid, read-only and disabled borders win over hover. */
   .nova-input:where(:hover) {
-    border-color: var(--nova-color-text-muted);
+    border-color: var(--nova-color-control-border-hover);
   }
 
   .nova-input:focus-visible {
@@ -43,11 +44,13 @@
   .nova-input:where(input, textarea):read-only:where(:not(:disabled)) {
     background-color: var(--nova-color-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
   }
 
   .nova-input:disabled {
     background-color: var(--nova-color-disabled-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
     cursor: not-allowed;
   }
@@ -85,12 +88,13 @@
     border: var(--nova-border-width) solid var(--nova-color-control-border);
     border-radius: var(--nova-radius-control);
     background-color: var(--nova-color-background);
+    box-shadow: var(--nova-shadow-xs);
     color: var(--nova-color-text);
-    transition: border-color var(--nova-duration) ease;
+    transition: border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
   .nova-input-group:hover {
-    border-color: var(--nova-color-text-muted);
+    border-color: var(--nova-color-control-border-hover);
   }
 
   .nova-input-group:has(> .nova-input:focus-visible) {
@@ -105,16 +109,18 @@
   .nova-input-group:has(> .nova-input:read-only:not(:disabled)) {
     background-color: var(--nova-color-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
   }
 
   .nova-input-group:has(> .nova-input:disabled) {
     background-color: var(--nova-color-disabled-surface);
     border-color: var(--nova-color-border);
+    box-shadow: none;
     color: var(--nova-color-disabled-text);
   }
 
   /* The inner input is borderless; −1px block margins let it keep the full
-     control height (36 / 44) inside the 1px frame. */
+     control height (32 / 44) inside the 1px frame. */
   .nova-input-group > .nova-input.nova-input {
     flex: 1 1 auto;
     align-self: stretch;
@@ -123,6 +129,7 @@
     padding-inline: 0;
     border: 0;
     background-color: transparent;
+    box-shadow: none;
   }
 
   .nova-input-group > .nova-input.nova-input:focus-visible {
@@ -147,12 +154,12 @@
     margin-block: -1px;
   }
 
-  /* 1×20 divider between the start affix and the value. */
+  /* 1×20 divider (one text line) between the start affix and the value. */
   .nova-input-group__start::after {
     content: "";
     flex: none;
     inline-size: var(--nova-border-width);
-    block-size: 20px;
+    block-size: var(--nova-line-height-body);
     background-color: var(--nova-color-border);
   }
 

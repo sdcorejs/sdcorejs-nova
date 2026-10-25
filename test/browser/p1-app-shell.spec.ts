@@ -73,11 +73,11 @@ for (const dark of [false, true]) test(`C14 mobile drawer keyboard, overflow and
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
 
-test('C14 design r2 header is 56 tall and desktop navigation links are 36 with a 500 current item', async ({page}) => {
+test('C14 design v2 header is 52 tall and desktop navigation links are 32 with a 500 current item', async ({page}) => {
   await page.setViewportSize({width: 1280, height: 800});
   await page.goto('/?scenario=p1-app-shell');
-  expect(Math.round((await page.getByRole('banner').boundingBox())!.height)).toBe(56);
+  expect(Math.round((await page.getByRole('banner').boundingBox())!.height)).toBe(52);
   const current = page.getByRole('link', {name: 'Tệp và tài liệu của tôi'});
-  expect(Math.round((await current.boundingBox())!.height)).toBe(36);
+  expect(Math.round((await current.boundingBox())!.height)).toBe(32);
   expect(await current.evaluate(node => getComputedStyle(node).fontWeight)).toBe('500');
 });

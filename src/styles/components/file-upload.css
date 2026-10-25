@@ -1,8 +1,8 @@
 @layer nova.tokens, nova.base, nova.components;
 @layer nova.components {
-  /* Drop zone: dashed control border, 8px radius, upload icon above a 36px chooser button. */
-  .nova-file-upload { display: flex; flex-direction: column; align-items: center; gap: var(--nova-space-2); box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; padding: 20px var(--nova-space-4); border: var(--nova-border-width) dashed var(--nova-color-control-border); border-radius: var(--nova-radius-popup); background: var(--nova-color-background); color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); text-align: center; overflow-wrap: anywhere; transition: border-color var(--nova-duration) ease, background-color var(--nova-duration) ease; }
-  .nova-file-upload:not([data-disabled]):hover { border-color: var(--nova-color-text-muted); }
+  /* Drop zone: dashed control border, 8px radius, upload icon above a 32px chooser button. */
+  .nova-file-upload { display: flex; flex-direction: column; align-items: center; gap: var(--nova-space-2); box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; padding: 20px var(--nova-space-4); border: var(--nova-border-width) dashed var(--nova-color-control-border); border-radius: var(--nova-radius-popup); background: var(--nova-color-background); color: var(--nova-color-text); font-family: var(--nova-font-family); font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); text-align: center; overflow-wrap: anywhere; transition: border-color var(--nova-duration-fast) var(--nova-ease-standard), background-color var(--nova-duration-fast) var(--nova-ease-standard); }
+  .nova-file-upload:not([data-disabled]):hover { border-color: var(--nova-color-control-border-hover); }
   .nova-file-upload__icon { display: inline-flex; align-items: center; justify-content: center; flex: none; inline-size: 40px; block-size: 40px; border-radius: var(--nova-radius-popup); background: var(--nova-color-surface-hover); color: var(--nova-color-text-muted); }
   .nova-file-upload__icon > .nova-icon { inline-size: var(--nova-icon-lg); block-size: var(--nova-icon-lg); }
   .nova-file-upload > .nova-button { max-inline-size: 100%; }

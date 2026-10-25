@@ -14,14 +14,14 @@ html:has(.showcase) { scroll-padding-block-start: 64px; }
 .showcase a { color: inherit; }
 
 /* ---------- Shell ---------- */
-.showcase.nova-app-shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); grid-template-rows: 56px 1fr; }
+.showcase.nova-app-shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); grid-template-rows: var(--nova-bar-height) 1fr; }
 /* Paint the sidebar column the full page height; the sticky sidebar itself is one viewport tall. */
-@media (min-width: 64rem) { .showcase.nova-app-shell { background: linear-gradient(to right, var(--nova-color-surface) 0 231px, var(--nova-color-border) 231px 232px, var(--nova-color-background) 232px); } .showcase.nova-app-shell:dir(rtl) { background: linear-gradient(to left, var(--nova-color-surface) 0 231px, var(--nova-color-border) 231px 232px, var(--nova-color-background) 232px); } }
+@media (min-width: 64rem) { .showcase.nova-app-shell { background: linear-gradient(to right, var(--nova-color-surface) 0 239px, var(--nova-color-border) 239px 240px, var(--nova-color-background) 240px); } .showcase.nova-app-shell:dir(rtl) { background: linear-gradient(to left, var(--nova-color-surface) 0 239px, var(--nova-color-border) 239px 240px, var(--nova-color-background) 240px); } }
 /* The header spans both rows so `sticky` has room to stay at the top while the page scrolls. */
-.showcase > .nova-app-shell__header { grid-column: 2; grid-row: 1 / -1; align-self: start; position: sticky; top: 0; z-index: 20; block-size: 56px; min-inline-size: 0; padding: 0; border-block-end: 1px solid var(--nova-color-border); background: var(--nova-color-background); }
+.showcase > .nova-app-shell__header { grid-column: 2; grid-row: 1 / -1; align-self: start; position: sticky; top: 0; z-index: 20; block-size: var(--nova-bar-height); min-inline-size: 0; padding: 0; border-block-end: 1px solid var(--nova-color-border); background: var(--nova-color-background); }
 .showcase > .nova-app-shell__body { display: contents; }
 .showcase .nova-app-shell__main { grid-column: 2; grid-row: 2; inline-size: 100%; max-inline-size: none; min-inline-size: 0; margin: 0; padding: 24px 24px 48px; }
-.showcase .nova-sidebar { grid-column: 1; grid-row: 1 / -1; align-self: start; position: sticky; top: 0; inline-size: 232px; block-size: 100dvh; border-inline-end: 1px solid var(--nova-color-border); background: var(--nova-color-surface); }
+.showcase .nova-sidebar { grid-column: 1; grid-row: 1 / -1; align-self: start; position: sticky; top: 0; inline-size: 240px; block-size: 100dvh; border-inline-end: 1px solid var(--nova-color-border); background: var(--nova-color-surface); }
 .showcase .nova-sidebar__trigger { display: none; }
 .showcase .nova-sidebar__desktop { max-block-size: 100dvh; overflow-y: auto; background: var(--nova-color-surface); }
 .showcase-sidebar { display: flex; flex-direction: column; gap: 16px; min-block-size: 100dvh; padding: 12px; }
@@ -34,7 +34,7 @@ html:has(.showcase) { scroll-padding-block-start: 64px; }
 .showcase-brand-caption { font-size: 13px; line-height: 18px; color: var(--nova-color-text-muted); }
 
 .showcase-navigation.nova-navigation ul { display: flex; flex-direction: column; gap: 2px; }
-.showcase-navigation.nova-navigation a { gap: 10px; min-block-size: 36px; padding: 0 10px; border-radius: var(--nova-radius-control); color: var(--nova-color-text); font-weight: 400; text-decoration: none; }
+.showcase-navigation.nova-navigation a { gap: 10px; min-block-size: var(--nova-control-md); padding: 0 10px; border-radius: var(--nova-radius-control); color: var(--nova-color-text); font-weight: 400; text-decoration: none; }
 .showcase-navigation.nova-navigation a > span[aria-hidden="true"] { display: inline-flex; color: var(--nova-color-text-muted); }
 .showcase-navigation.nova-navigation a:hover { background: var(--nova-color-surface-hover); }
 .showcase-navigation.nova-navigation a[aria-current="page"] { background: var(--nova-color-surface-hover); font-weight: 500; }
@@ -66,7 +66,7 @@ html:has(.showcase) { scroll-padding-block-start: 64px; }
 
 /* ---------- Card ---------- */
 .showcase .showcase-card { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; min-inline-size: 0; padding: 0; }
-.showcase-card__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; min-block-size: 56px; padding: 12px 16px; border-block-end: 1px solid var(--nova-color-border); }
+.showcase-card__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; min-block-size: var(--nova-bar-height); padding: 10px 16px; border-block-end: 1px solid var(--nova-color-border); }
 .showcase-card__heading { display: flex; align-items: center; gap: 12px; flex: 1 1 220px; min-inline-size: 0; }
 .showcase-card__titles { display: grid; gap: 2px; min-inline-size: 0; }
 .showcase-card__titles h2 { font-size: 16px; line-height: 24px; font-weight: 600; overflow-wrap: anywhere; }

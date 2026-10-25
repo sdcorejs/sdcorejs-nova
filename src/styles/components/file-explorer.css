@@ -10,13 +10,13 @@
   .nova-file-explorer__back .nova-icon { flex: none; }
   .nova-file-explorer__navigation > .nova-button.nova-file-explorer__back:disabled { border-color: transparent; background: transparent; color: var(--nova-color-disabled-text); }
   .nova-file-explorer__back:dir(rtl) .nova-icon { transform: scaleX(-1); }
-  /* Crumbs read as Breadcrumb links, not bold 36px buttons. */
+  /* Crumbs read as Breadcrumb links, not bold 32px buttons. */
   .nova-file-explorer__navigation .nova-button.nova-file-explorer__crumb { display: inline-block; min-block-size: 0; max-inline-size: 100%; margin: 0; padding: 2px var(--nova-space-1); border: 0; border-radius: 4px; background: transparent; color: var(--nova-color-text-muted); font-weight: normal; text-align: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .nova-file-explorer__navigation .nova-button.nova-file-explorer__crumb:hover { background: transparent; color: var(--nova-color-text); text-decoration: underline; text-underline-offset: 2px; }
   .nova-file-explorer__navigation .nova-breadcrumb__current { font-weight: var(--nova-font-weight-medium); }
   .nova-file-explorer__search { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; max-inline-size: 100%; font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
   .nova-file-explorer__search input { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; min-block-size: var(--nova-control-md); margin: 0; padding: 0 var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); color: var(--nova-color-text); background: var(--nova-color-background); font: inherit; font-size: var(--nova-font-size-body); line-height: var(--nova-line-height-body); font-weight: normal; }
-  .nova-file-explorer__search input:hover { border-color: var(--nova-color-text-muted); }
+  .nova-file-explorer__search input:hover { border-color: var(--nova-color-control-border-hover); }
   .nova-file-explorer__search input:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
   /* List / Grid stay two pressed-state buttons, drawn as a segmented pair. */
   .nova-file-explorer__views { display: inline-flex; flex-wrap: nowrap; gap: 2px; box-sizing: border-box; min-block-size: var(--nova-control-md); padding: 2px; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-control); background: var(--nova-color-surface); }
@@ -31,7 +31,7 @@
   .nova-file-explorer__folders .nova-tree__content > .nova-button { justify-content: flex-start; min-block-size: var(--nova-control-sm); max-inline-size: 100%; padding: 0 6px; font-weight: normal; text-align: start; }
   .nova-file-explorer__chooser { display: none; }
   .nova-file-explorer__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: var(--nova-space-3); }
-  .nova-file-explorer__card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--nova-space-2); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); min-inline-size: 0; overflow-wrap: anywhere; transition: border-color var(--nova-duration) ease; }
+  .nova-file-explorer__card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--nova-space-2); padding: var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); min-inline-size: 0; overflow-wrap: anywhere; transition: border-color var(--nova-duration-fast) var(--nova-ease-standard); }
   .nova-file-explorer__card:hover { border-color: var(--nova-color-control-border); }
   .nova-file-explorer__scroll { overflow: auto; max-inline-size: 100%; border: var(--nova-border-width) solid var(--nova-color-border); border-radius: var(--nova-radius-card); }
   .nova-file-explorer__scroll:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }

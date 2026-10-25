@@ -14,7 +14,7 @@
     box-sizing: border-box;
     min-inline-size: 36px;
     block-size: 22px;
-    border-radius: 999px;
+    border-radius: var(--nova-radius-full);
     cursor: pointer;
   }
 
@@ -25,16 +25,21 @@
     box-sizing: border-box;
     inline-size: 36px;
     block-size: 20px;
-    padding: 2px;
+    padding: var(--nova-space-0-5);
     border: var(--nova-border-width) solid var(--nova-color-control-border);
-    border-radius: 999px;
-    background: var(--nova-color-surface);
-    transition: background-color var(--nova-duration) ease, border-color var(--nova-duration) ease;
+    border-radius: var(--nova-radius-full);
+    background: var(--nova-color-surface-hover);
+    transition: background-color var(--nova-duration-fast) var(--nova-ease-standard), border-color var(--nova-duration-fast) var(--nova-ease-standard);
   }
 
   .nova-switch:hover:not([data-disabled], [data-readonly]) .nova-switch__track,
   .nova-field--inline:has(> .nova-label:hover) > .nova-switch-root > .nova-switch:not([data-disabled], [data-readonly]) .nova-switch__track {
-    border-color: var(--nova-color-text);
+    border-color: var(--nova-color-control-border-hover);
+  }
+
+  .nova-switch[data-checked]:hover:not([data-disabled], [data-readonly]) .nova-switch__track {
+    border-color: var(--nova-color-action-hover);
+    background: var(--nova-color-action-hover);
   }
 
   .nova-switch__thumb {
@@ -43,7 +48,7 @@
     block-size: 14px;
     border-radius: 50%;
     background: var(--nova-color-text-muted);
-    transition: transform var(--nova-duration) ease;
+    transition: transform var(--nova-duration) var(--nova-ease-standard);
   }
 
   .nova-switch[data-checked] .nova-switch__track {

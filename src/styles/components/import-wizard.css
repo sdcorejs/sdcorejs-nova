@@ -6,9 +6,9 @@
   .nova-import-wizard__mapping { display: grid; gap: var(--nova-space-3); }
   .nova-import-wizard__mapping > div { display: flex; flex-direction: column; gap: var(--nova-space-1); min-inline-size: 0; }
   .nova-import-wizard__mapping > div > label { font-size: var(--nova-font-size-label); line-height: var(--nova-line-height-label); font-weight: var(--nova-font-weight-strong); }
-  /* Native selects use the Nova 36px control frame (44px on touch). */
+  /* Native selects use the Nova 32px control frame (44px on touch). */
   .nova-import-wizard__mapping select { box-sizing: border-box; inline-size: 100%; min-block-size: var(--nova-control-md); margin: 0; padding: 0 var(--nova-space-2) 0 var(--nova-space-3); font: inherit; color: var(--nova-color-text); background-color: var(--nova-color-background); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); cursor: pointer; }
-  .nova-import-wizard__mapping select:hover:not(:disabled) { border-color: var(--nova-color-text-muted); }
+  .nova-import-wizard__mapping select:hover:not(:disabled) { border-color: var(--nova-color-control-border-hover); }
   .nova-import-wizard__mapping select[aria-invalid="true"] { border-color: var(--nova-color-error-text); }
   .nova-import-wizard__mapping select:disabled { border-color: var(--nova-color-border); background-color: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); cursor: not-allowed; }
   .nova-import-wizard [role="alert"] { color: var(--nova-color-error-text); }

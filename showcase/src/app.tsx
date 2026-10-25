@@ -9,6 +9,7 @@ import {Breadcrumb} from '@sdcorejs/nova/breadcrumb';
 import {Brand,Navigation,labels,type Locale} from './navigation.js';
 import {Icon,translator} from './ui.js';
 import {FormsPage} from './pages/forms-page.js';
+import {ProfilePage} from './pages/profile-page.js';
 import {ActionsPage} from './pages/actions-page.js';
 import {NavigationPage} from './pages/navigation-page.js';
 import {OverlaysPage} from './pages/overlays-page.js';
@@ -27,7 +28,7 @@ export function ShowcaseApp(){
  const sidebarReturn=useMemo(()=>({get current(){if(typeof document==='undefined')return null;const trigger=document.querySelector<HTMLElement>('.showcase .nova-sidebar__trigger');return trigger&&trigger.getClientRects().length>0?trigger:document.getElementById('showcase-content');}}),[]);
  const hash=useSyncExternalStore(subscribeHash,snapshot,()=>''),route=parseShowcaseHash(hash),t=translator(locale);
  useEffect(()=>{if(!location.hash)history.replaceState(null,'',location.pathname+location.search+'#/forms');},[]);
- const pages={forms:<FormsPage locale={locale} onLocaleChange={setLocale}/>,actions:<ActionsPage locale={locale}/>,navigation:<NavigationPage locale={locale}/>,overlays:<OverlaysPage locale={locale}/>,dates:<DatesPage locale={locale}/>,feedback:<FeedbackPage locale={locale}/>,data:<DataPage locale={locale}/>,files:<FilesPage locale={locale}/>,jobs:<JobsPage locale={locale}/>,utilities:<UtilitiesPage locale={locale}/>};
+ const pages={forms:<FormsPage locale={locale} onLocaleChange={setLocale}/>,profile:<ProfilePage locale={locale}/>,actions:<ActionsPage locale={locale}/>,navigation:<NavigationPage locale={locale}/>,overlays:<OverlaysPage locale={locale}/>,dates:<DatesPage locale={locale}/>,feedback:<FeedbackPage locale={locale}/>,data:<DataPage locale={locale}/>,files:<FilesPage locale={locale}/>,jobs:<JobsPage locale={locale}/>,utilities:<UtilitiesPage locale={locale}/>};
  const dark=theme==='dark',themeLabel=dark?t('Giao diện sáng','Light theme'):t('Giao diện tối','Dark theme');
  const header=<div className="showcase-topbar">
   <Breadcrumb className="showcase-breadcrumb" items={[{id:'nova',label:'Nova',href:'#/forms'},{id:route,label:route==='not-found'?t('Không tìm thấy','Not found'):labels[locale][route]}]}/>
@@ -44,7 +45,7 @@ export function ShowcaseApp(){
   </div>
  </Sidebar>;
  return <NovaProvider theme={theme} locale={locale}><ToastProvider><ConfirmProvider><AppShell className="showcase" data-testid="nova-showcase" mainId="showcase-content" skipLabel={t('Đến nội dung chính','Skip to content')} header={header} sidebar={sidebar}>
-  <div className={route==='data'?'showcase-page showcase-page--wide':'showcase-page'}>
+  <div className={route==='data'||route==='profile'?'showcase-page showcase-page--wide':'showcase-page'}>
    {route==='not-found'?<div className="showcase-page-head"><div className="showcase-page-head__text"><p className="showcase-eyebrow">404</p><h1>{t('Không tìm thấy trang','Page not found')}</h1><p className="showcase-page-intro">{t('Trang này chưa có trong showcase.','This page is not available.')}</p><p><a className="showcase-link" href="#/forms">{t('Về Biểu mẫu','Back to Forms')}</a></p></div></div>:pages[route]}
    <footer className="showcase-page-footer"><span>{t('Nova · Core UI cho trải nghiệm hằng ngày','Nova · Core UI for everyday experiences')}</span><span>{t('Bản mẫu cục bộ · dữ liệu giả lập','Local preview · simulated data')}</span></footer>
   </div>

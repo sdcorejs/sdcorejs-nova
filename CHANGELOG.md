@@ -4,7 +4,22 @@ Ghi chú thay đổi của `@sdcorejs/nova`. Package vẫn `private: true` và c
 
 ## Chưa phát hành
 
-Chưa có thay đổi.
+Theme Nova v2: foundations và component theo [design-system-v2](docs/nova/design-system-v2.vi.md). Không đổi tên gói, tên token `--nova-*` hay `data-nova-theme`; không đổi prop.
+
+### Thay đổi giao diện
+
+- **Mật độ gọn.** `--nova-control-md` 36 → 32 px, `--nova-control-lg` 44 → 40 px; vùng bấm coarse/≤ 640 px vẫn 44. Nhãn trường 600 → 500, khoảng nhãn ↔ control ↔ mô tả 4 → 6 px.
+- **Màu.** Ramp xám zinc; chữ `#17171a`, chữ phụ `#52525a`, surface `#fafafb`, hover `#f4f4f5`, viền `#e0e0e4`, viền control `#8a8a93` (tối `#71717a`). Nền tone tối đổi sang 12% sắc độ. Mọi cặp vẫn đạt 4.5:1 chữ, 3:1 viền control (`npm run report:contrast`).
+- **Bo góc và độ nổi.** `--nova-radius-card` 10 → 8, `--nova-radius-overlay` 12 → 10. Input và nút viền có `shadow-xs`; popup, menu, toast `shadow-md`; dialog `shadow-lg`. `--nova-shadow-overlay` = shadow-md; bóng và `--nova-color-backdrop` (40% / 60%) đổi theo theme.
+- **Component.** Bảng: header 36, hàng 40 (dày 32 với lớp `nova-data-table--dense`), cột chọn 36, cột thao tác 40, nút trong ô 24, footer phân trang 10/16. Dialog: header/footer 52, tiêu đề 18/26, nút đóng 28; mặc định vẫn 512 px. Menu/popup: hàng 32, padding 4, rộng tối thiểu 180. Badge 20 px chữ 12/16 có viền tone. Avatar lg 40. AppShell header 52, sidebar 240. Pressed/expanded dùng `surface-active`; icon vô hiệu dùng `disabled-text`.
+
+### Thêm mới
+
+- **Token màu.** `surface-active`, `popover`, `border-strong`, `control-border-hover`, `action-active`, `danger-hover`, `{tip,info,success,warning,error}-border`.
+- **Token hiệu ứng theo theme.** `--nova-shadow-xs/sm/md/lg`.
+- **Token thang đo.** `font-size-xs/md/lg/2xl` (+ line-height), `font-weight-regular`, `space-0-5/1-5/2-5`, `radius-xs/full`, `control-xs`, `icon-xs`, `row-sm/md/header`, `col-select/actions`, `bar-height`, `popup-min-width`, `dialog-sm/md/lg`, `duration-fast/slow`, `ease-standard/out`.
+- **Script.** `npm run report:contrast` in bảng tương phản WCAG từ `tokens.ts`.
+- **Showcase.** Trang "Hồ sơ nhân sự" (`#/profile`): biểu mẫu thêm nhân sự và danh sách 248 hồ sơ với chuyển mật độ và mô phỏng trạng thái bảng.
 
 ## 0.1.0 — 2026-10-22
 

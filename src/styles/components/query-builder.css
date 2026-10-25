@@ -17,7 +17,7 @@
   .nova-query-builder input, .nova-query-builder select { max-inline-size: 100%; }
   /* Native selects use the Nova control frame. */
   .nova-query-builder select { box-sizing: border-box; min-block-size: var(--nova-control-md); min-inline-size: 0; margin: 0; padding: 0 var(--nova-space-2) 0 var(--nova-space-3); border: var(--nova-border-width) solid var(--nova-color-control-border); border-radius: var(--nova-radius-control); background-color: var(--nova-color-background); color: var(--nova-color-text); font: inherit; cursor: pointer; }
-  .nova-query-builder select:hover:not(:disabled) { border-color: var(--nova-color-text-muted); }
+  .nova-query-builder select:hover:not(:disabled) { border-color: var(--nova-color-control-border-hover); }
   .nova-query-builder select[aria-invalid="true"] { border-color: var(--nova-color-error-text); }
   .nova-query-builder select:disabled { border-color: var(--nova-color-border); background-color: var(--nova-color-disabled-surface); color: var(--nova-color-disabled-text); cursor: not-allowed; }
   .nova-query-builder select:focus-visible { outline: var(--nova-focus-width) solid var(--nova-color-focus-ring); outline-offset: var(--nova-focus-offset); }
